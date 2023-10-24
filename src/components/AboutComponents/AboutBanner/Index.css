@@ -1,0 +1,12 @@
+.about_banner_img {
+    position: relative;
+}
+.about_banner_img h1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 36px;
+}

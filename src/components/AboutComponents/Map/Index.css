@@ -1,0 +1,33 @@
+#AboutMap h1{
+    color: #484848;
+    margin-bottom: 40px;
+    font-size: 30px;
+    line-height: 1.3636;
+    font-weight: 400;
+}
+#AboutMap p{
+    width: 53%;
+    font-size: 14px;
+    line-height: 2.4;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+}
+@media screen and (max-width:768px){
+    #AboutMap h1{
+        font-size: 25px;
+    }
+    #AboutMap p{
+        font-size: 10px;
+        line-height: 2.4;
+    }
+}
+@media screen and (max-width:576px){
+    #AboutMap h1{
+        font-size: 20px;
+    }
+    #AboutMap p{
+        font-size: 8px;
+        line-height: 2;
+    }
+}

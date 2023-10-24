@@ -1,0 +1,54 @@
+#Contact_Info h3{
+    font-weight: lighter;
+    letter-spacing: 5px;
+    font-size: 24px;
+    color: #484848;
+    margin: 20px 0 10px 0;
+}
+#Contact_Info p{
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 24px;
+    margin-bottom: 0;
+    width: 75%;
+}
+#Contact_Info a{
+    color: #cda96f;
+    text-decoration: none;
+    border-bottom: 1px solid #cda96f;
+    padding-bottom: 2px;
+    transition: .3s all;
+    margin: auto;
+}
+#Contact_Info a:hover{
+    color: #fcb900;
+    transition: .3s all;
+}
+.container-contact{
+    padding: 0 5rem;
+}
+
+@media screen and (max-width:992px){
+    #Contact_Info h3{
+        font-size: 15px;
+    }
+    #Contact_Info p{
+        font-size: 12px;
+    }
+}
+@media screen and (max-width:576px){
+   .contact_info_all{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center !important;
+    gap: 20px;
+   }
+   .contact_info_box{
+    text-align: center !important;
+   }
+   #Contact_Info p{
+    width: 100% !important;
+}
+}

@@ -1,0 +1,32 @@
+#information{
+    padding: 60px 0;
+}
+#information h3{
+    font-size: 24px;
+    font-family: "Montserrat";
+    font-weight: 500;
+    color: #484848;
+    margin-bottom: 50px;
+}
+.information-box{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.information-box i{
+    font-size: 20px;
+}
+.information-box h4{
+    color: #484848;
+    font-size: 18px;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+}
+.information-box p{
+    line-height: 1.8;
+    font-size: 14px;
+    font-family: "Montserrat";
+    font-weight: 400;
+    color: #222222;
+    width: 100%;
+}

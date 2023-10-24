@@ -1,0 +1,28 @@
+.instgram-bottom {
+    background-color: #1a265c;
+    padding: 10px 0;
+}
+
+.instgram-bottom i {
+    color: white;
+    font-size: 22px;
+}
+
+.instgram-bottom span {
+    line-height: 57px;
+    color: #fff;
+    font-size: 14px;
+    font-family: "Montserrat";
+    font-weight: 400;
+}
+
+@media screen and (max-width:768px) {
+    .instgram-bottom i {
+        font-size: 13px;
+    }
+
+    .instgram-bottom span {
+        line-height: 30px;
+        font-size: 14px;
+    }
+}

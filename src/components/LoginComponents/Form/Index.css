@@ -1,0 +1,54 @@
+/* #login_form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+} */
+#login_form h2{
+    margin-top: 1em;
+    font-size: 34px;
+    color: #484848;
+    font-family: "Montserrat";
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+#login_form input{
+    border: 2px solid #ddd !important;
+    outline: none;
+    padding: 0 12px !important;
+    width: 50% !important;
+    border-radius: 2px;
+    font-size: 15px !important;
+    height: 40px !important;
+    box-sizing: border-box !important;
+}
+#login_form button{
+    font-size: 15px;
+    background: #f7ca18!important;
+    color: white;
+    padding: 6px 50px;
+    border: none;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: .3s all;
+}
+#login_form button:hover{
+    background-color: #fcb900 !important;
+    transition: .3s all;
+}
+#login_form label{
+    text-align: left !important;
+}
+
+@media screen and (max-width:576px) {
+    #login_form h2{
+        font-size: 25px;
+    }
+    #login_form input{
+        width: 100% !important;
+    }
+    #login_form form{
+        width: 80% !important;
+    }
+}

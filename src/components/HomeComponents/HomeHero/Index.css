@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.homehero-img img{
+    object-fit: cover;
+}
+.homehero-img{
+    position: relative;
+}
+.HomeHero-content{
+    position: absolute;
+    top: 0;
+    margin-top: 220px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    flex-direction: column;
+    padding: 0 20px;
+}
+.HomeHero-content h2{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: 5px;
+    color: #fff;
+    /* text-transform: uppercase; */
+    line-height: 1.2;
+}
+.HomeHero-content p{
+    font-family: "Montserrat', sans-serif";
+    line-height: 2;
+    font-size: 30px;
+    text-transform: uppercase;
+    font-style: italic;
+    color: #fff;
+}
+.HomeHero-content a{
+    border-color: #f7ca18;
+    background-color: #f7ca18;
+    margin: auto;
+    text-decoration: none;
+    font-family: "Montserrat,sans-serif";
+    font-weight: 700;
+    padding: 16px 40px;
+    font-size: 17px;
+    text-transform: uppercase;
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    color: #fff;
+    transition: .3s all;
+}
+.HomeHero-content a:hover{
+    background-color: #fcb900;
+    transition: .3s all;
+}
+@media screen and (max-width:992px){
+    .HomeHero-content h2{
+        font-size: 25px;
+    }
+    .HomeHero-content{
+        margin-top: 120px;
+    }
+    .HomeHero-content p{
+        font-size: 20px;
+    }
+    .HomeHero-content a{
+        padding: 12px 35px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width:768px){
+    .HomeHero-content h2{
+        font-size: 15px;
+    }
+    .HomeHero-content{
+        margin-top: 100px;
+    }
+    .HomeHero-content p{
+        font-size: 10px;
+    }
+    .HomeHero-content a{
+        padding: 10px 30px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width:576px){
+    .HomeHero-content h2{
+        font-size: 10px;
+    }
+    .HomeHero-content{
+        margin-top: 80px;
+    }
+    .HomeHero-content p{
+        font-size: 7px;
+    }
+    .HomeHero-content a{
+        padding: 6px 15px;
+        font-size: 6px;
+    }
+}
