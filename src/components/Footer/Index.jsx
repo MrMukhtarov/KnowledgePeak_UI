@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Index.css";
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/knowledge-peak-university-high-resolution-logo-black-transparent.png";
+import axios from "axios";
 
 const Index = () => {
+  const [setting,setSetting] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://localhost:7153/api/Settings")
+    .then((res) => setSetting(res.data))
+    .catch((err) => console.log(err));
+  },[])
   return (
     <footer className="py-4">
       <div className="container">
         <div className="footer-all d-flex flex-column flex-lg-row align-items-center justify-content-between flex-lg-nowrap flex-md-wrap flex-sm-column gap-sm-3">
           <div className="footer-left col-lg-4 col-md-6 d-flex flex-column gap-2 col-sm-12 text-sm-center col-12">
-            <NavLink to="/">
-              <img className="img-fluid w-75" src={Logo} alt="" />
-            </NavLink>
+            {setting.map(set => {
+              return (
+                <NavLink key={set.id} to="/">
+                <img className="img-fluid w-75" src={set.footerLogo.replace(/\\/g, "/")} alt="" />
+              </NavLink>
+              )
+            })}
             <p>
               Alumni Association of the University of Sayidan. The best
               university in the world located in Sayidan city.
