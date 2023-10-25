@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Index.css";
 import { NavLink } from "react-router-dom";
-import Logo from "../../assets/knowledge-peak-university-high-resolution-logo-black-transparent.png";
 import axios from "axios";
 
 const Index = () => {
