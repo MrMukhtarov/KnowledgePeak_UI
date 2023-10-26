@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import {
-  DesktopOutlined,
+  SettingOutlined,
   FileOutlined,
   HomeOutlined,
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
+import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -18,7 +19,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("Dashboard", "1",<HomeOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
+  getItem("Setting", "2", <SettingOutlined />),
   getItem("User", "sub1", <UserOutlined />, [
     getItem("Tom", "3"),
     getItem("Bill", "4"),
@@ -32,7 +33,17 @@ const items = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+
+  const OpenPage = (item) => {
+    if(item === "1"){
+     navigate("/superadmin");
+    }
+    else if(item === "2"){
+      navigate("/superadmin/setting");
+    }
+  }
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -52,6 +63,7 @@ const Index = () => {
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
+          onClick={(e) => OpenPage(e.key)}
         />
       </Sider>
  </Layout>

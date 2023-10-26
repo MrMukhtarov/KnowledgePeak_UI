@@ -26,6 +26,7 @@
     border-radius: 5px;
     display: none;
     z-index: 11111111;
+    background: white;
 }
 .dashboard-header-dropdown-top{
     background-color: #3EA1E4;

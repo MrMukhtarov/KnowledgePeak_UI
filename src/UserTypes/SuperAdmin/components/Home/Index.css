@@ -34,6 +34,18 @@
         display: flex !important;
         justify-content: center !important;
     }
+    .superadmin_home{
+        width: 100%;
+    }
+    .superadmin-sidebar{
+        display: none;
+    }
+    .super_admin_mobile_menu{
+        display: block;
+    }
+    .supad-bars{
+        display: block;
+    }
 }
 @media screen and (max-width:768px){
     .super_admin_home_box{
