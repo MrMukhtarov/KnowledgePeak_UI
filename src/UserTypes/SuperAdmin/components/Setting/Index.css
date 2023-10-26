@@ -21,6 +21,7 @@
     -webkit-transition: border-color ease-in 0.2s;
     transition: border-color ease-in 0.2s;
     outline: none;
+    
 }
 
 .setting input:focus {
