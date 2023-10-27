@@ -1,0 +1,110 @@
+.facultyList_superadmin h5 {
+    color: #000;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.facultyList_superadmin label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    color: #888;
+}
+
+.facultyList_superadmin input {
+    background: #f4f7fa;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #495057;
+    height: auto;
+    border: 0px;
+    border-bottom: 1px solid rgba(130, 139, 178, 0.3);
+    border-radius: 0px;
+    outline: none;
+    transition: .3s all;
+    margin-left: 5px;
+}
+
+.facultyList_superadmin input:focus {
+    border-bottom: 1px solid #0d6efd;
+    transition: .3s all;
+}
+
+.facultyList_superadmin table thead th {
+    background-color: #002140 !important;
+    color: white;
+}
+
+.search_div {
+    margin-bottom: 30px;
+}
+
+.facultyList_superadmin_pagination button {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    color: white;
+    font-weight: 400;
+    background-color: #002140;
+    padding: 5px;
+    border-radius: 2px;
+    transition: .3s all;
+}
+
+.facultyList_superadmin_pagination button:hover {
+    background-color: #0d6efd;
+    transition: .3s all;
+}
+
+
+.facultyList_superadmin_action .one {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+    background-color: #04a9f5;
+    border-color: #04a9f5;
+    transition: .3s all;
+}
+.facultyList_superadmin_action .one:hover{
+    background-color: #002140;
+    border-color: #002140;
+    transition: .3s all;
+}
+
+.facultyList_superadmin_action .two {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+    background-color: #f44236;
+    border-color: #f44236;
+    transition: .3s all;
+}
+.facultyList_superadmin_action .two:hover{
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    transition: .3s all;
+}
+.facultyList_superadmin_action .three {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+    background-color: grey;
+    border-color: grey;
+    transition: .3s all;
+}
+.facultyList_superadmin_action .three:hover{
+    background-color: rgba(128, 128, 128, 0.534);
+    border-color: rgba(128, 128, 128, 0.534);
+    transition: .3s all;
+}
+@media screen and (max-width:576px) {
+    .facultyList_superadmin_table{
+        overflow-x: scroll;
+    }
+   
+}

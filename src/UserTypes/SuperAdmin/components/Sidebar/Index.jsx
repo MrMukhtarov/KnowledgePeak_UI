@@ -4,7 +4,7 @@ import {
   FileOutlined,
   HomeOutlined,
   TeamOutlined,
-  UserOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -20,11 +20,12 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem("Dashboard", "1",<HomeOutlined />),
   getItem("Setting", "2", <SettingOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
+  getItem("Faculty", "3", <BookOutlined />),
+  // getItem("Faculty", "sub1", <UserOutlined />, [
+  //   getItem("Tom", "3"),
+  //   getItem("Bill", "4"),
+  //   getItem("Alex", "5"),
+  // ]),
   getItem("Team", "sub2", <TeamOutlined />, [
     getItem("Team 1", "6"),
     getItem("Team 2", "8"),
@@ -42,6 +43,9 @@ const Index = () => {
     }
     else if(item === "2"){
       navigate("/superadmin/setting");
+    }
+    else if(item === "3"){
+      navigate("/superadmin/faculty");
     }
   }
   const {

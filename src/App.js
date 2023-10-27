@@ -7,6 +7,9 @@ import Login from './pages/Login/Index.jsx'
 import SuperAdmin from "./Layouts/SuperAdminDashboard";
 import SuperAdminHome from './UserTypes/SuperAdmin/pages/Home/Index.jsx'
 import Setting from './UserTypes/SuperAdmin/pages/Setting/Index.jsx'
+import SuperAdminFaculty from './UserTypes/SuperAdmin/pages/Faculty/Index.jsx'
+import FacultyCreate from './UserTypes/SuperAdmin/pages/FacultyCreate/Index.jsx'
+import FacultyUpdate from './UserTypes/SuperAdmin/pages/FacultyUpdate/Index.jsx'
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route path="/superadmin" element={<SuperAdmin/>}>
             <Route index element={<SuperAdminHome/>}/>
             <Route path="/superadmin/setting" element={<Setting/>}/>
+            <Route path="/superadmin/faculty" element={<SuperAdminFaculty/>}/>
+            <Route path="/superadmin/faculty/create" element={<FacultyCreate/>}/>
+            <Route path="/superadmin/faculty/update/:id" element={<FacultyUpdate/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,0 +1,6 @@
+.faculty_update button:hover{
+    background-color: white !important;
+    border: 1px solid black;
+    color: black;
+    transition: .3s all;
+}

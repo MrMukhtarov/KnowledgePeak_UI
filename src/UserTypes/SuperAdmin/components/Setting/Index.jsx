@@ -5,11 +5,15 @@ import "./Index.css";
 const Index = () => {
   const [setting, setSetting] = useState([]);
   const [inputs, setInputs] = useState({});
+  const [error, setError] = useState([])
 
   useEffect(() => {
     axios
       .get("https://localhost:7153/api/Settings")
-      .then((res) => setSetting(res.data))
+      .then((res) => {
+        setSetting(res.data);
+        setInputs(res.data[0])
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -23,6 +27,7 @@ const Index = () => {
       [`${name}File`]: file,
     }));
   };
+  console.log(inputs);
 
   const handleSubmit = async (e, id) => {
     e.preventDefault();
@@ -38,17 +43,43 @@ const Index = () => {
     if (inputs.footerLogoFile) {
       formdata.append("FooterLogoFile", inputs.footerLogoFile);
     }
-
-    await axios
+    const newErrors = validateInputs(inputs);
+    setError(newErrors);
+    
+    if(Object.keys(error).length === 0){
+      await axios
       .put(`https://localhost:7153/api/Settings/Update/${id}`, formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => console.log(res.data))
-      .catch((e) => console.log(e));
+      .then((res) => setError(res.data.response))
+      .catch(e => console.log(e))
+    }else{
+      console.log("error", error);
+    }
   };
+  const validateInputs = (values) => {
+    const newErrors = {};
 
+    if (!values.address) {
+      newErrors.address = "Address is required";
+    }
+    if (!values.phone) {
+      newErrors.phone = "Phone is required.";
+    } else if (!/^\d{10}$/.test(values.phone)) {
+      newErrors.phone = "Invalid phone number.";
+    }
+
+    if (!values.email) {
+      newErrors.email = "E-mail is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
+      newErrors.email = "Invalid email address.";
+    }
+
+    setError(newErrors);
+    return newErrors;
+  };
   return (
     <section className="setting py-3">
       <div className="container">
@@ -73,6 +104,7 @@ const Index = () => {
                       onChange={handleInputChange}
                       name="email"
                     />
+                   {error.email && <span className="error-message text-danger text-sm">{error.email}</span>}
                   </div>
 
                   <div className="d-flex flex-column col-lg-5">
@@ -86,6 +118,7 @@ const Index = () => {
                       onChange={handleInputChange}
                       name="phone"
                     />
+                    {error.phone && <span className="error-message text-danger text-sm">{error.phone}</span>}
                   </div>
 
                   <div className="d-flex flex-column col-lg-5">
@@ -99,6 +132,7 @@ const Index = () => {
                       defaultValue={set.location}
                       onChange={handleInputChange}
                     />
+                    {error.location && <span className="error-message text-danger text-sm">{error.location}</span>}
                   </div>
                 </div>
                 <div className="d-flex justify-content-center gap-2 setting_form-bottom">
