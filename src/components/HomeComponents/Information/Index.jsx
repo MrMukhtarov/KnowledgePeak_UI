@@ -8,7 +8,7 @@ const Index = () => {
         <h3>My Knowledge Peak Information</h3>
         <div className="information-all d-flex flex-column flex-lg-row justify-content-between align-items-center gap-4 gap-lg-2">
           <div className="information-box col-lg-3">
-          <i class="fa-solid fa-envelope"></i>
+          <i className="fa-solid fa-envelope"></i>
             <h4>Checking Message</h4>
             <p>
               Claritas est etiam processus dynamicus, qui sequitur mutationem
@@ -17,7 +17,7 @@ const Index = () => {
           </div>
 
           <div className="information-box col-lg-3">
-          <i class="fa-solid fa-user"></i>
+          <i className="fa-solid fa-user"></i>
             <h4>Update My Information</h4>
             <p>
               Claritas est etiam processus dynamicus, qui sequitur mutationem
@@ -35,7 +35,7 @@ const Index = () => {
           </div>
 
           <div className="information-box col-lg-3">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
             <h4>Search Alumni Directory</h4>
             <p>
               Claritas est etiam processus dynamicus, qui sequitur mutationem

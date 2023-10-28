@@ -33,7 +33,7 @@ const Index = () => {
           </NavLink>
         </div>
         <div className="instgram-bottom text-center d-flex align-items-center justify-content-center gap-2">
-          <i class="fa-brands fa-instagram"></i>
+          <i className="fa-brands fa-instagram"></i>
           <span>@KnwoledgePeakEdu</span>
         </div>
       </div>

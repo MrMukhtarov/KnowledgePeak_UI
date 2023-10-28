@@ -97,6 +97,21 @@
     border-color: grey;
     transition: .3s all;
 }
+.facultyList_superadmin_action .four:hover{
+    background-color: rgba(0, 128, 0, 0.616);
+    border-color: rgba(0, 128, 0, 0.616);
+    transition: .3s all;
+}
+.facultyList_superadmin_action .four {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+    background-color: green;
+    border-color: green;
+    transition: .3s all;
+}
 .facultyList_superadmin_action .three:hover{
     background-color: rgba(128, 128, 128, 0.534);
     border-color: rgba(128, 128, 128, 0.534);

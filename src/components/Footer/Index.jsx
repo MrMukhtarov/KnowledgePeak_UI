@@ -62,11 +62,11 @@ const Index = () => {
           <div className="footer-right col-lg-3 d-flex flex-column gap-4 justify-md-center col-md-12 col-12">
             <NavLink to="/about">EXPLORE US</NavLink>
             <ul className="p-0 d-flex justify-content-center gap-3">
-                <li><i class="fa-brands fa-facebook-f"></i></li>
-                <li><i class="fa-brands fa-twitter"></i></li>
-                <li><i class="fa-brands fa-youtube"></i></li>
-                <li><i class="fa-brands fa-linkedin-in"></i></li>
-                <li><i class="fa-brands fa-instagram"></i></li>
+                <li><i className="fa-brands fa-facebook-f"></i></li>
+                <li><i className="fa-brands fa-twitter"></i></li>
+                <li><i className="fa-brands fa-youtube"></i></li>
+                <li><i className="fa-brands fa-linkedin-in"></i></li>
+                <li><i className="fa-brands fa-instagram"></i></li>
             </ul>
           </div>
         </div>

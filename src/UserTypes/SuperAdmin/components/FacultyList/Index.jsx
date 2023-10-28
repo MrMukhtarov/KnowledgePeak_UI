@@ -8,6 +8,8 @@ const Index = () => {
   const [faculty, setFaculty] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [errorMessages, setErrorMessages] = useState("");
+  const [error, setError] = useState("");
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -27,11 +29,60 @@ const Index = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredFaculty.slice(indexOfFirstItem, indexOfLastItem);
 
+  const Delete = (id) => {
+    axios.delete(`https://localhost:7153/api/Facultys/Delete/${id}`)
+    .then(res => {
+      window.location.reload();
+    })
+    .catch((e) => {
+      if (e.response && e.response.data && e.response.data.errors) {
+        setErrorMessages(e.response.data.errors);
+      } else {
+          setError(e.response.data.message);
+      }
+    });
+  } 
+
+    const SoftDelete = (id) => {
+      axios.patch(`https://localhost:7153/api/Facultys/SoftDelete/${id}`)
+      .then(res => {
+          window.location.reload();
+      })
+      .catch((e) => {
+        if (e.response && e.response.data && e.response.data.errors) {
+          setErrorMessages(e.response.data.errors);
+        } else {
+            setError(e.response.data.message);
+        }
+      });
+    }
+
+    const RevertSoftDelete = (id) => {
+      axios.patch(`https://localhost:7153/api/Facultys/RevertSoftDelete/${id}`)
+      .then(res => {
+          window.location.reload();
+      })
+      .catch((e) => {
+        if (e.response && e.response.data && e.response.data.errors) {
+          setErrorMessages(e.response.data.errors);
+        } else {
+            setError(e.response.data.message);
+        }
+      });
+    }
   return (
     <section className="facultyList_superadmin py-3">
       <div className="container">
         <h5>Faculty List</h5>
         <hr />
+      <div className="d-flex  justify-content-between align-items-center">
+      {errorMessages ? (
+              <div className="error-messages">
+                <p style={{color:"red"}} className="error-message">{errorMessages.message}</p>
+              </div>
+            ) : <div className="error-messages">
+            <p style={{color:"red"}} className="error-message">{error}</p>
+          </div>}
         <div className="search_div text-end">
           <NavLink className="btn btn-success me-2" to={"/superadmin/faculty/create"}>
             Create
@@ -43,6 +94,7 @@ const Index = () => {
             id="search"
           />
         </div>
+      </div>
         <div className="facultyList_superadmin_all">
           <div className="facultyList_superadmin_table">
             <table className="table">
@@ -68,12 +120,14 @@ const Index = () => {
                       <button onClick={() => navigate(`/superadmin/faculty/update/${f.id}`)} className="one me-1">
                         <i className="fa-solid fa-pen-to-square"></i>
                       </button>
-                      <button className="two me-1">
+                      <button onClick={() => Delete(f.id)} className="two me-1">
                         <i className="fa-solid fa-trash"></i>
                       </button>
-                      <button className="three">
+                     {f.isDeleted === false ?  <button onClick={() => SoftDelete(f.id)} className="three">
                         <i className="fa-solid fa-trash-arrow-up"></i>
-                      </button>
+                      </button> : <button onClick={() => RevertSoftDelete(f.id)} className="four">
+                      <i className="fa-solid fa-eraser"></i>
+                      </button>}
                     </td>
                   </tr>
                 ))}

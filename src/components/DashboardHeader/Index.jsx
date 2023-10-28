@@ -38,11 +38,11 @@ const Index = () => {
                     </span>
                   </div>
                   <div className="dashboard-header-dropwdown-top-right">
-                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <i className="fa-solid fa-right-from-bracket"></i>
                   </div>
                 </div>
                 <div className="dashboard-header-dropdown-bottom">
-                  <i class="fa-solid fa-circle-user">
+                  <i className="fa-solid fa-circle-user">
                     <span>My Profile</span>
                   </i>
                 </div>

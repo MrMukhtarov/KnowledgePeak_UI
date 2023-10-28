@@ -83,7 +83,7 @@ const Index = () => {
                 <h3>{stuCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-graduation-cap"></i>
+                <i className="fa-solid fa-graduation-cap"></i>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ const Index = () => {
                 <h3>{teacherCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-school"></i>
+                <i className="fa-solid fa-school"></i>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ const Index = () => {
                 <h3>{facultyCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-pen"></i>
+                <i className="fa-solid fa-pen"></i>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ const Index = () => {
                 <h3>{groupCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-people-group"></i>
+                <i className="fa-solid fa-people-group"></i>
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@ const Index = () => {
                 <h3>{lessonCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-book"></i>
+                <i className="fa-solid fa-book"></i>
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ const Index = () => {
                 <h3>{roomCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-people-roof"></i>
+                <i className="fa-solid fa-people-roof"></i>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@ const Index = () => {
                 <h3>{specialityCount}</h3>
               </div>
               <div className="super_admin_home_box_bottom_right">
-                <i class="fa-solid fa-glasses"></i>
+                <i className="fa-solid fa-glasses"></i>
               </div>
             </div>
           </div>

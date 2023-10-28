@@ -8,6 +8,8 @@ const Index = () => {
   const {id} = useParams();
   const[inpust,setInputs]=useState({})
   const[faculty,setFaculty]=useState({})
+  const [errorMessages, setErrorMessages] = useState({});
+  const [error, setError] = useState("");
 
 useEffect(() => {
   axios.get(`https://localhost:7153/api/Facultys/GetById/${id}`)
@@ -26,7 +28,7 @@ const handleInputChange = (e) => {
     [name]: value,
   }));
 };
-
+console.log(inpust);
 const handleSubmit = (e) => {
   e.preventDefault()
   var formData = new FormData();
@@ -39,7 +41,13 @@ const handleSubmit = (e) => {
     },
   })
   .then(res => console.log(res.data))
-  .catch(e => console.log(e))
+  .catch((e) => {
+    if (e.response && e.response.data && e.response.data.errors) {
+      setErrorMessages(e.response.data.errors);
+    } else {
+        setError(e.response.data.message);
+    }
+  });
 } 
 
   return (
@@ -65,6 +73,13 @@ const handleSubmit = (e) => {
             defaultValue={faculty.name}
             onChange={handleInputChange}
           />
+           {errorMessages.Name ? (
+              <div className="error-messages">
+                <p style={{color:"red"}} className="error-message">{errorMessages.Name}</p>
+              </div>
+            ) : <div className="error-messages">
+            <p style={{color:"red"}} className="error-message">{error.includes("name")  ? error : "" }</p>
+          </div>}
         </div>
         <div className="form-group mt-3">
           <label className="mb-1" htmlFor="short">
@@ -79,6 +94,13 @@ const handleSubmit = (e) => {
             defaultValue={faculty.shortName}
             onChange={handleInputChange}
           />
+            {errorMessages.ShortName ? (
+              <div className="error-messages">
+                <p style={{color:"red"}} className="error-message">{errorMessages.ShortName}</p>
+              </div>
+            ) : <div className="error-messages">
+            <p style={{color:"red"}} className="error-message">{error.includes("ShortName") ? error : ""}</p>
+          </div>}
         </div>
         <button
           style={{ backgroundColor: "#002140" }}
