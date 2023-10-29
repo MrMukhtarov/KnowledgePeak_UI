@@ -5,7 +5,10 @@ import axios from "axios";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    name : "",
+    shortName : ""
+  });
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   

@@ -10,6 +10,9 @@ import Setting from './UserTypes/SuperAdmin/pages/Setting/Index.jsx'
 import SuperAdminFaculty from './UserTypes/SuperAdmin/pages/Faculty/Index.jsx'
 import FacultyCreate from './UserTypes/SuperAdmin/pages/FacultyCreate/Index.jsx'
 import FacultyUpdate from './UserTypes/SuperAdmin/pages/FacultyUpdate/Index.jsx'
+import Speciality from './UserTypes/SuperAdmin/pages/Speciality/Index.jsx'
+import SpecialityCreate from './UserTypes/SuperAdmin/pages/SpecialityCreate/Index.jsx'
+import SpecialityUpdate from './UserTypes/SuperAdmin/pages/SpecialityUpdate/Index.jsx'
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
             <Route path="/superadmin/faculty" element={<SuperAdminFaculty/>}/>
             <Route path="/superadmin/faculty/create" element={<FacultyCreate/>}/>
             <Route path="/superadmin/faculty/update/:id" element={<FacultyUpdate/>}/>
+            <Route path="/superadmin/speciality" element={<Speciality/>}/>
+            <Route path="/superadmin/speciality/create" element={<SpecialityCreate/>}/>
+            <Route path="/superadmin/speciality/update/:id" element={<SpecialityUpdate/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

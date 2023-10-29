@@ -21,6 +21,7 @@ const items = [
   getItem("Dashboard", "1",<HomeOutlined />),
   getItem("Setting", "2", <SettingOutlined />),
   getItem("Faculty", "3", <BookOutlined />),
+  getItem("Speciality", "4", <BookOutlined />),
   // getItem("Faculty", "sub1", <UserOutlined />, [
   //   getItem("Tom", "3"),
   //   getItem("Bill", "4"),
@@ -46,6 +47,9 @@ const Index = () => {
     }
     else if(item === "3"){
       navigate("/superadmin/faculty");
+    }
+    else if(item === "4"){
+      navigate("/superadmin/speciality");
     }
   }
   const {
