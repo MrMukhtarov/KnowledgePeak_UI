@@ -22,16 +22,13 @@ const items = [
   getItem("Setting", "2", <SettingOutlined />),
   getItem("Faculty", "3", <BookOutlined />),
   getItem("Speciality", "4", <BookOutlined />),
+  getItem("Lesson", "5", <BookOutlined />),
+  getItem("Teacher", "6", <BookOutlined />),
   // getItem("Faculty", "sub1", <UserOutlined />, [
   //   getItem("Tom", "3"),
   //   getItem("Bill", "4"),
   //   getItem("Alex", "5"),
   // ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
 ];
 
 const Index = () => {
@@ -50,6 +47,12 @@ const Index = () => {
     }
     else if(item === "4"){
       navigate("/superadmin/speciality");
+    }
+    else if(item === "5"){
+      navigate("/superadmin/lesson");
+    }
+    else if(item === "6"){
+      navigate("/superadmin/teacher");
     }
   }
   const {

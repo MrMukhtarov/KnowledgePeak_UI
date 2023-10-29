@@ -27,7 +27,6 @@ const Index = () => {
       [`${name}File`]: file,
     }));
   };
-  console.log(inputs);
 
   const handleSubmit = async (e, id) => {
     e.preventDefault();
@@ -36,6 +35,7 @@ const Index = () => {
     formdata.append("email", inputs.email);
     formdata.append("phone", inputs.phone);
     formdata.append("location", inputs.location);
+    console.log(inputs.headerLogoFile);
 
     if (inputs.headerLogoFile) {
       formdata.append("HeaderLogoFile", inputs.headerLogoFile);

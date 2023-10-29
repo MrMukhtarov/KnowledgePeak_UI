@@ -13,6 +13,17 @@ import FacultyUpdate from './UserTypes/SuperAdmin/pages/FacultyUpdate/Index.jsx'
 import Speciality from './UserTypes/SuperAdmin/pages/Speciality/Index.jsx'
 import SpecialityCreate from './UserTypes/SuperAdmin/pages/SpecialityCreate/Index.jsx'
 import SpecialityUpdate from './UserTypes/SuperAdmin/pages/SpecialityUpdate/Index.jsx'
+import LessonSuperAdmin from './UserTypes/SuperAdmin/pages/Lesson/Index.jsx'
+import LessonCreate from './UserTypes/SuperAdmin/pages/LessonCreate/Index.jsx'
+import LessonUpdate from './UserTypes/SuperAdmin/pages/LessonUpdate/Index.jsx'
+import SuperAdminTeacher from './UserTypes/SuperAdmin/pages/Teacher/Index.jsx'
+import TeacherRegister from './UserTypes/SuperAdmin/pages/RegisterTeachers/Index.jsx'
+import TeacherAddFaculty from './UserTypes/SuperAdmin/pages/TeacherAddFaculty/Index.jsx'
+import TeacherAddSpeciality from './UserTypes/SuperAdmin/pages/TeacherAddSpeciality/Index.jsx'
+import TeacherAddLesson from './UserTypes/SuperAdmin/pages/TeacherAddLesson/Index.jsx'
+import AddRoleTeacher from './UserTypes/SuperAdmin/pages/AddRole/Index.jsx'
+import RemoveRoleTeacher from './UserTypes/SuperAdmin/pages/RemoveRole/Index.jsx'
+import UpdateTeacherForAdmin from './UserTypes/SuperAdmin/pages/TeacherUpdate/Index.jsx'
 
 function App() {
   return (
@@ -34,6 +45,17 @@ function App() {
             <Route path="/superadmin/speciality" element={<Speciality/>}/>
             <Route path="/superadmin/speciality/create" element={<SpecialityCreate/>}/>
             <Route path="/superadmin/speciality/update/:id" element={<SpecialityUpdate/>}/>
+            <Route path="/superadmin/lesson" element={<LessonSuperAdmin/>}/>
+            <Route path="/superadmin/lesson/create" element={<LessonCreate/>}/>
+            <Route path="/superadmin/lesson/update/:id" element={<LessonUpdate/>}/>
+            <Route path="/superadmin/teacher" element={<SuperAdminTeacher/>}/>
+            <Route path="/superadmin/teacher/register" element={<TeacherRegister/>}/>
+            <Route path="/superadmin/teacher/addfaculty" element={<TeacherAddFaculty/>}/>
+            <Route path="/superadmin/teacher/addspeciality" element={<TeacherAddSpeciality/>}/>
+            <Route path="/superadmin/teacher/addlesson" element={<TeacherAddLesson/>}/>
+            <Route path="/superadmin/teacher/addrole/:username" element={<AddRoleTeacher/>}/>
+            <Route path="/superadmin/teacher/removerole/:username" element={<RemoveRoleTeacher/>}/>
+            <Route path="/superadmin/teacher/update/:id" element={<UpdateTeacherForAdmin/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
