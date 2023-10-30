@@ -56,6 +56,11 @@ const Index = () => {
             "Content-Type": "multipart/form-data",
           },
         })
+        .then(res => {
+          if(res.status === 200){
+            navigate("/superadmin/teacher")
+          }
+        })
     }
 
   return (

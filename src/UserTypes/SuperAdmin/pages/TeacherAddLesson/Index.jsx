@@ -57,6 +57,11 @@ const Index = () => {
             "Content-Type": "multipart/form-data",
           },
         })
+        .then(res => {
+          if(res.status === 200){
+            navigate("/superadmin/teacher")
+          }
+        })
         .catch((e) => {
             if (e.response && e.response.data && e.response.data.errors) {
               setErrorMessages(e.response.data.errors);

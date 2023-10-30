@@ -31,7 +31,7 @@ const Index = () => {
         setSelectTeacher(value);
       }
 
-      if (name === "specialityIds") {
+      if (name === "teacherSpecialities") {
         const selectedSpeciality = Array.from(options)
           .filter((option) => option.selected && option.value !== "")
           .map((option) => Number(option.value));
@@ -55,6 +55,11 @@ const Index = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+        })
+        .then(res => {
+          if(res.status === 200){
+            navigate("/superadmin/teacher")
+          }
         })
     }
 
@@ -99,10 +104,10 @@ const Index = () => {
             id="short"
             onChange={handleInputChange}
             name="teacherSpecialities"
-            multiple
+            multiple={true}
             value={selectSepciality}
           >
-            <option selected disabled>Select Speciality</option>
+            <option value="" selected disabled>Select Speciality</option>
             {sepciality.filter(f => f.isDeleted === false).map(e => {
                 return (
                     <option key={e.id} value={e.id}>{e.name}</option>

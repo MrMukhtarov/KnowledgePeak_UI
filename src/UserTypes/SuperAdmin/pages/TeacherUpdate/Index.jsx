@@ -6,63 +6,98 @@ const Index = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [lesson, setLesson] = useState([]);
+  const [selectFaculty,setSelectFaculty] = useState([])
   const [speciality, setSpeciality] = useState([]);
   const [faculty, setFaculty] = useState([]);
+  const [selectLesson,setSelectLesson] = useState([])
   const [teacher, setTeacher] = useState({});
+  const [selectSepciality,setSelectSpeciality] = useState([])
   const [inputs, setInputs] = useState({
     name: " ",
     surname: " ",
     description: " ",
-    age: " ",
+    age: " ", 
     salary: " ",
     userName: " ",
     email: " ",
-    password: " ",
+    gender : teacher.gender,
+    status : teacher.status,
+    imageFile : teacher.imageUrl
   });
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
-
-  console.log(teacher);
+  const [selectGender, setSelectGender] = useState("");
+  const [selectStatus, setSelectStatus] = useState("");
+  
   useEffect(() => {
     axios.get("https://localhost:7153/api/Lessons").then((res) => {
       setLesson(res.data);
     });
   }, []);
-
+  
   useEffect(() => {
     axios.get("https://localhost:7153/api/Specialities/Get").then((res) => {
       setSpeciality(res.data);
     });
   }, []);
-
+  
   useEffect(() => {
     axios.get("https://localhost:7153/api/Facultys/GetAll").then((res) => {
       setFaculty(res.data);
     });
   }, []);
-
+  
   useEffect(() => {
     axios
-      .get(`https://localhost:7153/api/TeacherAuth/GetById/${id}`)
-      .then((res) => {
-        setTeacher(res.data);
-        setInputs(res.data);
-      });
-  }, [id]);
-  console.log(teacher);
-
+    .get(`https://localhost:7153/api/TeacherAuth/GetById/${id}`)
+    .then((res) => {
+      setTeacher(res.data);
+      setInputs(res.data);
+      // setSelectSpeciality(res.data.specialities && res.data.specialities.map(l => l.id))
+      // setSelectFaculty(res.data.faculties && res.data.faculties.map(l => l.id))
+      // setSelectLesson(res.data.lessons && res.data.lessons.map(l => l.id))
+    });
+  }, []);
+  
+  console.log(inputs);
+  // console.log(teacher);
   const handleInputChange = (e) => {
-    const { name, value, files, type } = e.target;
+    const { name, value, files, type, options } = e.target;
+    
+    if (name === "lessonIds") {
+      const selectedlesson = Array.from(options)
+        .filter((option) => option.selected && option.value !== "")
+        .map((option) => Number(option.value));
+  
+      setSelectLesson(selectedlesson);
+    }
+
+    if (name === "specialityIds") {
+      const selectedSpeciality = Array.from(options)
+        .filter((option) => option.selected && option.value !== "")
+        .map((option) => Number(option.value));
+  
+      setSelectSpeciality(selectedSpeciality);
+    }
+
+    if (name === "facultyIds") {
+      const selectedFacultys = Array.from(options)
+        .filter((option) => option.selected && option.value !== "")
+        .map((option) => Number(option.value));
+  
+      setSelectFaculty(selectedFacultys);
+    }
 
     setInputs((prev) => ({
       ...prev,
       [name]: value,
     }));
     if (name === "gender") {
-      setInputs((prevState) => ({
-        ...prevState,
-        gender: parseInt(value, 10),
-      }));
+      setSelectGender(value);
+    }
+
+    if (name === "status") {
+      setSelectStatus(value);
     }
     if (type === "file" && files != null && files.length > 0) {
       const selectedFile = files[0];
@@ -80,21 +115,36 @@ const Index = () => {
     formdata.append("name", inputs.name);
     formdata.append("surname", inputs.surname);
     formdata.append("description", inputs.description);
-    formdata.append("age", inputs.age);
     formdata.append("salary", inputs.salary);
     formdata.append("imageFile", inputs.imageFile);
+    formdata.append("age", inputs.age);
     formdata.append("gender", inputs.gender);
     formdata.append("userName", inputs.userName);
     formdata.append("email", inputs.email);
-    formdata.append("password", inputs.password);
+    formdata.append("status", inputs.status);
 
+    selectFaculty.forEach((faculyIds) => {
+      formdata.append("facultyIds", faculyIds);
+    });
+
+    selectLesson.forEach((lessonIds) => {
+      formdata.append("lessonIds", lessonIds);
+    });
+
+    selectSepciality.forEach((specialityIds) => {
+      formdata.append("specialityIds", specialityIds);
+    });
     axios
-      .post("https://localhost:7153/api/TeacherAuth/CreateTeacher", formdata, {
+      .put(`https://localhost:7153/api/TeacherAuth/UpdateProfileAdmin?id=${id}`, formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => console.log(res.data))
+      // .then((res) => {
+      //   if(res.status === 200){
+      //     navigate("/superadmin/teacher")
+      //   }
+      // })
       .catch((e) => {
         if (e.response && e.response.data && e.response.data.errors) {
           setErrorMessages(e.response.data.errors);
@@ -112,7 +162,7 @@ const Index = () => {
             style={{ cursor: "pointer" }}
             className="fa-solid fa-arrow-left"
           ></i>
-          <h5>Teacher Register</h5>
+          <h5>Teacher Update</h5>
         </div>
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
           {/* ---- */}
@@ -136,7 +186,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("name") ? error : ""}
+                  {error && error.includes("Name") ? error : ""}
                 </p>
               </div>
             )}
@@ -164,7 +214,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Surname") ? error : ""}
+                  {error && error.includes("Surname") ? error : ""}
                 </p>
               </div>
             )}
@@ -190,7 +240,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Age") ? error : ""}
+                  {error && error.includes("Age") ? error : ""}
                 </p>
               </div>
             )}
@@ -216,7 +266,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Description") ? error : ""}
+                  {error && error.includes("Description") ? error : ""}
                 </p>
               </div>
             )}
@@ -231,6 +281,7 @@ const Index = () => {
               placeholder="Enter Salary"
               onChange={handleInputChange}
               name="salary"
+              defaultValue={teacher.salary}
             />
             {errorMessages.Salary ? (
               <div className="error-messages">
@@ -241,12 +292,13 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Salary") ? error : ""}
+                  {error && error.includes("Salary") ? error : ""}
                 </p>
               </div>
             )}
           </div>
           {/* ---- */}
+            <img width={40} src={teacher.imageUrl} alt="" />
           <div className="form-group">
             <label htmlFor="img">Image</label>
             <input
@@ -266,13 +318,14 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("ImageFile") ? error : ""}
+                  {error && error.includes("ImageFile") ? error : ""}
                 </p>
               </div>
             )}
           </div>
           {/* ---- */}
           <div className="form-group">
+           Current Gender : {teacher.gender === 1 ? <span style={{color:"green"}}>Male</span> : <span style={{color:"green"}}>Female</span>}<br/>
             <label htmlFor="gender">Gender</label>
             <select
               type="text"
@@ -281,6 +334,7 @@ const Index = () => {
               placeholder="Enter Gender"
               onChange={handleInputChange}
               name="gender"
+              value={selectGender}
             >
               <option value="1">Male</option>
               <option value="2">Female</option>
@@ -294,7 +348,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Gender") ? error : ""}
+                  {error && error.includes("gender") ? error : ""}
                 </p>
               </div>
             )}
@@ -309,6 +363,7 @@ const Index = () => {
               placeholder="Enter Username"
               onChange={handleInputChange}
               name="userName"
+              defaultValue={teacher.userName}
             />
             {errorMessages.UserName ? (
               <div className="error-messages">
@@ -319,7 +374,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("UserName") ? error : ""}
+                  {error && error.includes("UserName") ? error : ""}
                 </p>
               </div>
             )}
@@ -334,6 +389,7 @@ const Index = () => {
               placeholder="Enter Email"
               onChange={handleInputChange}
               name="email"
+              defaultValue={teacher.email}
             />
             {errorMessages.Email ? (
               <div className="error-messages">
@@ -344,39 +400,14 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Email") ? error : ""}
+                  {error && error.includes("Email") ? error : ""}
                 </p>
               </div>
             )}
           </div>
           {/* ---- */}
           <div className="form-group">
-            <label htmlFor="pas">Password</label>
-            <input
-              type="text"
-              className="form-control"
-              id="pas"
-              placeholder="Enter Password"
-              onChange={handleInputChange}
-              name="password"
-            />
-            {errorMessages.Password ? (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Password}
-                </p>
-              </div>
-            ) : (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Password") ? error : ""}
-                </p>
-              </div>
-            )}
-          </div>
-          {/* ---- */}
-          <div className="form-group">
-            <label htmlFor="status">Status</label>
+            Current Status : {teacher.status === 2 ? <span style={{color:"green"}}>Work</span> :  <span style={{color:"green"}}>Out ofWork</span>}
             <select
               type="text"
               className="form-control"
@@ -384,6 +415,7 @@ const Index = () => {
               placeholder="Change Status"
               onChange={handleInputChange}
               name="status"
+              value={selectStatus}
             >
               <option value="" selected disabled>
                 Select Status
@@ -412,6 +444,7 @@ const Index = () => {
               onChange={handleInputChange}
               name="lessonIds"
               multiple
+              value={selectLesson}
             >
               <option value="" selected disabled>
                 Select Lesson
@@ -426,19 +459,13 @@ const Index = () => {
                   );
                 })}
             </select>
-            {errorMessages.Password ? (
+            {errorMessages.Password &&
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
                   {errorMessages.Password}
                 </p>
               </div>
-            ) : (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Password") ? error : ""}
-                </p>
-              </div>
-            )}
+          }
           </div>
           {/* ---- */}
           <div className="form-group">
@@ -460,6 +487,7 @@ const Index = () => {
               onChange={handleInputChange}
               name="specialityIds"
               multiple
+              value={selectSepciality}  
             >
               <option value="" selected disabled>
                 Select Speciality
@@ -474,19 +502,13 @@ const Index = () => {
                   );
                 })}
             </select>
-            {errorMessages.Password ? (
+            {errorMessages.Password &&
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
                   {errorMessages.Password}
                 </p>
               </div>
-            ) : (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Password") ? error : ""}
-                </p>
-              </div>
-            )}
+            }
           </div>
           {/* ---- */}
           <div className="form-group">
@@ -508,6 +530,7 @@ const Index = () => {
               onChange={handleInputChange}
               name="facultyIds"
               multiple
+              value={selectFaculty}
             >
               <option value="" selected disabled>
                 Select Faculty
@@ -522,19 +545,13 @@ const Index = () => {
                   );
                 })}
             </select>
-            {errorMessages.Password ? (
+            {errorMessages.Password &&
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
                   {errorMessages.Password}
                 </p>
               </div>
-            ) : (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error.includes("Password") ? error : ""}
-                </p>
-              </div>
-            )}
+             }
           </div>
           {/* ---- */}
           <button
@@ -542,7 +559,7 @@ const Index = () => {
             type="submit"
             className="btn btn-success mt-2"
           >
-            Create
+            Update
           </button>
         </form>
       </div>

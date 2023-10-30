@@ -111,6 +111,7 @@ const Index = () => {
                   <th scope="col">UserName</th>
                   <th scope="col">Email</th>
                   <th scope="col">Gender</th>
+                  <th scope="col">Salary</th>
                   <th scope="col">Role</th>
                   <th scope="col">Start Date</th>
                   <th scope="col">End Date</th>
@@ -148,6 +149,7 @@ const Index = () => {
                     <td>{f.userName}</td>
                     <td>{f.email}</td>
                     <td>{f.gender === 1 ? "Male" : "Female"}</td>
+                    <td>${f.salary}</td>
                     <td>{f.roles}</td>
                     <td
                       style={{
