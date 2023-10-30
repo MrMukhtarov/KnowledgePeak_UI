@@ -1,0 +1,36 @@
+.teacher_dashboard{
+    background-color: #F7F7FA;
+}
+.teacher_dashboard_top_box{
+    background-color: white;
+    padding: 25px;
+    border-radius: 5px;
+}
+.teacher_dashboard_top_box_left h6{
+    font-weight: 400;
+    font-size: 14px;
+    color: #808191;
+}
+.teacher_dashboard_top_box_left h3{
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+}
+.teacher_dashboard_title{
+    font-size: 22px;
+    font-weight: 500;
+    color: #2C323F;
+    text-align: center;
+}
+.teacher_dashboard_bottom_title{
+    font-size: 18px;
+}
+.teacher_dashboard_bottom_box_bottom{
+    color: #A098AE;
+    font-size: 14px;
+}
+.teacher_dashboard_bottom_box{
+    background-color: white;
+    padding: 25px;
+    border-radius: 5px;
+}

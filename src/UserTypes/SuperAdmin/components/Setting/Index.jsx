@@ -4,7 +4,14 @@ import "./Index.css";
 
 const Index = () => {
   const [setting, setSetting] = useState([]);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    // email : setting.forEach(s => s.email),
+    // phone : setting.forEach(s => s.phone),
+    // location : setting.forEach(s => s.location),
+    // headerLogo : setting.forEach(s => s.headerLogo),
+    // footerLogo : setting.forEach(s => s.footerLogo)
+  });
+  console.log(inputs);
   const [error, setError] = useState([])
 
   useEffect(() => {
@@ -12,7 +19,9 @@ const Index = () => {
       .get("https://localhost:7153/api/Settings")
       .then((res) => {
         setSetting(res.data);
-        setInputs(res.data[0])
+        if (res.data.length > 0) {
+          setInputs(res.data[0]);
+        }
       })
       .catch((err) => console.log(err));
   }, []);
@@ -28,6 +37,7 @@ const Index = () => {
     }));
   };
 
+
   const handleSubmit = async (e, id) => {
     e.preventDefault();
 
@@ -35,7 +45,6 @@ const Index = () => {
     formdata.append("email", inputs.email);
     formdata.append("phone", inputs.phone);
     formdata.append("location", inputs.location);
-    console.log(inputs.headerLogoFile);
 
     if (inputs.headerLogoFile) {
       formdata.append("HeaderLogoFile", inputs.headerLogoFile);
@@ -85,7 +94,7 @@ const Index = () => {
       <div className="container">
         <h5>Setting</h5>
         <hr />
-        {setting.map((set) => (
+        {setting.length > 0 && setting.map((set) => (
           <div key={set.id} className="setting_all">
             <form
               onSubmit={(e) => handleSubmit(e, set.id)}
@@ -94,17 +103,17 @@ const Index = () => {
               <div className="form_content_all d-flex flex-column gap-5">
                 <div className="d-flex flex-wrap gap-2 justify-content-center form-top">
                 <div className="d-flex flex-column col-lg-5">
-                   <label htmlFor="email">
+                   <label htmlFor="mail">
                       Email <span>*</span>
                     </label>
                    <input
                       type="email"
-                      id="email"
-                      defaultValue={set.email}
+                      id="mail"
+                      defaultValue={set?.email}
                       onChange={handleInputChange}
                       name="email"
                     />
-                   {error.email && <span className="error-message text-danger text-sm">{error.email}</span>}
+                   {/* {error.email && <span className="error-message text-danger text-sm">{error.email}</span>} */}
                   </div>
 
                   <div className="d-flex flex-column col-lg-5">
@@ -118,7 +127,7 @@ const Index = () => {
                       onChange={handleInputChange}
                       name="phone"
                     />
-                    {error.phone && <span className="error-message text-danger text-sm">{error.phone}</span>}
+                    {/* {error.phone && <span className="error-message text-danger text-sm">{error.phone}</span>} */}
                   </div>
 
                   <div className="d-flex flex-column col-lg-5">
@@ -132,7 +141,7 @@ const Index = () => {
                       defaultValue={set.location}
                       onChange={handleInputChange}
                     />
-                    {error.location && <span className="error-message text-danger text-sm">{error.location}</span>}
+                    {/* {error.location && <span className="error-message text-danger text-sm">{error.location}</span>} */}
                   </div>
                 </div>
                 <div className="d-flex justify-content-center gap-2 setting_form-bottom">
