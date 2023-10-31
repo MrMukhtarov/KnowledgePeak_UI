@@ -26,9 +26,24 @@ import RemoveRoleTeacher from "./UserTypes/SuperAdmin/pages/RemoveRole/Index.jsx
 import UpdateTeacherForAdmin from "./UserTypes/SuperAdmin/pages/TeacherUpdate/Index.jsx";
 import TeacerLayout from "./Layouts/Teacher";
 import TeacherHome from "./UserTypes/Teacher/pages/Home/Index.jsx";
+import { format } from "date-fns";
+import TeacherGrade from './UserTypes/Teacher/pages/Grades/Index.jsx'
+import GradeCreate from './UserTypes/Teacher/pages/GradeCreate/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
+  function Expires(user) {
+    const currentDate = new Date();
+    const dates = format(currentDate, "yyyy-MM-dd");
+    const time = format(currentDate, "HH:mm:ss");
+    const dateNow = `${dates}T${time}`;
+    if (user) {
+      if (user.expires <= dateNow) {
+        localStorage.removeItem("user");
+      }
+    }
+  }
+  Expires(user);
   return (
     <div>
       <BrowserRouter>
@@ -39,7 +54,16 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
           </Route>
-            <Route path="/superadmin" element={user && user.roles[0] === "Admin" ? <SuperAdmin /> : <Navigate to="/login"/>}>
+          <Route
+            path="/superadmin"
+            element={
+              user && user.roles[0] === "Admin" ? (
+                <SuperAdmin />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          >
             <Route index element={<SuperAdminHome />} />
             <Route path="/superadmin/setting" element={<Setting />} />
             <Route path="/superadmin/faculty" element={<SuperAdminFaculty />} />
@@ -99,9 +123,20 @@ function App() {
               element={<UpdateTeacherForAdmin />}
             />
           </Route>
-          <Route path="/teacher" element={user && user.roles[0] === "Teacher" ? <TeacerLayout /> : <Navigate to="/login"/>}>
-              <Route index element={<TeacherHome />} />
-            </Route>
+          <Route
+            path="/teacher"
+            element={
+              user && user.roles[0] === "Teacher" ? (
+                <TeacerLayout />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          >
+            <Route index element={<TeacherHome />} />
+            <Route path="/teacher/grade" element={<TeacherGrade />} />
+            <Route path="/teacher/grade/create" element={<GradeCreate />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

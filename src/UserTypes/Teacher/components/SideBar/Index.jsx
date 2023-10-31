@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {PiExamBold} from 'react-icons/pi'
 import {
   SettingOutlined,
   HomeOutlined,
@@ -17,6 +18,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("Dashboard", "1",<HomeOutlined />),
+  getItem("Grade", "2",<PiExamBold />),
   // getItem("Faculty", "sub1", <UserOutlined />, [
   //   getItem("Tom", "3"),
   //   getItem("Bill", "4"),
@@ -31,6 +33,9 @@ const Index = () => {
   const OpenPage = (item) => {
     if(item === "1"){
      navigate("/teacher");
+    }
+    else if(item === "2"){
+     navigate("/teacher/grade");
     }
   }
   const {
