@@ -245,6 +245,7 @@ const Index = () => {
               onChange={handleInputChange}
               name="gender"
             >
+              <option value="" selected disabled>Select Gender</option>
               <option value="1">Male</option>
               <option value="2">Female</option>
             </select>

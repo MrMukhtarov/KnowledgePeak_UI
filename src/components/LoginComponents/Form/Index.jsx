@@ -4,7 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
-  const nav = useNavigate();
+  // const nav = useNavigate();
+ 
   const [inputs, setInputs] = useState({
     userName: "",
     password: "",
@@ -12,6 +13,8 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectType, setSelectType] = useState("");
+
+ 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
