@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {PiExamBold} from 'react-icons/pi'
+import {CgProfile} from 'react-icons/cg'
 import {
   SettingOutlined,
   HomeOutlined,
@@ -19,6 +20,7 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem("Dashboard", "1",<HomeOutlined />),
   getItem("Grade", "2",<PiExamBold />),
+  getItem("Profile", "3",<CgProfile />),
   // getItem("Faculty", "sub1", <UserOutlined />, [
   //   getItem("Tom", "3"),
   //   getItem("Bill", "4"),
@@ -37,6 +39,9 @@ const Index = () => {
     else if(item === "2"){
      navigate("/teacher/grade");
     }
+    else if(item === "3"){
+      navigate("/teacher/profile");
+     }
   }
   const {
     token: { colorBgContainer },

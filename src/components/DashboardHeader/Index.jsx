@@ -1,24 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Index.css";
 import $ from "jquery";
+import axios from "axios";
 
 const Index = () => {
   const openDropDown = () => {
     const down = $(".dashboard-header-dropdown");
     down.fadeToggle("slow");
   };
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [start, setStart] = useState(false);
+  const [type, setType] = useState("");
+
+  function check(){
+    if (user.roles[0] === "Teacher") {
+      setType("TeacherAuth");
+    } else if (user.roles[0] === "Admin") {
+      setType("AdminAuth");
+    } else if (user.roles === "Tutor") {
+      setType("TutorAuth");
+    } else if (user.roles === "Student") {
+      setType("StudentAuth");
+    }
+  }
+
+  useEffect(() => {
+    if (start) {
+      axios
+        .post(`https://localhost:7153/api/${type}/SignOut`, {
+          headers: {
+            "Authorization": `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            localStorage.removeItem("user");
+          }
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [type,start,user.token]);
+
+  const startCount = () => {
+    setStart(true)
+    check()
+  }
+
   return (
     <header id="dashboard_header" className="py-2">
       <div className="container">
         <div className="dashboard_header_all d-flex justify-content-between align-items-center">
           <div className="dashboard_header_left">
-           <div>
-           <h4>Knowlegde Peak University</h4>
-            <span>Super Admin</span>
-           </div>
+            <div>
+              <h4>Knowlegde Peak University</h4>
+              <span>Super Admin</span>
+            </div>
           </div>
           <div className="dashboard_header_right">
-            <i onClick={openDropDown} className="fa-regular fa-user">
+            <div className="dashboard-header-dropwdown-top-right">
+              <i
+                onClick={startCount}
+                className="fa-solid fa-right-from-bracket"
+              ></i>
+            </div>
+            {/* <i onClick={openDropDown} className="fa-regular fa-user">
               <i className="fa-solid fa-angle-down"></i>
             </i>
 
@@ -47,7 +93,7 @@ const Index = () => {
                   </i>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

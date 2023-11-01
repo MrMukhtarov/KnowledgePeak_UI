@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, json } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Index.css";
 import { AiOutlinePlus } from "react-icons/ai";
 import {AiFillEdit} from 'react-icons/ai'
 import axios from "axios";
+import { format } from "date-fns";
+
 
 const Index = () => {
     const user = JSON.parse(localStorage.getItem("user"))
@@ -30,6 +32,7 @@ const Index = () => {
         })
     },[])
 
+   
   return (
     <section className="teacher_grades_list py-3">
       <div className="container">
@@ -73,9 +76,9 @@ const Index = () => {
                         <td>{g.point}</td>
                         <td>{g.student.name}</td>
                         <td>{g.student.surName}</td>
-                        <td>{g.gradeDate.substring(0,10)}</td>
+                        <td>{g.gradeDate.substring(0,10)} - {g.gradeDate.substring(11,19)}</td>
                         <td title={g.review}>{g.review.substring(0,10)}...</td>
-                        <td><NavLink title="Edit" className="btn bg-primary" to="/"><AiFillEdit style={{color:"white", marginBottom:"0"}}/></NavLink></td>
+                        <td><NavLink title="Edit" className="btn bg-primary" to={`/teacher/grade/update/${g.id}`}><AiFillEdit style={{color:"white", marginBottom:"0"}}/></NavLink></td>
                       </tr>
                     )
                    })}

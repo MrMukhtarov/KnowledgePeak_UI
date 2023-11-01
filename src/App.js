@@ -29,6 +29,9 @@ import TeacherHome from "./UserTypes/Teacher/pages/Home/Index.jsx";
 import { format } from "date-fns";
 import TeacherGrade from './UserTypes/Teacher/pages/Grades/Index.jsx'
 import GradeCreate from './UserTypes/Teacher/pages/GradeCreate/Index.jsx'
+import GradeUpdate from './UserTypes/Teacher/pages/GradeUpdate/Index.jsx'
+import TeacherProfile from './UserTypes/Teacher/pages/Profile/Index.jsx'
+import UpdateProfileTeacher from './UserTypes/Teacher/pages/UpdateProfile/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -136,6 +139,9 @@ function App() {
             <Route index element={<TeacherHome />} />
             <Route path="/teacher/grade" element={<TeacherGrade />} />
             <Route path="/teacher/grade/create" element={<GradeCreate />} />
+            <Route path="/teacher/grade/update/:id" element={<GradeUpdate />} />
+            <Route path="/teacher/profile" element={<TeacherProfile />} />
+            <Route path="/teacher/update" element={<UpdateProfileTeacher />} />
           </Route>
         </Routes>
       </BrowserRouter>
