@@ -37,8 +37,9 @@ const Index = () => {
         <div className="teacher_grades_list_all">
           <div className="teacher_grades_list_top">
             <div className="search_div text-end">
+                <NavLink to={`/tutor/group/createSchedules/${group.id}`} className="btn btn-primary me-2">Create Class Schedule</NavLink>
               <NavLink
-                title="Add Grade"
+                title="Add Students"
                 className="btn btn-primary me-4"
                 to={"/teacher/grade/create"}
               >
