@@ -1,0 +1,4 @@
+.tutor_group_id:hover{
+    color: blue;
+    transition: .3s all;
+}

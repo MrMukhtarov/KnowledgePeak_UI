@@ -32,6 +32,10 @@ import GradeCreate from './UserTypes/Teacher/pages/GradeCreate/Index.jsx'
 import GradeUpdate from './UserTypes/Teacher/pages/GradeUpdate/Index.jsx'
 import TeacherProfile from './UserTypes/Teacher/pages/Profile/Index.jsx'
 import UpdateProfileTeacher from './UserTypes/Teacher/pages/UpdateProfile/Index.jsx'
+import TutorLayout from './Layouts/Tutor'
+import TutorHome from './UserTypes/Tutor/pages/Home/Index.jsx'
+import TutorGroupDetail from './UserTypes/Tutor/pages/GroupDetail/Index.jsx'
+import TutorClassScheduleList from './UserTypes/Tutor/pages/ClassSchedulesList/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -142,6 +146,12 @@ function App() {
             <Route path="/teacher/grade/update/:id" element={<GradeUpdate />} />
             <Route path="/teacher/profile" element={<TeacherProfile />} />
             <Route path="/teacher/update" element={<UpdateProfileTeacher />} />
+          </Route>
+
+          <Route path="/tutor" element={user && user.roles[0] === "Tutor" ? <TutorLayout/> : <Navigate to="/login" />}>
+            <Route index element={<TutorHome/>}/>
+            <Route path="/tutor/group/:id" element={<TutorGroupDetail/>}/>
+            <Route path="/tutor/classschedules/:username" element={<TutorClassScheduleList/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

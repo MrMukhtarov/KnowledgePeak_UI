@@ -1,0 +1,32 @@
+.tutor_group_detail  .search_div input {
+    background: #f4f7fa !important;
+    padding: 8px 12px !important;
+    font-size: 14px;
+    color: #495057;
+    height: auto;
+    border: 0px;
+    border-bottom: 1px solid rgba(130, 139, 178, 0.3) !important;
+    border-radius: 0px;
+    outline: none !important;
+    transition: .3s all;
+    margin-left: 5px;
+}
+.tutor_group_detail  .search_div input:focus {
+    border-bottom: 1px solid #0d6efd;
+    transition: .3s all;
+}
+.tutor_group_detail  table thead th{
+    background-color: #F8F9FA !important;
+}
+.teacher_grade_list_title{
+    font-size: 35px;
+    font-weight: 500;
+    color: #2C323F;
+    margin-bottom: 40px;
+}
+.tutor_group_detail img{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}

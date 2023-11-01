@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Index.css";
 import $ from "jquery";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const openDropDown = () => {
     const down = $(".dashboard-header-dropdown");
     down.fadeToggle("slow");
   };
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const [start, setStart] = useState(false);
   const [type, setType] = useState("");
@@ -27,15 +29,17 @@ const Index = () => {
   useEffect(() => {
     if (start) {
       axios
-        .post(`https://localhost:7153/api/${type}/SignOut`, {
+        .post(`https://localhost:7153/api/${type}/SignOut`,{}, {
           headers: {
-            "Authorization": `Bearer ${user.token}`,
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json"
           },
         })
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
             localStorage.removeItem("user");
+            navigate('/login')
           }
         })
         .catch((e) => console.log(e));
@@ -54,7 +58,7 @@ const Index = () => {
           <div className="dashboard_header_left">
             <div>
               <h4>Knowlegde Peak University</h4>
-              <span>Super Admin</span>
+              <span>{user.roles}</span>
             </div>
           </div>
           <div className="dashboard_header_right">

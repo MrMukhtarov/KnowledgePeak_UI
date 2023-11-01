@@ -51,6 +51,14 @@ const Index = () => {
             localStorage.setItem("user", JSON.stringify(res.data));
             window.location.href = "/superadmin";
           }
+          if (users && users.roles[0] && users.roles[0] === "Tutor") {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            window.location.href = "/tutor";
+          }
+          if (users && users.roles[0] && users.roles[0] === "Student") {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            window.location.href = "/student";
+          }
         }
       })
       .catch((e) => {

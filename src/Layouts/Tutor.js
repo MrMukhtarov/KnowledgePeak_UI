@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../components/DashboardHeader/Index.jsx'
 
-const Teacher = () => {
+const Tutor = () => {
   return (
     <div>
         <Header/>
@@ -13,4 +13,4 @@ const Teacher = () => {
   )
 }
 
-export default Teacher
+export default Tutor

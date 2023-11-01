@@ -1,0 +1,54 @@
+.tutor_home_title{
+    font-size: 22px;
+    font-weight: 500;
+    color: #2C323F;
+    margin-bottom: 20px;
+}
+.tutor_home_groups_box_title{
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 25px;
+}
+/* .tutor_home_groups_box{
+    border: 2px solid rgba(220, 220, 220, 0.3);
+    border-radius: 10px;
+    box-shadow: none;
+} */
+.tutor_home_groups_box li{
+    list-style: none;
+    color: #808080;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0;
+    transition: .3s all;
+}
+.tutor_home_groups_box li:hover{
+    color: #002140;
+    transition: .3s all;
+    cursor: pointer;
+}
+.tutor_home_groups_box_title_head{
+    font-size: 25px;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 25px;
+}
+.tutor_home_groups_box_title{
+    border: 2px solid rgba(220, 220, 220, 0.3);
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 10px;
+    transition: .3s all;
+}
+.tutor_home_groups_box_title:hover{
+    color: blue;
+    transition: .3s all;
+    cursor: pointer;
+}
+.teacher_dashboard_bottom_box{
+    border: 2px solid rgba(220, 220, 220, 0.3);
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 10px;
+}
