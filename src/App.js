@@ -37,6 +37,8 @@ import TutorHome from './UserTypes/Tutor/pages/Home/Index.jsx'
 import TutorGroupDetail from './UserTypes/Tutor/pages/GroupDetail/Index.jsx'
 import TutorClassScheduleList from './UserTypes/Tutor/pages/ClassSchedulesList/Index.jsx'
 import CreateClassSchedules from './UserTypes/Tutor/pages/CreateClassSchedules/Index.jsx'
+import UpdateClassSchedule from './UserTypes/Tutor/pages/ScheduleUpdate/Index.jsx'
+import GroupAddStudent from './UserTypes/Tutor/pages/AddStudent/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -154,6 +156,8 @@ function App() {
             <Route path="/tutor/group/:id" element={<TutorGroupDetail/>}/>
             <Route path="/tutor/classschedules/:username" element={<TutorClassScheduleList/>}/>
             <Route path="/tutor/group/createSchedules/:id" element={<CreateClassSchedules/>}/>
+            <Route path="/tutor/group/classscheduleupdate/:id" element={<UpdateClassSchedule/>}/>
+            <Route path="/tutor/group/addStudent/:id" element={<GroupAddStudent/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
