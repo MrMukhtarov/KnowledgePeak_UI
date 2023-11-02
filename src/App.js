@@ -39,6 +39,12 @@ import TutorClassScheduleList from './UserTypes/Tutor/pages/ClassSchedulesList/I
 import CreateClassSchedules from './UserTypes/Tutor/pages/CreateClassSchedules/Index.jsx'
 import UpdateClassSchedule from './UserTypes/Tutor/pages/ScheduleUpdate/Index.jsx'
 import GroupAddStudent from './UserTypes/Tutor/pages/AddStudent/Index.jsx'
+import TutorProfile from './UserTypes/Tutor/pages/Profile/Index.jsx'
+import TutorUpdateProfile from './UserTypes/Tutor/pages/UpdateProfile/Index.jsx'
+import StudentLayout from './Layouts/Student'
+import StudentHome from './UserTypes/Student/pages/Home/Index.jsx'
+import StudentHistory from './UserTypes/Student/pages/History/Index.jsx'
+import StudentProfile from './UserTypes/Student/pages/Profile/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -67,7 +73,7 @@ function App() {
           <Route
             path="/superadmin"
             element={
-              user && user.roles[0] === "Admin" ? (
+              user && user.roles && user.roles[0] === "Admin" ? (
                 <SuperAdmin />
               ) : (
                 <Navigate to="/login" />
@@ -136,7 +142,7 @@ function App() {
           <Route
             path="/teacher"
             element={
-              user && user.roles[0] === "Teacher" ? (
+              user && user.roles && user.roles[0] === "Teacher" ? (
                 <TeacerLayout />
               ) : (
                 <Navigate to="/login" />
@@ -151,13 +157,21 @@ function App() {
             <Route path="/teacher/update" element={<UpdateProfileTeacher />} />
           </Route>
 
-          <Route path="/tutor" element={user && user.roles[0] === "Tutor" ? <TutorLayout/> : <Navigate to="/login" />}>
+          <Route path="/tutor" element={user && user.roles && user.roles[0] === "Tutor" ? <TutorLayout/> : <Navigate to="/login" />}>
             <Route index element={<TutorHome/>}/>
             <Route path="/tutor/group/:id" element={<TutorGroupDetail/>}/>
             <Route path="/tutor/classschedules/:username" element={<TutorClassScheduleList/>}/>
             <Route path="/tutor/group/createSchedules/:id" element={<CreateClassSchedules/>}/>
             <Route path="/tutor/group/classscheduleupdate/:id" element={<UpdateClassSchedule/>}/>
             <Route path="/tutor/group/addStudent/:id" element={<GroupAddStudent/>}/>
+            <Route path="/tutor/profile" element={<TutorProfile/>}/>
+            <Route path="/tutor/profile/update" element={<TutorUpdateProfile/>}/>
+          </Route>
+
+          <Route path="/student" element={user && user.roles && user.roles[0] === "Student" ? <StudentLayout/> : <Navigate to="/login" />}>
+              <Route index element={<StudentHome/>}/>
+              <Route path="/student/history" element={<StudentHistory/>}/>
+              <Route path="/student/profile" element={<StudentProfile/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

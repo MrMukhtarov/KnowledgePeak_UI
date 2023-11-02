@@ -19,7 +19,6 @@ const Index = () => {
   const [selectTeacher, setSelectTeacher] = useState("")
   const [selectClassTime, setSelectClassTime] = useState("")
   const [selectLesson, setSelectLesson] = useState("")
-  const [selectDay, setSelectDay] = useState("")
   const [isLessonSelectDisabled, setIsLessonSelectDisabled] = useState(true);
 
   useEffect(() => {
@@ -78,9 +77,6 @@ const Index = () => {
     if (name === "lessonId") {
         setSelectLesson(value)
     }
-    if (name === "day") {
-        setSelectDay(value)
-    }
     if (name === "classTimeId") {
         setSelectClassTime(value)
     }
@@ -94,7 +90,6 @@ const Index = () => {
     const formdata = new FormData();
     formdata.append("lessonId", selectLesson);
     formdata.append("teacherId", selectTeacher);
-    formdata.append("day", selectDay);
     formdata.append("classTimeId", selectClassTime);
     formdata.append("roomId", selectRoom);
     formdata.append("scheduleDate", inputs.scheduleDate);
@@ -235,36 +230,6 @@ const Index = () => {
             )}
           </div>
             {/* ---- */}
-            <div className="form-group">
-            <label htmlFor="faculties">Day</label>
-            <select
-              className="form-control"
-              id="faculties"
-              placeholder="Select Day"
-              onChange={handleInputChange}
-              name="day"
-              value={selectDay}
-            >
-              <option value="" selected disabled>
-                Select Day
-              </option>
-            <option value="0">Monday</option>
-            <option value="1">Tuesday</option>
-            <option value="2">Wednesday</option>
-            <option value="3">Thursday</option>
-            <option value="4">Friday</option>
-            <option value="5">Saturday</option>
-            <option value="6">Sunday</option>
-            </select>
-            {errorMessages.Day &&
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Day}
-                </p>
-              </div>
-             }
-          </div>
-          {/* ---- */}
           <div className="form-group">
             <label htmlFor="gender">Class Time</label>
             <select

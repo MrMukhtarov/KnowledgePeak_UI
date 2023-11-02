@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {PiExamBold} from 'react-icons/pi'
+import { AiOutlineHistory } from 'react-icons/ai';
 import {CgProfile} from 'react-icons/cg'
 import {
   HomeOutlined,
@@ -16,8 +16,9 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Dashboard", "1",<HomeOutlined />),
-  getItem("Profile", "2",<CgProfile />),
+  getItem("Home", "1",<HomeOutlined />),
+  getItem("History", "2",<AiOutlineHistory />),
+  getItem("Profile", "3",<CgProfile />),
 ];
 
 const Index = () => {
@@ -26,10 +27,13 @@ const Index = () => {
 
   const OpenPage = (item) => {
     if(item === "1"){
-     navigate("/tutor");
+     navigate("/student");
     }
     if(item === "2"){
-      navigate("/tutor/profile");
+      navigate("/student/history");
+     }
+     if(item === "3"){
+      navigate("/student/profile");
      }
   }
   const {

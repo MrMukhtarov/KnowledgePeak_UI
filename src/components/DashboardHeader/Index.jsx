@@ -17,11 +17,11 @@ const Index = () => {
   function check(){
     if (user.roles[0] === "Teacher") {
       setType("TeacherAuth");
-    } else if (user.roles[0] === "Admin") {
+    } else if (user && user.roles[0] === "Admin") {
       setType("AdminAuth");
-    } else if (user.roles === "Tutor") {
+    } else if (user && user.roles[0] === "Tutor") {
       setType("TutorAuth");
-    } else if (user.roles === "Student") {
+    } else if (user && user.roles[0] === "Student") {
       setType("StudentAuth");
     }
   }
@@ -44,7 +44,7 @@ const Index = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, [type,start,user.token]);
+  }, [type,start,user && user.token]);
 
   const startCount = () => {
     setStart(true)
@@ -58,7 +58,7 @@ const Index = () => {
           <div className="dashboard_header_left">
             <div>
               <h4>Knowlegde Peak University</h4>
-              <span>{user.roles}</span>
+              <span>{user && user.roles}</span>
             </div>
           </div>
           <div className="dashboard_header_right">

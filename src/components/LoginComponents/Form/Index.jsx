@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import "./Index.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Index = () => {
-  // const nav = useNavigate();
- 
   const [inputs, setInputs] = useState({
     userName: "",
     password: "",
@@ -43,19 +40,19 @@ const Index = () => {
       .then((res) => {
         if (res.status === 200) {
           var users = res.data;
-          if (users && users.roles[0] && users.roles[0] === "Teacher") {
+          if (users && users.roles && users.roles[0] && users.roles[0] === "Teacher") {
             localStorage.setItem("user", JSON.stringify(res.data));
             window.location.href = "/teacher";
           }
-          if (users && users.roles[0] && users.roles[0] === "Admin") {
+          if (users && users.roles && users.roles[0] && users.roles[0] === "Admin") {
             localStorage.setItem("user", JSON.stringify(res.data));
             window.location.href = "/superadmin";
           }
-          if (users && users.roles[0] && users.roles[0] === "Tutor") {
+          if (users && users.roles && users.roles[0] && users.roles[0] === "Tutor") {
             localStorage.setItem("user", JSON.stringify(res.data));
             window.location.href = "/tutor";
           }
-          if (users && users.roles[0] && users.roles[0] === "Student") {
+          if (users && users.roles && users.roles[0] && users.roles[0] === "Student") {
             localStorage.setItem("user", JSON.stringify(res.data));
             window.location.href = "/student";
           }
@@ -144,7 +141,7 @@ const Index = () => {
               {
                 <div className="error-messages">
                   <p style={{ color: "red" }} className="error-message">
-                    {error && error.includes("Not") ? error : ""}
+                    {error && error.includes("Not") || error.includes("reason") ? error : ""}
                   </p>
                 </div>
               }

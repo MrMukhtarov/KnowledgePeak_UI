@@ -18,7 +18,6 @@ const Index = () => {
   const [selectTeacher, setSelectTeacher] = useState("");
   const [selectClassTime, setSelectClassTime] = useState("");
   const [selectLesson, setSelectLesson] = useState("");
-  const [selectDay, setSelectDay] = useState("");
   const [isLessonSelectDisabled, setIsLessonSelectDisabled] = useState(true);
   const [schedule, setSchedule] = useState({});
   const [group,setGroup] = useState([]);
@@ -52,7 +51,6 @@ const Index = () => {
       .then((res) => {
         setSchedule(res.data);
         setSelectClassTime(res.data.classTime && res.data.classTime.id)
-        setSelectDay(res.data.day)
         setSelectLesson(res.data.lesson && res.data.lesson.id)
         setInputs(res.data)
         setSelectTeacher(res.data.teacher && res.data.teacher.id)
@@ -115,9 +113,6 @@ const Index = () => {
     if (name === "lessonId") {
       setSelectLesson(value);
     }
-    if (name === "day") {
-      setSelectDay(value);
-    }
     if (name === "classTimeId") {
       setSelectClassTime(value);
     }
@@ -131,7 +126,6 @@ const Index = () => {
     const formdata = new FormData();
     formdata.append("lessonId", selectLesson);
     formdata.append("teacherId", selectTeacher);
-    formdata.append("day", selectDay);
     formdata.append("classTimeId", selectClassTime);
     formdata.append("roomId", selectRoom);
     formdata.append("scheduleDate", inputs.scheduleDate);
@@ -277,36 +271,6 @@ const Index = () => {
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
                   {error && error.includes("LessonId") ? error : ""}
-                </p>
-              </div>
-            )}
-          </div>
-          {/* ---- */}
-          <div className="form-group">
-            <label htmlFor="faculties">Day</label>
-            <select
-              className="form-control"
-              id="faculties"
-              placeholder="Select Day"
-              onChange={handleInputChange}
-              name="day"
-              value={selectDay}
-            >
-              <option value="" selected disabled>
-                Select Day
-              </option>
-              <option value="0">Monday</option>
-              <option value="1">Tuesday</option>
-              <option value="2">Wednesday</option>
-              <option value="3">Thursday</option>
-              <option value="4">Friday</option>
-              <option value="5">Saturday</option>
-              <option value="6">Sunday</option>
-            </select>
-            {errorMessages.Day && (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Day}
                 </p>
               </div>
             )}
