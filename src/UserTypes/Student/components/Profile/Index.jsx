@@ -5,8 +5,12 @@ import { BiSolidUser } from "react-icons/bi";
 import { BsCalendarDate } from "react-icons/bs";
 import { TbClockHour2 } from "react-icons/tb";
 import { FaUserEdit } from "react-icons/fa";
+import { AiOutlinePercentage } from "react-icons/ai";
+import { BsSortNumericDown } from "react-icons/bs";
+import { FaPeopleGroup } from "react-icons/fa6";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
+import './Index.css'
 
 const Index = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -51,8 +55,8 @@ const Index = () => {
               {student.name} {student.surName}
             </h2>
           </div>
-          <div className="teacher_profile_center mt-5 d-flex justify-content-between">
-            <div className="teacher_profile_center_left col-lg-4 p-4">
+          <div className="teacher_profile_center mt-5 d-flex justify-content-center gap-4">
+            <div className="teacher_profile_center_left col-lg-5 p-4">
               <h4 className="teacher_profile_center_title">
                 Personal Details :
               </h4>
@@ -130,37 +134,56 @@ const Index = () => {
                 {/*  */}
               </div>
             </div>
-            <div className="teacher_profile_center_right col-lg-7 p-4">
-              <div className="teacher_profile_center_right_all">
-                <div className="teacher_profile_center_right_all_top">
-                  <h5 className="teacher_profile_center_right_all_top_title">
-                    Hello I am {student.name} {student.surName}
-                  </h5>
+            <div className="teacher_profile_center_right col-lg-5 p-4">
+            <div className=" col-lg-12">
+              <h4 className="teacher_profile_center_title">
+                Personal Details :
+              </h4>
+              {/*  */}
+              <div className=" d-flex flex-column gap-3">
+                <div className="teacher_profile_center_left_box d-flex align-items-center gap-3">
+                  <div className="teacher_profile_center_left_box_left">
+                    <AiOutlinePercentage style={{ color: "#3D5EE1" }} />
+                  </div>
+                  <div className="teacher_profile_center_left_box_right">
+                    <h4 className="teacher_profile_center_left_box_right_first">
+                      Avarage
+                    </h4>
+                    <h5 className="teacher_profile_center_left_box_right_second">
+                      {student.avarage} %
+                    </h5>
+                  </div>
                 </div>
-                <div className="teacher_profile_center_right_all_bottom mt-4">
-                  <h5 className="teacher_profile_center_right_all_top_title">
-                    My Groups
-                  </h5>
-                  <div className="teacher_profile_center_right_all_bottom_lessons d-flex flex-column gap-1">
-                    {student.groups &&
-                      student.groups.map((l) => {
-                        return (
-                          <span
-                            onClick={() => nav(`/tutor/group/${l.id}`)}
-                            style={{
-                              fontWeight: "bolder",
-                              color: "blue",
-                              cursor: "pointer",
-                            }}
-                            key={l.id}
-                          >
-                            {l.name}
-                          </span>
-                        );
-                      })}
+                {/*  */}
+                <div className="teacher_profile_center_left_box d-flex align-items-center gap-3">
+                  <div className="teacher_profile_center_left_box_left">
+                    <BsSortNumericDown style={{ color: "#3D5EE1" }} />
+                  </div>
+                  <div className="teacher_profile_center_left_box_right">
+                    <h4 className="teacher_profile_center_left_box_right_first">
+                      Course
+                    </h4>
+                    <h5 className="teacher_profile_center_left_box_right_second">
+                      {student.course}
+                    </h5>
+                  </div>
+                </div>
+                     {/*  */}
+                     <div className="teacher_profile_center_left_box d-flex align-items-center gap-3">
+                  <div className="teacher_profile_center_left_box_left">
+                    <FaPeopleGroup style={{ color: "#3D5EE1" }} />
+                  </div>
+                  <div className="teacher_profile_center_left_box_right">
+                    <h4 className="teacher_profile_center_left_box_right_first">
+                      Group
+                    </h4>
+                    <h5 className="teacher_profile_center_left_box_right_second">
+                      {student.group && student.group.name}
+                    </h5>
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
