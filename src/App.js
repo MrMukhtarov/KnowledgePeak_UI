@@ -45,6 +45,9 @@ import StudentLayout from './Layouts/Student'
 import StudentHome from './UserTypes/Student/pages/Home/Index.jsx'
 import StudentHistory from './UserTypes/Student/pages/History/Index.jsx'
 import StudentProfile from './UserTypes/Student/pages/Profile/Index.jsx'
+import Studentupdate from './UserTypes/Student/pages/UpdateProfile/Index.jsx'
+import ClassTimeList from './UserTypes/SuperAdmin/pages/ClassTime/Index.jsx'
+import AddClassTime from './UserTypes/SuperAdmin/pages/AddTime/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -138,6 +141,8 @@ function App() {
               path="/superadmin/teacher/update/:id"
               element={<UpdateTeacherForAdmin />}
             />
+            <Route path="/superadmin/classtime" element={<ClassTimeList/>}/>
+            <Route path="/superadmin/classtime/add" element={<AddClassTime/>}/>
           </Route>
           <Route
             path="/teacher"
@@ -172,6 +177,7 @@ function App() {
               <Route index element={<StudentHome/>}/>
               <Route path="/student/history" element={<StudentHistory/>}/>
               <Route path="/student/profile" element={<StudentProfile/>}/>
+              <Route path="/student/profile/update" element={<Studentupdate/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

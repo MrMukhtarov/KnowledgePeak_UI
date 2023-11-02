@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import {
   SettingOutlined,
-  FileOutlined,
   HomeOutlined,
-  TeamOutlined,
   BookOutlined,
 } from "@ant-design/icons";
+import {AiOutlineClockCircle} from 'react-icons/ai'
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
@@ -24,11 +23,7 @@ const items = [
   getItem("Speciality", "4", <BookOutlined />),
   getItem("Lesson", "5", <BookOutlined />),
   getItem("Teacher", "6", <BookOutlined />),
-  // getItem("Faculty", "sub1", <UserOutlined />, [
-  //   getItem("Tom", "3"),
-  //   getItem("Bill", "4"),
-  //   getItem("Alex", "5"),
-  // ]),
+  getItem("Class Time", "7", <AiOutlineClockCircle />),
 ];
 
 const Index = () => {
@@ -53,6 +48,9 @@ const Index = () => {
     }
     else if(item === "6"){
       navigate("/superadmin/teacher");
+    }
+    else if(item === "7"){
+      navigate("/superadmin/classtime");
     }
   }
   const {

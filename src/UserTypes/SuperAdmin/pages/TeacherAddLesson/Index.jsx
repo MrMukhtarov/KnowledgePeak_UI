@@ -58,9 +58,7 @@ const Index = () => {
           },
         })
         .then(res => {
-          if(res.status === 200){
             navigate("/superadmin/teacher")
-          }
         })
         .catch((e) => {
             if (e.response && e.response.data && e.response.data.errors) {

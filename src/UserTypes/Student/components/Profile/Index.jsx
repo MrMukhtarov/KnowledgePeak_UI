@@ -8,14 +8,14 @@ import { FaUserEdit } from "react-icons/fa";
 import { AiOutlinePercentage } from "react-icons/ai";
 import { BsSortNumericDown } from "react-icons/bs";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { FaUserGraduate } from "react-icons/fa6";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './Index.css'
 
 const Index = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [student, setStudent] = useState({});
-  const nav = useNavigate();
 
   useEffect(() => {
     axios
@@ -42,7 +42,7 @@ const Index = () => {
               title="Edit Profile"
               className="btn btn-primary btn-sm ms-5"
               style={{ width: "15%" }}
-              to="/tutor/profile/update"
+              to="/student/profile/update"
             >
               <FaUserEdit />
             </NavLink>
@@ -179,6 +179,20 @@ const Index = () => {
                     </h4>
                     <h5 className="teacher_profile_center_left_box_right_second">
                       {student.group && student.group.name}
+                    </h5>
+                  </div>
+                </div>
+                    {/*  */}
+                    <div className="teacher_profile_center_left_box d-flex align-items-center gap-3">
+                  <div className="teacher_profile_center_left_box_left">
+                    <FaUserGraduate style={{ color: "#3D5EE1" }} />
+                  </div>
+                  <div className="teacher_profile_center_left_box_right">
+                    <h4 className="teacher_profile_center_left_box_right_first">
+                      Username
+                    </h4>
+                    <h5 className="teacher_profile_center_left_box_right_second">
+                      {student.userName && student.userName}
                     </h5>
                   </div>
                 </div>
