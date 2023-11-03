@@ -1,0 +1,42 @@
+.stu_modal{
+    position: absolute;
+    background-color: white;
+    color: #002140;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid #002140;
+    border-radius: 5px;
+    display: none;
+}
+.stu_molad_all{
+    padding: 30px;
+}
+.stu_modal ul{
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.stu_modal ul li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: italic;
+}
+.stu_modal i:hover{
+    color: red;
+    cursor: pointer;
+    transition: .3s all;
+}
+.student_modal_click:hover{
+    color: blue;
+    transition: all .3s;
+}
+.student_modal_click{
+    background-color: transparent;
+    border: none;
+}

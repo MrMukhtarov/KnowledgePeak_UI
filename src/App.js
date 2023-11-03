@@ -63,6 +63,7 @@ import RegisterStudent from './UserTypes/SuperAdmin/pages/RegisterStudent/Index.
 import UpdateAdminStudent from './UserTypes/SuperAdmin/pages/StudentUpdate/Index.jsx'
 import StudentAddRole from './UserTypes/SuperAdmin/pages/StudentAddRole/Index.jsx'
 import StudentRemoveRole from './UserTypes/SuperAdmin/pages/RemoveRoleStudent/Index.jsx'
+import GroupList from './UserTypes/SuperAdmin/pages/GroupList/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -173,6 +174,7 @@ function App() {
             <Route path="/superadmin/student/update/:username" element={<UpdateAdminStudent/>}/>
             <Route path="/superadmin/student/addrole/:username" element={<StudentAddRole/>}/>
             <Route path="/superadmin/student/removerole/:username" element={<StudentRemoveRole/>}/>
+            <Route path="/superadmin/group" element={<GroupList/>}/>
           </Route>
           <Route
             path="/teacher"
