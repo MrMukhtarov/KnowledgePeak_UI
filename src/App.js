@@ -56,6 +56,11 @@ import TutorAddSPeciality from './UserTypes/SuperAdmin/pages/TutorAddSpeciality/
 import TutorAddGroups from './UserTypes/SuperAdmin/pages/TutorAddGroups/Index.jsx'
 import AddRoleTutor from './UserTypes/SuperAdmin/pages/AddRoleTutor/Index.jsx'
 import RemoveRoleTutor from './UserTypes/SuperAdmin/pages/RemoveRoleTutor/Index.jsx'
+import SpecialityAddFaculty from './UserTypes/SuperAdmin/pages/SpecialityAddFaculty/Index.jsx'
+import SpecialityAddLesson from './UserTypes/SuperAdmin/pages/SpecialityAddLesson/Index.jsx'
+import StudentAll from './UserTypes/SuperAdmin/pages/StudentAll/Index.jsx'
+import RegisterStudent from './UserTypes/SuperAdmin/pages/RegisterStudent/Index.jsx'
+import UpdateAdminStudent from './UserTypes/SuperAdmin/pages/StudentUpdate/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -159,6 +164,11 @@ function App() {
             <Route path="/superadmin/tutor/addgroup" element={<TutorAddGroups/>}/>
             <Route path="/superadmin/tutor/addrole/:username" element={<AddRoleTutor/>}/>
             <Route path="/superadmin/tutor/removerole/:username" element={<RemoveRoleTutor/>}/>
+            <Route path="/superadmin/speciality/addfaculty" element={<SpecialityAddFaculty/>}/>
+            <Route path="/superadmin/speciality/addlesson" element={<SpecialityAddLesson/>}/>
+            <Route path="/superadmin/student" element={<StudentAll/>}/>
+            <Route path="/superadmin/student/register" element={<RegisterStudent/>}/>
+            <Route path="/superadmin/student/update/:username" element={<UpdateAdminStudent/>}/>
           </Route>
           <Route
             path="/teacher"

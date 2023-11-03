@@ -12,6 +12,7 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
   const itemsPerPage = 5;
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios
@@ -32,7 +33,11 @@ const Index = () => {
 
   const Delete = (id) => {
     axios
-      .delete(`https://localhost:7153/api/Lessons/Delete/${id}`)
+      .delete(`https://localhost:7153/api/Lessons/Delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       .then((res) => {
         window.location.reload();
       })
@@ -47,7 +52,16 @@ const Index = () => {
 
   const SoftDelete = (id) => {
     axios
-      .patch(`https://localhost:7153/api/Lessons/SoftDelete/${id}`)
+      .patch(
+        `https://localhost:7153/api/Lessons/SoftDelete/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         window.location.reload();
       })
@@ -62,7 +76,16 @@ const Index = () => {
 
   const RevertSoftDelete = (id) => {
     axios
-      .patch(`https://localhost:7153/api/Lessons/RevertSoftDelete/${id}`)
+      .patch(
+        `https://localhost:7153/api/Lessons/RevertSoftDelete/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         window.location.reload();
       })

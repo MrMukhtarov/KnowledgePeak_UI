@@ -13,21 +13,12 @@ const Index = () => {
   const [teacher, setTeacher] = useState({});
   const [selectSepciality,setSelectSpeciality] = useState([])
   const [inputs, setInputs] = useState({
-    name: " ",
-    surname: " ",
-    description: " ",
-    age: " ", 
-    salary: " ",
-    userName: " ",
-    email: " ",
-    gender : teacher.gender,
-    status : teacher.status,
-    imageFile : teacher.imageUrl
   });
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectGender, setSelectGender] = useState("");
   const [selectStatus, setSelectStatus] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
   
   useEffect(() => {
     axios.get("https://localhost:7153/api/Lessons").then((res) => {
@@ -53,6 +44,9 @@ const Index = () => {
     .then((res) => {
       setTeacher(res.data);
       setInputs(res.data);
+      setSelectFaculty(res.data.faculties && res.data.faculties.map(f => f.id))
+      setSelectLesson(res.data.lessons && res.data.lessons.map(l => l.id))
+      setSelectSpeciality(res.data.specialities && res.data.specialities.map(s => s.id))
     });
   }, []);
   
@@ -134,6 +128,7 @@ const Index = () => {
       .put(`https://localhost:7153/api/TeacherAuth/UpdateProfileAdmin?id=${id}`, formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
         },
       })
       .then((res) => {

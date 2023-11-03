@@ -15,7 +15,11 @@ const Index = () => {
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/Roles")
+      .get("https://localhost:7153/api/Roles",{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       .then((res) => setRole(res.data))
       .catch((e) => console.log(e));
   }, []);

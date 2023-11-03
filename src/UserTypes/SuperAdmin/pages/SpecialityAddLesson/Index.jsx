@@ -4,65 +4,71 @@ import axios from "axios";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [teacher, setTeacher] = useState([]);
-  const [faculty, setFaculty] = useState([]);
-  const [selectTeacher, setSelectTeacher] = useState("");
-  const [selectFaculty, setSelectFaculty] = useState([]);
+  const [speciality, setSpeciality] = useState([]);
+  const [lesson, setLesson] = useState([]);
+  const [selectSpeciality, setSelectSpeciality] = useState("");
+  const [selectLesson, setSelectLesson] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [error, setError] = useState("");
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/TeacherAuth/GetAll")
-      .then((res) => setTeacher(res.data))
-      .catch((e) => console.log(e));
+      .get("https://localhost:7153/api/Specialities/Get", {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then((res) => setSpeciality(res.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/Facultys/GetAll")
-      .then((res) => setFaculty(res.data))
+      .get("https://localhost:7153/api/Lessons")
+      .then((res) => setLesson(res.data))
       .catch((e) => console.log(e));
   }, []);
 
   const handleInputChange = (e) => {
     const { name, value, options } = e.target;
 
-    if (name === "userName") {
-      setSelectTeacher(value);
+    if (name === "id") {
+        setSelectSpeciality(value);
     }
 
-    if (name === "facultyIds") {
-      const selectedFacultys = Array.from(options)
-        .filter((option) => option.selected && option.value !== "")
-        .map((option) => Number(option.value));
-
-      setSelectFaculty(selectedFacultys);
-    }
+    if (name === "lessonIds") {
+        const selectedLessons = Array.from(options)
+          .filter((option) => option.selected && option.value !== "")
+          .map((option) => Number(option.value));
+    
+        setSelectLesson(selectedLessons);
+      }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formdata = new FormData();
-    formdata.append("userName", selectTeacher);
-    console.log(selectTeacher);
-
-    selectFaculty.forEach((faculyIds) => {
-      formdata.append("facultyIds", faculyIds);
-    });
+    formdata.append("id", selectSpeciality);
+    selectLesson.forEach((lessonIds) => {
+        formdata.append("lessonIds", lessonIds);
+      });
 
     axios
-      .post(
-        `https://localhost:7153/api/TeacherAuth/AddFaculty?userName=${selectTeacher}`,
-        formdata,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
+      .post(`https://localhost:7153/api/Specialities/AddLesson/${selectSpeciality}`, formdata, {
+        headers: {
             Authorization: `Bearer ${user.token}`,
-          },
-        }
-      )
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
-        navigate("/superadmin/teacher");
+        navigate("/superadmin/speciality");
+      })
+      .catch((e) => {
+        if (e.response && e.response.data && e.response.data.errors) {
+          setError(e.response.data.errors);
+        } else {
+          setError(e.response.data.message);
+        }
       });
   };
 
@@ -75,51 +81,23 @@ const Index = () => {
             style={{ cursor: "pointer" }}
             className="fa-solid fa-arrow-left"
           ></i>
-          <h5>Add Faculty For Teacher</h5>
+          <h5>Add Lesson For Speciality</h5>
         </div>
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
           <div className="form-group">
-            <label htmlFor="name">Teacher UserName</label>
+            <label htmlFor="name">Speciality</label>
             <select
               type="text"
               className="form-control"
               id="name"
               onChange={handleInputChange}
-              name="userName"
-              value={selectTeacher}
+              name="id"
+              value={selectSpeciality}
             >
               <option value="" selected disabled>
-                Select Teacher
+                Select Speciality
               </option>
-              {teacher
-                .filter((f) => f.isDeleted === false)
-                .map((e) => {
-                  return (
-                    <option key={e.id} value={e.userName}>
-                      {e.userName}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-          {/* ------ */}
-          <div className="form-group mt-3">
-            <label className="mb-1" htmlFor="short">
-              Faculty
-            </label>
-            <select
-              type="text"
-              className="form-control"
-              id="short"
-              onChange={handleInputChange}
-              name="facultyIds"
-              multiple
-              value={selectFaculty}
-            >
-              <option value="" selected disabled>
-                Select Faculty
-              </option>
-              {faculty
+              {speciality
                 .filter((f) => f.isDeleted === false)
                 .map((e) => {
                   return (
@@ -130,14 +108,48 @@ const Index = () => {
                 })}
             </select>
           </div>
+          {/* ------ */}
+          <div className="form-group mt-3">
+            <label className="mb-1" htmlFor="short">
+              Lesson
+            </label>
+            <select
+              type="text"
+              className="form-control"
+              id="short"
+              onChange={handleInputChange}
+              name="lessonIds"
+              value={selectLesson}
+              multiple
+            >
+              <option value="" selected disabled>
+                Select Lesson
+              </option>
+              {lesson
+                .filter((f) => f.isDeleted === false)
+                .map((e) => {
+                  return (
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  );
+                })}
+            </select>
+            {error ? <div className="error-messages text-center">
+                <p style={{ color: "red" }} className="error-message">
+                  {error && error.includes("Tutor") ? error : ""}
+                </p>
+              </div> : ""}
+          </div>
           <button
             style={{ backgroundColor: "#002140" }}
             type="submit"
             className="btn btn-success mt-2"
           >
-            Add Faculty
+            Add Lesson
           </button>
         </form>
+      
       </div>
     </section>
   );

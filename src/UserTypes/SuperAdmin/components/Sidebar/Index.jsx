@@ -9,6 +9,7 @@ import {FaChalkboardTeacher} from 'react-icons/fa'
 import {GiTeacher} from 'react-icons/gi'
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
+import { PiStudentBold } from 'react-icons/pi';
 
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -28,6 +29,7 @@ const items = [
   getItem("Teacher", "6", <FaChalkboardTeacher />),
   getItem("Class Time", "7", <AiOutlineClockCircle />),
   getItem("Tutor", "8", <GiTeacher />),
+  getItem("Student", "9", <PiStudentBold />),
 ];
 
 const Index = () => {
@@ -58,6 +60,9 @@ const Index = () => {
     }
     else if(item === "8"){
       navigate("/superadmin/tutor");
+    }
+    else if(item === "9"){
+      navigate("/superadmin/student");
     }
   }
   const {

@@ -13,12 +13,14 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectLessons, setSelectLessons] = useState([]);
+  const user = JSON.parse(localStorage.getItem('user'))
   
 useEffect(() => {
   axios.get(`https://localhost:7153/api/Specialities/GetById/${id}`)
   .then(res => {
     setSpeciality(res.data)
     setInputs(res.data)
+    setSelectLessons(res.data.lessonSpecialities && res.data.lessonSpecialities.map(l => l.lesson.id))
   })
   .catch(e => console.log(e))
 },[id])
@@ -76,9 +78,10 @@ const handleSubmit = (e) => {
   axios.put(`https://localhost:7153/api/Specialities/Update/${id}`,formData,{
     headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${user.token}`,
     },
   })
-  .then(res => console.log(res.data))
+  .then(res => navigate('/superadmin/speciality'))
   .catch((e) => {
     if (e.response && e.response.data && e.response.data.errors) {
       setErrorMessages(e.response.data.errors);
@@ -148,7 +151,7 @@ const handleSubmit = (e) => {
             className="form-control"
             id="facllty"
             name="facultyId"
-            defaultValue={speciality.facultyId}
+            value={speciality.facultyId}
             onChange={handleInputChange}
           >
             <option value="" disabled selected>Select Faculty</option>
@@ -181,7 +184,7 @@ const handleSubmit = (e) => {
             id="lesson"
             name="lessonIds"
             multiple={true}
-            defaultValue={speciality.lessonIds}
+            value={selectLessons}
             onChange={handleInputChange}
           >
             <option value="" disabled>Select Lesson</option>

@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import "./Index.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [teacher, setTeacher] = useState([]);
+  const [student, setStudent] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
   const itemsPerPage = 5;
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/TeacherAuth/GetAll")
-      .then((res) => setTeacher(res.data))
+      .get("https://localhost:7153/api/StudentAuth/Get",{
+        headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${user.token}`,
+          },
+      })
+      .then((res) => setStudent(res.data))
       .catch((e) => console.log(e));
   }, []);
 
@@ -25,7 +29,7 @@ const Index = () => {
     setCurrentPage(newPage);
   };
 
-  const filteredFaculty = teacher.filter((f) => f.name.includes(search));
+  const filteredFaculty = student.filter((f) => f.name.includes(search));
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -33,10 +37,10 @@ const Index = () => {
 
   const Delete = (id) => {
     axios
-      .delete(`https://localhost:7153/api/TeacherAuth/Delete?userName=${id}`, {
-        headers: {
+      .delete(`https://localhost:7153/api/TutorAuth/Delete?userName=${id}`,{
+        headers : {
           Authorization: `Bearer ${user.token}`,
-        },
+        }
       })
       .then((res) => {
         window.location.reload();
@@ -52,34 +56,18 @@ const Index = () => {
   return (
     <section className="facultyList_superadmin py-3">
       <div className="container">
-        <h5>Teacher List</h5>
+        <h5>Student List</h5>
         <hr />
         <div className="d-flex  justify-content-between align-items-center">
           {errorMessages ? (
             <div className="error-messages">
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  margin: "0",
-                }}
-                className="error-message"
-              >
+              <p style={{ color: "red" ,  fontSize:"12px", fontWeight:"bold",margin:"0"}} className="error-message">
                 {errorMessages.message}
               </p>
             </div>
           ) : (
             <div className="error-messages">
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  margin: "0",
-                }}
-                className="error-message"
-              >
+              <p style={{ color: "red" , fontSize:"12px", fontWeight:"bold",margin:"0"}} className="error-message">
                 {error}
               </p>
             </div>
@@ -87,27 +75,21 @@ const Index = () => {
           <div className="search_div text-end">
             <NavLink
               className="btn btn-success me-2"
-              to={"/superadmin/teacher/addlesson"}
+              to={"/superadmin/tutor/addgroup"}
             >
-              Add Lesson
+              Add Group
             </NavLink>
             <NavLink
               className="btn btn-success me-2"
-              to={"/superadmin/teacher/addspeciality"}
+              to={`/superadmin/tutor/addspeciality`}
             >
               Add Speciality
             </NavLink>
             <NavLink
-              className="btn btn-success me-2"
-              to={"/superadmin/teacher/addfaculty"}
-            >
-              Add Faculty
-            </NavLink>
-            <NavLink
               className="btn btn-primary me-2"
-              to={"/superadmin/teacher/register"}
+              to={"/superadmin/student/register"}
             >
-              Register Teacher
+              Register Student
             </NavLink>
             <label htmlFor="search">Search</label>
             <input
@@ -130,15 +112,15 @@ const Index = () => {
                   <th scope="col">Name</th>
                   <th scope="col">Surname</th>
                   <th scope="col">UserName</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Avarage</th>
+                  <th scope="col">Age</th>
                   <th scope="col">Email</th>
                   <th scope="col">Gender</th>
-                  <th scope="col">Salary</th>
                   <th scope="col">Role</th>
                   <th scope="col">Start Date</th>
                   <th scope="col">End Date</th>
-                  <th scope="col">Lessons</th>
-                  <th scope="col">Speciality</th>
-                  <th scope="col">Faculty</th>
+                  <th scope="col">Group</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -155,22 +137,24 @@ const Index = () => {
                       }}
                       scope="row"
                     >
-                      <span title={f.id}>{f.id}</span>
+                      <span title={f.id}>{f.id.substring(0,5)}</span>
                     </th>
                     <th scope="row">
                       <img
-                        className="img-fluid"
+                        className="img-fluid tutor_img_admin"
                         style={{ width: "70px" }}
                         src={f.imageUrl}
                         alt=""
                       />
                     </th>
                     <td>{f.name}</td>
-                    <td>{f.surname}</td>
+                    <td>{f.surName}</td>
                     <td>{f.userName}</td>
+                    <td>{f.course}</td>
+                    <td>{f.avarage}</td>
+                    <td>{f.age}</td>
                     <td>{f.email}</td>
                     <td>{f.gender === 1 ? "Male" : "Female"}</td>
-                    <td>${f.salary}</td>
                     <td>{f.roles}</td>
                     <td
                       style={{
@@ -191,79 +175,30 @@ const Index = () => {
                       {f.endDate ? f.endDate.substring(0, 10) : "-"}
                     </td>
                     <td>
-                      <select name="" id="">
-                        {f.lessons.map((l) => {
-                          return (
-                            <option value="">
-                              {l.id} - {l.name}
-                            </option>
-                          );
-                        })}
-                      </select>
+                       {f.group && f.group.name}
                     </td>
                     <td>
-                      <select name="" id="">
-                        {f.specialities.map((l) => {
-                          return (
-                            <option value="">
-                              {l.id} - {l.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </td>
-                    <td>
-                      <select name="" id="">
-                        {f.faculties.map((l) => {
-                          return (
-                            <option value="">
-                              {l.id} - {l.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </td>
-                    <td>
-                      <span>
-                        {f.isDeleted === false ? "Active" : "DeActive"}
-                      </span>
+                        {f.isDeleted === true ? <span style={{color:"red"}}>Kicked Out</span> : 
+                        <span style={{color:"green"}}>Student</span>}
+                     
                     </td>
                     <td className="facultyList_superadmin_action d-flex gap-3">
                       <button
-                        title="update"
+                      title="update"
                         onClick={() =>
-                          navigate(`/superadmin/teacher/update/${f.id}`)
+                          navigate(`/superadmin/student/update/${f.userName}`)
                         }
                         className="one me-1"
                       >
                         <i className="fa-solid fa-pen-to-square"></i>
                       </button>
-                      {(f.lessons && f.lessons.length > 0) ||
-                      (f.faculties && f.faculties.length > 0) ||
-                      (f.specialities && f.specialities.length > 0) ? (
-                        <button
-                          disabled
-                          style={{ opacity: "0.5" }}
-                          title="remove"
-                          onClick={() => Delete(f.userName)}
-                          className="two me-1"
-                        >
-                          <i className="fa-solid fa-trash"></i>
-                        </button>
-                      ) : (
-                        <button
-                          title="remove"
-                          onClick={() => Delete(f.userName)}
-                          className="two me-1"
-                        >
-                          <i className="fa-solid fa-trash"></i>
-                        </button>
-                      )}
-
+                      <button title="remove" onClick={() => Delete(f.userName)} className="two me-1">
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
                       <button
-                        title="Add Role"
+                      title="Add Role"
                         onClick={() =>
-                          navigate(`/superadmin/teacher/addrole/${f.userName}`)
+                          navigate(`/superadmin/tutor/addrole/${f.userName}`)
                         }
                         className="three me-1"
                       >
@@ -271,12 +206,12 @@ const Index = () => {
                       </button>
                       {f.roles.length === 0 ? (
                         <button
-                          title="Remove Role"
+                        title="Remove Role"
                           disabled
                           style={{ opacity: "0.6" }}
                           onClick={() =>
                             navigate(
-                              `/superadmin/teacher/removerole/${f.userName}`
+                              `/superadmin/tutor/removerole/${f.userName}`
                             )
                           }
                           className="four me-1"
@@ -285,10 +220,10 @@ const Index = () => {
                         </button>
                       ) : (
                         <button
-                          title="Remove Role"
+                        title="Remove Role"
                           onClick={() =>
                             navigate(
-                              `/superadmin/teacher/removerole/${f.userName}`
+                              `/superadmin/tutor/removerole/${f.userName}`
                             )
                           }
                           className="four me-1"

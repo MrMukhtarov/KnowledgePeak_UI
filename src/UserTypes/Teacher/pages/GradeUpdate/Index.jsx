@@ -15,11 +15,14 @@ const Index = () => {
     const [inputs, setInputs] = useState({
     });
     const {id} = useParams();
-    console.log(inputs);
 
     useEffect(() => {
         axios
-          .get("https://localhost:7153/api/StudentAuth/Get")
+          .get("https://localhost:7153/api/StudentAuth/Get",{
+            headers : {
+            "Authorization": `Bearer ${user.token}`,
+            }
+          })
           .then((res) => setStudent(res.data))
           .catch((e) => console.log(e));
       }, []);
@@ -41,7 +44,7 @@ useEffect(() => {
         setGrade(res.data)
         setInputs(res.data)
         setSelectLesson(res.data.lesson.id)
-        setSelectStudent(res.data.student.id)
+        setSelectStudent(res.data.student && res.data.student.name)
        
     })
 },[])

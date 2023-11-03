@@ -8,13 +8,17 @@ const Index = () => {
   const [selectRole, setSelectRole] = useState("");
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const { username } = useParams();
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/Roles")
+      .get("https://localhost:7153/api/Roles",{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       .then((res) => setRole(res.data))
       .catch((e) => console.log(e));
   }, []);
@@ -37,10 +41,11 @@ const Index = () => {
       .post(`https://localhost:7153/api/TutorAuth/AddRole`, formdata, {
         headers: {
           Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
         },
       })
-      .then(res => {
-            navigate('/superadmin/tutor')
+      .then((res) => {
+        navigate("/superadmin/tutor");
       })
       .catch((e) => {
         if (e.response && e.response.data && e.response.data.errors) {
@@ -62,7 +67,9 @@ const Index = () => {
           ></i>
           <h5>
             Add to Role For :{" "}
-            <span style={{ color: "green", fontWeight: "bold" }}>{username}</span>
+            <span style={{ color: "green", fontWeight: "bold" }}>
+              {username}
+            </span>
           </h5>
         </div>
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>

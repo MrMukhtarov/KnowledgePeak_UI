@@ -8,13 +8,18 @@ const Index = () => {
   const [selectRole, setSelectRole] = useState("");
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const { username } = useParams();
   console.log(username);
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/Roles")
+      .get("https://localhost:7153/api/Roles",{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       .then((res) => setRole(res.data))
       .catch((e) => console.log(e));
   }, []);
@@ -37,6 +42,7 @@ const Index = () => {
       .post(`https://localhost:7153/api/TeacherAuth/AddRole`, formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${user.token}`,
         },
       })
       .then(res => {

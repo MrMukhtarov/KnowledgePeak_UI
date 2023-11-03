@@ -11,30 +11,12 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
   const itemsPerPage = 5;
-  const [faculty, setFaculty] = useState([]);
-  const [lesson, setLesson] = useState([]);
-  const [addFaculty, setAddFaculyu] = useState({});
-  const [selectLessons, setSelectLessons] = useState([]);
-  const [selectSpeciality, setSelectSpeciality] = useState("")
+  const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
     axios
       .get("https://localhost:7153/api/Specialities/Get")
       .then((res) => setSpeciality(res.data))
-      .catch((e) => console.log(e));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("https://localhost:7153/api/Facultys/GetAll")
-      .then((res) => setFaculty(res.data))
-      .catch((e) => console.log(e));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("https://localhost:7153/api/Lessons")
-      .then((res) => setLesson(res.data))
       .catch((e) => console.log(e));
   }, []);
 
@@ -50,7 +32,11 @@ const Index = () => {
 
   const Delete = (id) => {
     axios
-      .delete(`https://localhost:7153/api/Specialities/Delete/${id}`)
+      .delete(`https://localhost:7153/api/Specialities/Delete/${id}`,{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       .then((res) => {
         window.location.reload();
       })
@@ -65,7 +51,12 @@ const Index = () => {
 
   const SoftDelete = (id) => {
     axios
-      .patch(`https://localhost:7153/api/Specialities/SoftDelete/${id}`)
+      .patch(`https://localhost:7153/api/Specialities/SoftDelete/${id}`,{},{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json"
+        },
+      })
       .then((res) => {
         window.location.reload();
       })
@@ -80,7 +71,12 @@ const Index = () => {
 
   const RevertSoftDelete = (id) => {
     axios
-      .patch(`https://localhost:7153/api/Specialities/RevertSoftDelete/${id}`)
+      .patch(`https://localhost:7153/api/Specialities/RevertSoftDelete/${id}`,{},{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json"
+        },
+      })
       .then((res) => {
         window.location.reload();
       })
@@ -92,86 +88,6 @@ const Index = () => {
         }
       });
   };
-
-  const AddFaculty = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "facultyId") {
-      setAddFaculyu((prevState) => ({
-        ...prevState,
-        facultyId: parseInt(value, 10),
-      }));
-    } else if (name === "id") {
-      setAddFaculyu((prevState) => ({ ...prevState, id: parseInt(value, 10) }));
-    }
-  };
-
-  const AddFacultySubmit = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("facultyId", addFaculty.facultyId);
-    formData.append("id", addFaculty.id);
-
-    axios
-      .post(
-        `https://localhost:7153/api/Specialities/AddFaculty/${addFaculty.id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((res) => console.log(res.data))
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
-  };
-
- const handleChange = (e) => {
-  const { name, value } = e.target;
-
-  if (name === "id") {
-    setSelectSpeciality(parseInt(value, 10));
-  }
-  if (name === "lessonIds") {
-    const selectedLessonIds = Array.from(e.target.selectedOptions).map(
-      (option) => Number(option.value)
-    );
-    setSelectLessons(selectedLessonIds);
-  }
-};
-
-const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData();
-    formData.append("id", selectSpeciality);
-  
-    selectLessons.forEach((lessonId) => {
-      formData.append("lessonIds", lessonId);
-    });
-  
-    axios.post(`https://localhost:7153/api/Specialities/AddLesson/${selectSpeciality}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then(res => console.log(res.data))
-    .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
-  };
-  
 
   return (
     <section className="facultyList_superadmin py-3">
@@ -193,6 +109,18 @@ const handleSubmit = (e) => {
             </div>
           )}
           <div className="search_div text-end">
+            <NavLink
+              className="btn btn-primary me-2"
+              to={"/superadmin/speciality/addlesson"}
+            >
+              Add Lesson
+            </NavLink>
+            <NavLink
+              className="btn btn-primary me-2"
+              to={"/superadmin/speciality/addfaculty"}
+            >
+              Add Faculty
+            </NavLink>
             <NavLink
               className="btn btn-success me-2"
               to={"/superadmin/speciality/create"}
@@ -217,6 +145,7 @@ const handleSubmit = (e) => {
                   <th scope="col">Short Name</th>
                   <th scope="col">Faculty</th>
                   <th scope="col">Created TIme</th>
+                  <th scope="col">Lesson</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -237,6 +166,14 @@ const handleSubmit = (e) => {
                         </span>
                       </td>
                       <td>{s.createTime.substring(0, 10)}</td>
+                      <td>
+                        <select name="" id="">
+                          {s.lesson &&
+                            s.lesson.map((s) => {
+                              return <option value="">{s.name}</option>;
+                            })}
+                        </select>
+                      </td>
                       <td>{s.isDeleted === false ? "Active" : "DeActive"}</td>
                       <td className="facultyList_superadmin_action d-flex gap-3">
                         <button
@@ -290,174 +227,6 @@ const handleSubmit = (e) => {
               Next
             </button>
           </div>
-        </div>
-      </div>
-
-
-      <div className="d-flex mt-2">
-        <div className="col-lg-6 d-flex flex-column justify-content-center gap-3">
-          <h5 className="text-center">Add Faculty</h5>
-          <form onSubmit={(e) => AddFacultySubmit(e)}>
-            <div className="sepciality_add_faculty d-flex flex-column w-100 justify-content-center aliign-items-center text-center">
-              <div>
-                <select
-                  value={addFaculty.facultyId}
-                  onChange={AddFaculty}
-                  name="facultyId" 
-                  id=""
-                  className="w-50 faculyu-opt"
-                >
-                  <option value="" selected disabled>
-                    Select Faculty
-                  </option>
-                  {faculty.filter(f => f.isDeleted === false).map((f) => {
-                    return (
-                      <option key={f.id} value={f.id}>
-                        {f.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              {errorMessages ? (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {errorMessages.message}
-                  </p>
-                </div>
-              ) : (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {error}
-                  </p>
-                </div>
-              )}
-              <div>
-                <select
-                  value={addFaculty.id}
-                  onChange={AddFaculty}
-                  name="id" 
-                  id=""
-                  className="w-50 mt-2"
-                >
-                  <option value="" selected disabled>
-                    Select Speciality
-                  </option>
-                  {speciality.filter(f => f.isDeleted === false).map((s) => {
-                    return (
-                      <option key={s.id} value={s.id}>
-                        {s.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              {errorMessages ? (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {errorMessages.message}
-                  </p>
-                </div>
-              ) : (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {error}
-                  </p>
-                </div>
-              )}
-
-              <div>
-                <button className="btn btn-success btn-sm m-auto mt-2">
-                  Add Faculty
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        {/* ////// */}
-        {/* ////// */}
-
-        <div className="col-lg-6 d-flex flex-column justify-content-center gap-3">
-          <h5 className="text-center">Add Lesson</h5>
-          <form onSubmit={e => handleSubmit(e)}>
-            <div className="sepciality_add_faculty d-flex flex-column w-100 justify-content-center aliign-items-center text-center">
-              <div>
-                <select
-                  name="lessonIds"
-                  id=""
-                  className="w-50 faculyu-opt"
-                  multiple={true}
-                  value={selectLessons}
-                  onChange={handleChange}
-                >
-                  <option value="" selected disabled>
-                    Select Lessons
-                  </option>
-                  {lesson.filter(l => l.isDeleted === false).map((f) => {
-                    return (
-                      <option key={f.id} value={f.id}>
-                        {f.name}
-                      </option>
-                    );
-                  })}
-                </select>
-                
-              </div>
-              {errorMessages ? (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {errorMessages.message}
-                  </p>
-                </div>
-              ) : (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {error}
-                  </p>
-                </div>
-              )}
-              <div>
-                <select
-                  name="id"
-                  id=""
-                  className="w-50 mt-2"
-                  value={selectSpeciality}
-                  onChange={handleChange}
-                >
-                  <option value="" selected disabled>
-                    Select Speciality
-                  </option>
-                  {speciality.filter(s => s.isDeleted === false).map((s) => {
-                    return (
-                      <option key={s.id} value={s.id}>
-                        {s.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              {errorMessages ? (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {errorMessages.message}
-                  </p>
-                </div>
-              ) : (
-                <div className="error-messages">
-                  <p style={{ color: "red" }} className="error-message">
-                    {error}
-                  </p>
-                </div>
-              )}
-
-              <div>
-                <button className="btn btn-success btn-sm m-auto mt-2">
-                  Add Lessons
-                </button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </section>

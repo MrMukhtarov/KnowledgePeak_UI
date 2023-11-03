@@ -44,6 +44,7 @@ const Index = () => {
         setTutor(res.data);
         setInputs(res.data);
         setSelectStatus(res.data.status);
+        setSelectGroup(res.data.groups && res.data.groups.map(g => g.id))
         setSelectSpeciality(res.data.speciality.id ? res.data.speciality.id : " ");
       });
   }, []);
