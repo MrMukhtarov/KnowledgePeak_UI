@@ -141,7 +141,7 @@ const Index = () => {
           <div className="search_div text-end">
             <NavLink
               className="btn btn-success me-2"
-              to={"/superadmin/faculty/create"}
+              to={"/superadmin/group/create"}
             >
               Create
             </NavLink>
