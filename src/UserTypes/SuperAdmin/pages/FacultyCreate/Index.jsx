@@ -6,12 +6,13 @@ import axios from "axios";
 const Index = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
-    name : "",
-    shortName : ""
+    name: "",
+    shortName: "",
   });
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
-  
+  const user = JSON.parse(localStorage.getItem('user'))
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -31,14 +32,15 @@ const Index = () => {
       .post("https://localhost:7153/api/Facultys/Create", formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
         },
       })
-      .then((res) => console.log(res.data))
+      .then((res) => navigate('/superadmin/faculty'))
       .catch((e) => {
         if (e.response && e.response.data && e.response.data.errors) {
           setErrorMessages(e.response.data.errors);
         } else {
-            setError(e.response.data.message);
+          setError(e.response.data.message);
         }
       });
   };
@@ -66,11 +68,17 @@ const Index = () => {
             />
             {errorMessages.Name ? (
               <div className="error-messages">
-                <p style={{color:"red"}} className="error-message">{errorMessages.Name}</p>
+                <p style={{ color: "red" }} className="error-message">
+                  {errorMessages.Name}
+                </p>
               </div>
-            ) : <div className="error-messages">
-            <p style={{color:"red"}} className="error-message">{error.includes("name")  ? error : "" }</p>
-          </div>}
+            ) : (
+              <div className="error-messages">
+                <p style={{ color: "red" }} className="error-message">
+                  {error.includes("name") ? error : ""}
+                </p>
+              </div>
+            )}
           </div>
           <div className="form-group mt-3">
             <label className="mb-1" htmlFor="short">
@@ -84,13 +92,19 @@ const Index = () => {
               onChange={handleInputChange}
               name="shortName"
             />
-             {errorMessages.ShortName ? (
+            {errorMessages.ShortName ? (
               <div className="error-messages">
-                <p style={{color:"red"}} className="error-message">{errorMessages.ShortName}</p>
+                <p style={{ color: "red" }} className="error-message">
+                  {errorMessages.ShortName}
+                </p>
               </div>
-            ) : <div className="error-messages">
-            <p style={{color:"red"}} className="error-message">{error.includes("ShortName") ? error : ""}</p>
-          </div>}
+            ) : (
+              <div className="error-messages">
+                <p style={{ color: "red" }} className="error-message">
+                  {error.includes("ShortName") ? error : ""}
+                </p>
+              </div>
+            )}
           </div>
           <button
             style={{ backgroundColor: "#002140" }}

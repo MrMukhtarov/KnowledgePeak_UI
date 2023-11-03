@@ -37,7 +37,11 @@ const Index = () => {
 
   const Delete = (id) => {
     axios
-      .delete(`https://localhost:7153/api/TeacherAuth/Delete?userName=${id}`)
+      .delete(`https://localhost:7153/api/TutorAuth/Delete?userName=${id}`,{
+        headers : {
+          Authorization: `Bearer ${user.token}`,
+        }
+      })
       .then((res) => {
         window.location.reload();
       })
@@ -71,15 +75,9 @@ const Index = () => {
           <div className="search_div text-end">
             <NavLink
               className="btn btn-success me-2"
-              to={"/superadmin/teacher/addlesson"}
+              to={"/superadmin/tutor/addgroup"}
             >
-              Add Lesson
-            </NavLink>
-            <NavLink
-              className="btn btn-success me-2"
-              to={"/superadmin/teacher/addspeciality"}
-            >
-              Add Speciality
+              Add Group
             </NavLink>
             <NavLink
               className="btn btn-success me-2"
@@ -204,7 +202,7 @@ const Index = () => {
                       <button
                       title="Add Role"
                         onClick={() =>
-                          navigate(`/superadmin/teacher/addrole/${f.userName}`)
+                          navigate(`/superadmin/tutor/addrole/${f.userName}`)
                         }
                         className="three me-1"
                       >
@@ -217,7 +215,7 @@ const Index = () => {
                           style={{ opacity: "0.6" }}
                           onClick={() =>
                             navigate(
-                              `/superadmin/teacher/removerole/${f.userName}`
+                              `/superadmin/tutor/removerole/${f.userName}`
                             )
                           }
                           className="four me-1"
@@ -229,7 +227,7 @@ const Index = () => {
                         title="Remove Role"
                           onClick={() =>
                             navigate(
-                              `/superadmin/teacher/removerole/${f.userName}`
+                              `/superadmin/tutor/removerole/${f.userName}`
                             )
                           }
                           className="four me-1"

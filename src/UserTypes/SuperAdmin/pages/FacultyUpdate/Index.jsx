@@ -10,6 +10,7 @@ const Index = () => {
   const[faculty,setFaculty]=useState({})
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
+  const user = JSON.parse(localStorage.getItem('user'))
 
 useEffect(() => {
   axios.get(`https://localhost:7153/api/Facultys/GetById/${id}`)
@@ -38,9 +39,10 @@ const handleSubmit = (e) => {
   axios.put(`https://localhost:7153/api/Facultys/Update/${id}`,formData,{
     headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${user.token}`,
     },
   })
-  .then(res => console.log(res.data))
+  .then(res => navigate('/superadmin/faculty'))
   .catch((e) => {
     if (e.response && e.response.data && e.response.data.errors) {
       setErrorMessages(e.response.data.errors);

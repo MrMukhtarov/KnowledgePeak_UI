@@ -53,6 +53,9 @@ import TutorList from './UserTypes/SuperAdmin/pages/TutorList/Index.jsx'
 import TutorRegister from './UserTypes/SuperAdmin/pages/TutorRegister/Index.jsx'
 import TutorAdminUpdate from './UserTypes/SuperAdmin/pages/UpdateTutor/Index.jsx'
 import TutorAddSPeciality from './UserTypes/SuperAdmin/pages/TutorAddSpeciality/Index.jsx'
+import TutorAddGroups from './UserTypes/SuperAdmin/pages/TutorAddGroups/Index.jsx'
+import AddRoleTutor from './UserTypes/SuperAdmin/pages/AddRoleTutor/Index.jsx'
+import RemoveRoleTutor from './UserTypes/SuperAdmin/pages/RemoveRoleTutor/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -153,6 +156,9 @@ function App() {
             <Route path="/superadmin/tutor/register" element={<TutorRegister/>}/>
             <Route path="/superadmin/tutor/update/:username" element={<TutorAdminUpdate/>}/>
             <Route path="/superadmin/tutor/addspeciality" element={<TutorAddSPeciality/>}/>
+            <Route path="/superadmin/tutor/addgroup" element={<TutorAddGroups/>}/>
+            <Route path="/superadmin/tutor/addrole/:username" element={<AddRoleTutor/>}/>
+            <Route path="/superadmin/tutor/removerole/:username" element={<RemoveRoleTutor/>}/>
           </Route>
           <Route
             path="/teacher"
