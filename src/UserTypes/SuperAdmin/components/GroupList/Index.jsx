@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Index.css";
 import $ from "jquery";
+import Swal from "sweetalert2";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -53,71 +54,110 @@ const Index = () => {
   const currentItems = filteredFaculty.slice(indexOfFirstItem, indexOfLastItem);
 
   const Delete = (id) => {
-    axios
-      .delete(`https://localhost:7153/api/Facultys/Delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://localhost:7153/api/Groups/Delete/${id}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setErrorMessages(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
+      }
+    });
   };
 
   const SoftDelete = (id) => {
-    axios
-      .patch(
-        `https://localhost:7153/api/Facultys/SoftDelete/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Soft Delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(
+            `https://localhost:7153/api/Groups/SoftDelete/${id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setErrorMessages(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
+      }
+    });
   };
 
   const RevertSoftDelete = (id) => {
-    axios
-      .patch(
-        `https://localhost:7153/api/Facultys/RevertSoftDelete/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Revert Soft Delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(
+            `https://localhost:7153/api/Groups/RevertSoftDelete/${id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setErrorMessages(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
+      }
+    });
   };
   return (
     <section className="facultyList_superadmin py-3">
@@ -161,6 +201,7 @@ const Index = () => {
                   <th scope="col">Id</th>
                   <th scope="col">Name</th>
                   <th scope="col">Limit</th>
+                  <th scope="col">Speciality</th>
                   <th scope="col">Status</th>
                   <th scope="col">Students</th>
                   <th scope="col">Action</th>
@@ -174,6 +215,7 @@ const Index = () => {
                         <th scope="row">{g.id}</th>
                         <td>{g.name}</td>
                         <td>{g.limit}</td>
+                        <td>{g.speciality && g.speciality.name}</td>
                         <td>
                           {g.isDeleted === false ? (
                             <span style={{ color: "green" }}>Active</span>
@@ -194,7 +236,7 @@ const Index = () => {
                         <td className="facultyList_superadmin_action d-flex gap-3">
                           <button
                             onClick={() =>
-                              navigate(`/superadmin/faculty/update/id`)
+                              navigate(`/superadmin/group/update/${g.id}`)
                             }
                             className="one me-1"
                           >
