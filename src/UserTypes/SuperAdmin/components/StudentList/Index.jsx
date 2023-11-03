@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -11,15 +12,15 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
   const itemsPerPage = 5;
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios
-      .get("https://localhost:7153/api/StudentAuth/Get",{
+      .get("https://localhost:7153/api/StudentAuth/Get", {
         headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${user.token}`,
-          },
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
       })
       .then((res) => setStudent(res.data))
       .catch((e) => console.log(e));
@@ -35,23 +36,39 @@ const Index = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredFaculty.slice(indexOfFirstItem, indexOfLastItem);
 
-  const Delete = (id) => {
-    axios
-      .delete(`https://localhost:7153/api/TutorAuth/Delete?userName=${id}`,{
-        headers : {
-          Authorization: `Bearer ${user.token}`,
-        }
-      })
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
+  const Delete = (userName) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(
+            `https://localhost:7153/api/StudentAuth/Delete?userName=${userName}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setErrorMessages(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
+      }
+    });
   };
   return (
     <section className="facultyList_superadmin py-3">
@@ -61,30 +78,34 @@ const Index = () => {
         <div className="d-flex  justify-content-between align-items-center">
           {errorMessages ? (
             <div className="error-messages">
-              <p style={{ color: "red" ,  fontSize:"12px", fontWeight:"bold",margin:"0"}} className="error-message">
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  margin: "0",
+                }}
+                className="error-message"
+              >
                 {errorMessages.message}
               </p>
             </div>
           ) : (
             <div className="error-messages">
-              <p style={{ color: "red" , fontSize:"12px", fontWeight:"bold",margin:"0"}} className="error-message">
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  margin: "0",
+                }}
+                className="error-message"
+              >
                 {error}
               </p>
             </div>
           )}
           <div className="search_div text-end">
-            <NavLink
-              className="btn btn-success me-2"
-              to={"/superadmin/tutor/addgroup"}
-            >
-              Add Group
-            </NavLink>
-            <NavLink
-              className="btn btn-success me-2"
-              to={`/superadmin/tutor/addspeciality`}
-            >
-              Add Speciality
-            </NavLink>
             <NavLink
               className="btn btn-primary me-2"
               to={"/superadmin/student/register"}
@@ -137,7 +158,7 @@ const Index = () => {
                       }}
                       scope="row"
                     >
-                      <span title={f.id}>{f.id.substring(0,5)}</span>
+                      <span title={f.id}>{f.id.substring(0, 5)}</span>
                     </th>
                     <th scope="row">
                       <img
@@ -174,17 +195,17 @@ const Index = () => {
                     >
                       {f.endDate ? f.endDate.substring(0, 10) : "-"}
                     </td>
+                    <td>{f.group && f.group.name}</td>
                     <td>
-                       {f.group && f.group.name}
-                    </td>
-                    <td>
-                        {f.isDeleted === true ? <span style={{color:"red"}}>Kicked Out</span> : 
-                        <span style={{color:"green"}}>Student</span>}
-                     
+                      {f.isDeleted === true ? (
+                        <span style={{ color: "red" }}>Kicked Out</span>
+                      ) : (
+                        <span style={{ color: "green" }}>Student</span>
+                      )}
                     </td>
                     <td className="facultyList_superadmin_action d-flex gap-3">
                       <button
-                      title="update"
+                        title="update"
                         onClick={() =>
                           navigate(`/superadmin/student/update/${f.userName}`)
                         }
@@ -192,13 +213,17 @@ const Index = () => {
                       >
                         <i className="fa-solid fa-pen-to-square"></i>
                       </button>
-                      <button title="remove" onClick={() => Delete(f.userName)} className="two me-1">
+                      <button
+                        title="remove"
+                        onClick={() => Delete(f.userName)}
+                        className="two me-1"
+                      >
                         <i className="fa-solid fa-trash"></i>
                       </button>
                       <button
-                      title="Add Role"
+                        title="Add Role"
                         onClick={() =>
-                          navigate(`/superadmin/tutor/addrole/${f.userName}`)
+                          navigate(`/superadmin/student/addrole/${f.userName}`)
                         }
                         className="three me-1"
                       >
@@ -206,12 +231,12 @@ const Index = () => {
                       </button>
                       {f.roles.length === 0 ? (
                         <button
-                        title="Remove Role"
+                          title="Remove Role"
                           disabled
                           style={{ opacity: "0.6" }}
                           onClick={() =>
                             navigate(
-                              `/superadmin/tutor/removerole/${f.userName}`
+                              `/superadmin/student/removerole/${f.userName}`
                             )
                           }
                           className="four me-1"
@@ -220,10 +245,10 @@ const Index = () => {
                         </button>
                       ) : (
                         <button
-                        title="Remove Role"
+                          title="Remove Role"
                           onClick={() =>
                             navigate(
-                              `/superadmin/tutor/removerole/${f.userName}`
+                              `/superadmin/student/removerole/${f.userName}`
                             )
                           }
                           className="four me-1"
