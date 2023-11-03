@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Index = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -38,76 +39,38 @@ const Index = () => {
   }, []);
 
   const Remove = (id) => {
-    axios
-      .delete(`https://localhost:7153/api/ClassSchedules/Delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.reload();
-        }
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setError(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
-  };
-
-  const SoftDelete = (id) => {
-    axios
-      .patch(
-        `https://localhost:7153/api/ClassSchedules/SoftDelete/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.reload();
-        }
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setError(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
-  };
-
-  const RevertSoftDelete = (id) => {
-    axios
-      .patch(
-        `https://localhost:7153/api/ClassSchedules/RevertSoftDelete/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.reload();
-        }
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setError(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://localhost:7153/api/ClassTime/Delete/${id}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              window.location.reload();
+            }
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setError(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
+      }
+    });
   };
   return (
     <section className="teacher_grades_list py-3">
@@ -125,7 +88,12 @@ const Index = () => {
               <h5 className="teacher_grade_list_title mb-0">Class TIme</h5>
             </div>
             <div className="search_div text-end mb-0">
-                <NavLink to="/superadmin/classtime/add" className="btn btn-primary me-3">Add Time</NavLink>
+              <NavLink
+                to="/superadmin/classtime/add"
+                className="btn btn-primary me-3"
+              >
+                Add Time
+              </NavLink>
               <label htmlFor="search">Search</label>
               <input
                 onChange={(e) => setSearch(e.target.value)}
@@ -136,7 +104,7 @@ const Index = () => {
           </div>
           <div className="error-messages text-center">
             <p style={{ color: "red" }} className="error-message">
-              {error && error.includes("delete") ? error : ""}
+              {error && error.includes("used") ? error : ""}
             </p>
           </div>
           <div className="teacher_grades_list_center">
@@ -154,14 +122,19 @@ const Index = () => {
                   currentItems.map((e) => {
                     return (
                       <tr>
-                        <th key={e.id} scope="row">{e.id}</th>
+                        <th key={e.id} scope="row">
+                          {e.id}
+                        </th>
                         <td>{e.startTime}</td>
                         <td>{e.endTime}</td>
                         <td>
-                          <NavLink to={`/tutor/group/classscheduleupdate/`}>
+                          <NavLink to={`/superadmin/classtime/update/${e.id}`}>
                             <i className="fa-solid fa-pen-to-square"></i>
                           </NavLink>
-                          <NavLink className="ms-3">
+                          <NavLink
+                            className="ms-3"
+                            onClick={() => Remove(e.id)}
+                          >
                             <i
                               style={{ color: "red" }}
                               className="fa-solid fa-trash"

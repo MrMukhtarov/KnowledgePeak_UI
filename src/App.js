@@ -48,6 +48,11 @@ import StudentProfile from './UserTypes/Student/pages/Profile/Index.jsx'
 import Studentupdate from './UserTypes/Student/pages/UpdateProfile/Index.jsx'
 import ClassTimeList from './UserTypes/SuperAdmin/pages/ClassTime/Index.jsx'
 import AddClassTime from './UserTypes/SuperAdmin/pages/AddTime/Index.jsx'
+import UpdateClassTime from './UserTypes/SuperAdmin/pages/UpdateClassTime/Index.jsx'
+import TutorList from './UserTypes/SuperAdmin/pages/TutorList/Index.jsx'
+import TutorRegister from './UserTypes/SuperAdmin/pages/TutorRegister/Index.jsx'
+import TutorAdminUpdate from './UserTypes/SuperAdmin/pages/UpdateTutor/Index.jsx'
+import TutorAddSPeciality from './UserTypes/SuperAdmin/pages/TutorAddSpeciality/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -143,6 +148,11 @@ function App() {
             />
             <Route path="/superadmin/classtime" element={<ClassTimeList/>}/>
             <Route path="/superadmin/classtime/add" element={<AddClassTime/>}/>
+            <Route path="/superadmin/classtime/update/:id" element={<UpdateClassTime/>}/>
+            <Route path="/superadmin/tutor" element={<TutorList/>}/>
+            <Route path="/superadmin/tutor/register" element={<TutorRegister/>}/>
+            <Route path="/superadmin/tutor/update/:username" element={<TutorAdminUpdate/>}/>
+            <Route path="/superadmin/tutor/addspeciality" element={<TutorAddSPeciality/>}/>
           </Route>
           <Route
             path="/teacher"

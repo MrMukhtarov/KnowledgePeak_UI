@@ -5,8 +5,11 @@ import {
   BookOutlined,
 } from "@ant-design/icons";
 import {AiOutlineClockCircle} from 'react-icons/ai'
+import {FaChalkboardTeacher} from 'react-icons/fa'
+import {GiTeacher} from 'react-icons/gi'
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
+
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -22,8 +25,9 @@ const items = [
   getItem("Faculty", "3", <BookOutlined />),
   getItem("Speciality", "4", <BookOutlined />),
   getItem("Lesson", "5", <BookOutlined />),
-  getItem("Teacher", "6", <BookOutlined />),
+  getItem("Teacher", "6", <FaChalkboardTeacher />),
   getItem("Class Time", "7", <AiOutlineClockCircle />),
+  getItem("Tutor", "8", <GiTeacher />),
 ];
 
 const Index = () => {
@@ -51,6 +55,9 @@ const Index = () => {
     }
     else if(item === "7"){
       navigate("/superadmin/classtime");
+    }
+    else if(item === "8"){
+      navigate("/superadmin/tutor");
     }
   }
   const {
