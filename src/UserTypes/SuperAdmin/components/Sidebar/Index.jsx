@@ -11,7 +11,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import { PiStudentBold } from 'react-icons/pi';
 import { FaPeopleGroup } from 'react-icons/fa6';
-
+import { MdMeetingRoom } from 'react-icons/md';
 
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -33,6 +33,7 @@ const items = [
   getItem("Tutor", "8", <GiTeacher />),
   getItem("Student", "9", <PiStudentBold />),
   getItem("Group", "10", <FaPeopleGroup />),
+  getItem("Room", "11", <MdMeetingRoom />),
 ];
 
 const Index = () => {
@@ -69,6 +70,9 @@ const Index = () => {
     }
     else if(item === "10"){
       navigate("/superadmin/group");
+    }
+    else if(item === "11"){
+      navigate("/superadmin/room");
     }
   }
   const {

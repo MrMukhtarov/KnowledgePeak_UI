@@ -6,7 +6,9 @@ const Index = () => {
   return (
     <div className="d-flex">
       <div className="col-lg-2">
-        <SideBar />
+      <div style={{backgroundColor:"#001529", width:"200px",height:"100%"}}>
+          <SideBar />
+        </div>
       </div>
       <div className="col-lg-10">
         <Home/>

@@ -66,6 +66,9 @@ import StudentRemoveRole from './UserTypes/SuperAdmin/pages/RemoveRoleStudent/In
 import GroupList from './UserTypes/SuperAdmin/pages/GroupList/Index.jsx'
 import CreateGroup from './UserTypes/SuperAdmin/pages/CreateGroup/Index.jsx'
 import UpdateGroup from './UserTypes/SuperAdmin/pages/GroupUpdate/Index.jsx'
+import RoomList from './UserTypes/SuperAdmin/pages/RoomList/Index.jsx'
+import RoomCreate from './UserTypes/SuperAdmin/pages/RoomCreate/Index.jsx'
+import RoomUpdate from './UserTypes/SuperAdmin/pages/RoomUpdate/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -179,6 +182,9 @@ function App() {
             <Route path="/superadmin/group" element={<GroupList/>}/>
             <Route path="/superadmin/group/create" element={<CreateGroup/>}/>
             <Route path="/superadmin/group/update/:id" element={<UpdateGroup/>}/>
+            <Route path="/superadmin/room" element={<RoomList/>}/>
+            <Route path="/superadmin/room/create" element={<RoomCreate/>}/>
+            <Route path="/superadmin/room/update/:id" element={<RoomUpdate/>}/>
           </Route>
           <Route
             path="/teacher"

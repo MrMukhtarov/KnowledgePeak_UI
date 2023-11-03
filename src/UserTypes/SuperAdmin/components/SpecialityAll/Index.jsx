@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Index.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Index = () => {
   const [search, setSearch] = useState("");
@@ -31,6 +32,17 @@ const Index = () => {
   const currentItems = filteredFaculty.slice(indexOfFirstItem, indexOfLastItem);
 
   const Delete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
     axios
       .delete(`https://localhost:7153/api/Specialities/Delete/${id}`,{
         headers: {
@@ -47,9 +59,22 @@ const Index = () => {
           setError(e.response.data.message);
         }
       });
+    }
+  });
   };
 
   const SoftDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
     axios
       .patch(`https://localhost:7153/api/Specialities/SoftDelete/${id}`,{},{
         headers: {
@@ -67,9 +92,22 @@ const Index = () => {
           setError(e.response.data.message);
         }
       });
+    }
+  });
   };
 
   const RevertSoftDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
     axios
       .patch(`https://localhost:7153/api/Specialities/RevertSoftDelete/${id}`,{},{
         headers: {
@@ -87,6 +125,8 @@ const Index = () => {
           setError(e.response.data.message);
         }
       });
+    }
+  });
   };
 
   return (
