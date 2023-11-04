@@ -3,6 +3,7 @@ import "./Index.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -32,22 +33,38 @@ const Index = () => {
   const currentItems = filteredFaculty.slice(indexOfFirstItem, indexOfLastItem);
 
   const Delete = (id) => {
-    axios
-      .delete(`https://localhost:7153/api/TeacherAuth/Delete?userName=${id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((e) => {
-        if (e.response && e.response.data && e.response.data.errors) {
-          setErrorMessages(e.response.data.errors);
-        } else {
-          setError(e.response.data.message);
-        }
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(
+            `https://localhost:7153/api/TeacherAuth/Delete?userName=${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setErrorMessages(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
+      }
+    });
   };
   return (
     <section className="facultyList_superadmin py-3">

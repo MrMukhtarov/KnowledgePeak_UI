@@ -65,7 +65,7 @@ const Index = () => {
           },
         })
         .then(res => {
-         console.log(res.data);
+         navigate('/teacher/grade')
         })
         .catch((e) => {
             if (e.response && e.response.data && e.response.data.errors) {

@@ -50,7 +50,7 @@ const Index = () => {
             })}
           </div>
           <div className="header-right col-lg-3">
-            <NavLink to="/">Blog</NavLink>
+            <NavLink to="/ourteacher">Teacher</NavLink>
             <NavLink className="header-login" to="/login">
               Login
             </NavLink>
@@ -96,7 +96,7 @@ const Index = () => {
           </li>
           <li>
             <NavLink onClick={menuClose} to="/">
-              Blog
+              Teacher
             </NavLink>
           </li>
         </ul>

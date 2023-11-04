@@ -1,0 +1,61 @@
+.our_teacher_top ul{
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+.our_teacher_top ul li{
+    list-style: none;
+    color: black;
+    padding: 2px 10px;
+    font-size: 14px;
+}
+.our_teacher_top ul li:hover{
+    color: blue;
+    transition: .3s all;
+    cursor: pointer;
+}
+.our_teacher_bottom .teacher_name{
+    color: #2f3c40;
+    outline: none;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: Lato, Tahoma, sans-serif;
+    font-weight: 700;
+}
+.our_teacher_bottom_box_faculties span{
+    color: #0191c6;
+    display: block;
+    font-size: 12px;
+    padding-top: 5px
+}
+.our_teacher_bottom .teacher_eamil{
+    color: #8d908f;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+.our_teacher_bottom p{
+    color: #8d908f;
+}
+.our_teacher_bottom button{
+    background-color: transparent !important;
+    border: none;
+    border: 1px solid black;
+    color: black;
+    padding: 8px 15px;
+    margin: auto;
+}
+.our_teacher_bottom button:hover{
+    background-color: black !important;
+    color: white;
+    border-color: black;
+    transition: .3s all;
+}
+.our_teacher_bottom_box{
+    width: 23%;
+    margin-bottom: 10px;
+}
+.selected_teacher{
+    background-color: #2a2e30;
+    color: #fff !important;
+}

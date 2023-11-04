@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Index.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Index = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -47,71 +48,120 @@ const Index = () => {
   }, []);
 
   const Remove = (id) => {
-    axios.delete(`https://localhost:7153/api/ClassSchedules/Delete/${id}`,{
-      headers : {
-        Authorization: `Bearer ${user.token}`,
-      }
-    })
-    .then(res => {
-      if(res.status === 200){
-        window.location.reload();
-      }
-    })
-    .catch((e) => {
-      if (e.response && e.response.data && e.response.data.errors) {
-        setError(e.response.data.errors);
-      } else {
-        setError(e.response.data.message);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://localhost:7153/api/ClassSchedules/Delete/${id}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              window.location.reload();
+            }
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setError(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
       }
     });
-  }
+  };
 
   const SoftDelete = (id) => {
-    axios.patch(`https://localhost:7153/api/ClassSchedules/SoftDelete/${id}`,{},{
-      headers : {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "application/json",
-      }
-    })
-    .then(res => {
-      if(res.status === 200){
-        window.location.reload();
-      }
-    })
-    .catch((e) => {
-      if (e.response && e.response.data && e.response.data.errors) {
-        setError(e.response.data.errors);
-      } else {
-        setError(e.response.data.message);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(
+            `https://localhost:7153/api/ClassSchedules/SoftDelete/${id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              window.location.reload();
+            }
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setError(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
       }
     });
-  }
+  };
 
   const RevertSoftDelete = (id) => {
-    axios.patch(`https://localhost:7153/api/ClassSchedules/RevertSoftDelete/${id}`,{},{
-      headers : {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "application/json",
-      }
-    })
-    .then(res => {
-      if(res.status === 200){
-        window.location.reload();
-      }
-    })
-    .catch((e) => {
-      if (e.response && e.response.data && e.response.data.errors) {
-        setError(e.response.data.errors);
-      } else {
-        setError(e.response.data.message);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .patch(
+            `https://localhost:7153/api/ClassSchedules/RevertSoftDelete/${id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              window.location.reload();
+            }
+          })
+          .catch((e) => {
+            if (e.response && e.response.data && e.response.data.errors) {
+              setError(e.response.data.errors);
+            } else {
+              setError(e.response.data.message);
+            }
+          });
       }
     });
-  }
+  };
 
   return (
     <section className="teacher_grades_list py-3">
       <div className="container">
-     
         <div className="teacher_grades_list_all">
           <div className="teacher_grades_list_top d-flex  justify-content-between align-items-center mb-5">
             <div className="d-flex align-items-center gap-4">
@@ -134,10 +184,10 @@ const Index = () => {
             </div>
           </div>
           <div className="error-messages text-center">
-                <p style={{ color: "red" }} className="error-message">
-                  {error && error.includes("delete") ? error : ""}
-                </p>
-              </div>
+            <p style={{ color: "red" }} className="error-message">
+              {error && error.includes("delete") ? error : ""}
+            </p>
+          </div>
           <div className="teacher_grades_list_center">
             <table class="table">
               <thead>
@@ -175,33 +225,49 @@ const Index = () => {
                         <td>
                           {s.classTime.startTime} : {s.classTime.endTime}
                         </td>
-                        <td>{s.isDeleted === false ? <span style={{color:"green"}}>Active</span> : 
-                          <span style={{color:"red"}}>DeActive</span>
-                        }</td>
+                        <td>
+                          {s.isDeleted === false ? (
+                            <span style={{ color: "green" }}>Active</span>
+                          ) : (
+                            <span style={{ color: "red" }}>DeActive</span>
+                          )}
+                        </td>
                         <td>
                           <NavLink
                             to={`/tutor/group/classscheduleupdate/${s.id}`}
                           >
                             <i className="fa-solid fa-pen-to-square"></i>
                           </NavLink>
-                          <NavLink className="ms-3" onClick={() => Remove(s.id)}>
+                          <NavLink
+                            className="ms-3"
+                            onClick={() => Remove(s.id)}
+                          >
                             <i
                               style={{ color: "red" }}
                               className="fa-solid fa-trash"
                             ></i>
                           </NavLink>
-                          {s.isDeleted === false ? 
-                            <NavLink className="ms-3" onClick={() => SoftDelete(s.id)}>
-                            <i
-                              style={{ color: "grey" }}
-                              className="fa-solid fa-trash"
-                            ></i>
-                          </NavLink>
-                         :
-                         <NavLink className="ms-3" onClick={() => RevertSoftDelete(s.id)}>
-                         <i style={{color:"green"}} className="fa-solid fa-rotate-left"></i>
-                       </NavLink>
-                         }
+                          {s.isDeleted === false ? (
+                            <NavLink
+                              className="ms-3"
+                              onClick={() => SoftDelete(s.id)}
+                            >
+                              <i
+                                style={{ color: "grey" }}
+                                className="fa-solid fa-trash"
+                              ></i>
+                            </NavLink>
+                          ) : (
+                            <NavLink
+                              className="ms-3"
+                              onClick={() => RevertSoftDelete(s.id)}
+                            >
+                              <i
+                                style={{ color: "green" }}
+                                className="fa-solid fa-rotate-left"
+                              ></i>
+                            </NavLink>
+                          )}
                         </td>
                       </tr>
                     );
