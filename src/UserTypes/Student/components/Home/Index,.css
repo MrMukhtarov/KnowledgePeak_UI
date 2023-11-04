@@ -2,3 +2,13 @@
 {
     width: 120px !important;
 }
+.student_home_grade_not{
+    background-color: #1677FF;
+    width: 20%;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+.remove{
+    display: none;
+}

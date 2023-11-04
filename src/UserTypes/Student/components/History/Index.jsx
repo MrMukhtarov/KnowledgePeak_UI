@@ -20,10 +20,13 @@ const Index = () => {
     student.studentHistory &&
     student.studentHistory.filter((f) => f.grade.lesson.name && f.grade.lesson.name.includes(search));
 
+    const sorted = filteredFaculty && filteredFaculty.sort((a,b) => b.id - a.id)
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems =
-    filteredFaculty && filteredFaculty.slice(indexOfFirstItem, indexOfLastItem);
+  sorted && sorted.slice(indexOfFirstItem, indexOfLastItem);
+    
 
   useEffect(() => {
     axios

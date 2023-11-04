@@ -4,6 +4,9 @@ import $ from "jquery";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { FaChalkboardTeacher } from 'react-icons/fa';
+import { CiTimer } from 'react-icons/ci';
 
 const Index = () => {
   const [stuCount, setStuCount] = useState();
@@ -13,6 +16,9 @@ const Index = () => {
   const [lessonCount, setLessonCount] = useState();
   const [roomCount, setRoomCount] = useState();
   const [specialityCount, setSpecialityCount] = useState();
+  const [tutorCount, setTutorCount] = useState();
+  const [classTimeCount, setClassTimeCount] = useState();
+  const nav = useNavigate();
 
   const OpenMobileMenu = () => {
     const x = $(".super_admin_mobile_menu");
@@ -24,6 +30,20 @@ const Index = () => {
     axios
       .get("https://localhost:7153/api/StudentAuth/Count")
       .then((res) => setStuCount(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://localhost:7153/api/classtime/Count")
+      .then((res) => setClassTimeCount(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+   useEffect(() => {
+    axios
+      .get("https://localhost:7153/api/TutorAuth/Count")
+      .then((res) => setTutorCount(res.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -74,8 +94,8 @@ const Index = () => {
       <div className="container">
         <i onClick={OpenMobileMenu} className="fa-solid fa-bars supad-bars"></i>
         <div className="super_admin_home_all d-flex justify-content-center flex-wrap gap-5">
-          <div className="super_admin_home_box col-lg-3">
-            <div className="super_admin_home_box_top">
+          <div onClick={() => nav('/superadmin/student')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
+            <div  className="super_admin_home_box_top">
               <h5>Stdents</h5>
             </div>
             <div className="super_admin_home_box_bottom d-flex justify-content-between align-items-center">
@@ -88,7 +108,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="super_admin_home_box col-lg-3">
+          <div onClick={() => nav('/superadmin/teacher')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
             <div className="super_admin_home_box_top">
               <h5>Teacher</h5>
             </div>
@@ -102,7 +122,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="super_admin_home_box col-lg-3">
+          <div onClick={() => nav('/superadmin/faculty')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
             <div className="super_admin_home_box_top">
               <h5>Facultys</h5>
             </div>
@@ -116,7 +136,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="super_admin_home_box col-lg-3">
+          <div onClick={() => nav('/superadmin/group')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
             <div className="super_admin_home_box_top">
               <h5>Groups</h5>
             </div>
@@ -130,7 +150,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="super_admin_home_box col-lg-3">
+          <div onClick={() => nav('/superadmin/lesson')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
             <div className="super_admin_home_box_top">
               <h5>Lessons</h5>
             </div>
@@ -144,7 +164,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="super_admin_home_box col-lg-3">
+          <div onClick={() => nav('/superadmin/room')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
             <div className="super_admin_home_box_top">
               <h5>Rooms</h5>
             </div>
@@ -158,7 +178,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="super_admin_home_box col-lg-3">
+          <div onClick={() => nav('/superadmin/speciality')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
             <div className="super_admin_home_box_top">
               <h5>Specialityies</h5>
             </div>
@@ -168,6 +188,34 @@ const Index = () => {
               </div>
               <div className="super_admin_home_box_bottom_right">
                 <i className="fa-solid fa-glasses"></i>
+              </div>
+            </div>
+          </div>
+
+          <div onClick={() => nav('/superadmin/tutor')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
+            <div className="super_admin_home_box_top">
+              <h5>Tutor</h5>
+            </div>
+            <div className="super_admin_home_box_bottom d-flex justify-content-between align-items-center">
+              <div className="super_admin_home_box_bottom_left">
+                <h3>{tutorCount}</h3>
+              </div>
+              <div className="super_admin_home_box_bottom_right">
+                <i><FaChalkboardTeacher/></i>
+              </div>
+            </div>
+          </div>
+
+          <div onClick={() => nav('/superadmin/classtime')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
+            <div className="super_admin_home_box_top">
+              <h5>Class Time</h5>
+            </div>
+            <div className="super_admin_home_box_bottom d-flex justify-content-between align-items-center">
+              <div className="super_admin_home_box_bottom_left">
+                <h3>{classTimeCount}</h3>
+              </div>
+              <div className="super_admin_home_box_bottom_right">
+                <i><CiTimer/></i>
               </div>
             </div>
           </div>

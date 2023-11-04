@@ -40,7 +40,7 @@ const Index = () => {
     setSelectedEvent(eventInfo.event);
     setShow(true);
   };
-
+console.log(schedules);
   return (
     <section className="tutor_home py-3">
       <div className="container">
@@ -115,6 +115,8 @@ const Index = () => {
                     s.room.roomNumber +
                     " " +
                     s.lesson.name +
+                    " " +
+                    s.group.name +
                     " " +
                     s.classTime.startTime +
                     " " +

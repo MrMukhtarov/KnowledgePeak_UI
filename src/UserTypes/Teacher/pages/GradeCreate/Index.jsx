@@ -19,7 +19,13 @@ const Index = () => {
 
     useEffect(() => {
         axios
-          .get("https://localhost:7153/api/StudentAuth/Get")
+          .get("https://localhost:7153/api/StudentAuth/Get",{
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Authorization": `Bearer ${user.token}`,
+  
+            },
+          })
           .then((res) => setStudent(res.data))
           .catch((e) => console.log(e));
       }, []);
