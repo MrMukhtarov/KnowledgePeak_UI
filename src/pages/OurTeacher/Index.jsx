@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Index = () => {
@@ -8,6 +8,7 @@ const Index = () => {
   const [faculty, setFaculty] = useState([]);
   const [filteredTeacher, setFilteredTeacher] = useState([]);
   const [selectedFaculty, setSelectedFaculty] = useState(0);
+  const nav = useNavigate();
 
   useEffect(() => {
     axios.get(`https://localhost:7153/api/TeacherAuth/GetAll`).then((res) => {
@@ -86,7 +87,7 @@ const Index = () => {
                     <hr />
                     <span className="teacher_eamil">{t.email}</span>
                     <p>{t.description && t.description.substring(0, 40)}...</p>
-                    <button>VIEW TEACHER</button>
+                    <button onClick={() => nav(`/ourteacher/detail/${t.userName}`)}>VIEW TEACHER</button>
                   </div>
                 );
               })}

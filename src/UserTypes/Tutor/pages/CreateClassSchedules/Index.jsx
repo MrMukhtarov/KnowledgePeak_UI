@@ -130,7 +130,7 @@ const Index = () => {
           {/* ---- */}
           <div className="error-messages">
                       <p className="error-message" style={{color:"red"}}>
-                        {error.includes("This") ? error : ""}
+                        {error.includes("This" || "written") ? error : ""}
                       </p>
                     </div>
           <div className="form-group w-100">

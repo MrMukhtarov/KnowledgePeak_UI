@@ -70,6 +70,7 @@ import RoomList from './UserTypes/SuperAdmin/pages/RoomList/Index.jsx'
 import RoomCreate from './UserTypes/SuperAdmin/pages/RoomCreate/Index.jsx'
 import RoomUpdate from './UserTypes/SuperAdmin/pages/RoomUpdate/Index.jsx'
 import OurTeacher from './pages/OurTeacher/Index.jsx'
+import TeacherDetail from './pages/TeacherDeatil/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -95,6 +96,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/ourteacher" element={<OurTeacher />} />
+            <Route path="/ourteacher/detail/:username" element={<TeacherDetail />} />
           </Route>
           <Route
             path="/superadmin"
