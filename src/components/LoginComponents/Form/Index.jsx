@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import "./Index.css";
 import axios from "axios";
+
 
 const Index = () => {
   const [inputs, setInputs] = useState({
@@ -10,6 +11,7 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectType, setSelectType] = useState("");
+  const [type,setType] = useState(false);
 
  
 
@@ -66,6 +68,17 @@ const Index = () => {
         }
       });
   };
+
+  const Watch = () => {
+   var eye = document.querySelector('.login_eye')
+    if(type === false){
+      setType(true)
+      eye.className = "fa-solid fa-eye-slash col-lg-2 login_eye"
+    }else{
+      eye.className = "fa-solid fa-eye col-lg-2 login_eye"
+      setType(false)
+    }
+  }
   return (
     <section id="login_form" className="py-5">
       <div className="contain">
@@ -91,10 +104,9 @@ const Index = () => {
             className="w-50 m-auto d-flex flex-column gap-2"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <div className="d-flex flex-column align-items-center">
+            <div className="username_login">
               <input
                 name="userName"
-                className="w-75"
                 type="text"
                 placeholder="Username"
                 id="username"
@@ -115,14 +127,19 @@ const Index = () => {
               )}
             </div>
             <div className="d-flex flex-column align-items-center">
-              <input
-                type="password"
+              
+             <div className="d-flex password_div justify-content-between"> 
+             <div className="col=lg-10">
+             <input
+                type={type === false ? "password" : "text"}
                 placeholder="Password"
-                className="w-75"
                 id="pas"
                 name="password"
                 onChange={handleInputChange}
               />
+             </div>
+              <i onClick={Watch} style={{cursor:"pointer"}} className="fa-solid fa-eye col-lg-2 login_eye"></i>
+             </div>
               {errorMessages.password ? (
                 <div className="error-messages">
                   <p style={{ color: "red" }} className="error-message">
@@ -141,7 +158,7 @@ const Index = () => {
               {
                 <div className="error-messages">
                   <p style={{ color: "red" }} className="error-message">
-                    {error && error.includes("Not") || error.includes("reason") ? error : ""}
+                    {error && (error.includes("Not") || error.includes("reason") || error.includes("suspended")) ? error : ""}
                   </p>
                 </div>
               }

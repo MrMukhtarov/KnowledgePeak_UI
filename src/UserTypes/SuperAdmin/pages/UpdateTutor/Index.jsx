@@ -421,7 +421,7 @@ const Index = () => {
               name="specialityId"
               value={selectSepciality}
             >
-              <option value="" selected disabled>
+              <option value="" selected>
                 Select Speciality
               </option>
               {speciality

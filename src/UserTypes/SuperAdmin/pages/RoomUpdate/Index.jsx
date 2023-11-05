@@ -156,7 +156,7 @@ const Index = () => {
               name="facultyId"
               value={selectFaculty}
             >
-              <option value="" selected disabled>
+              <option value=" " selected>
                 Select Faculty
               </option>
               {faculty &&
@@ -165,7 +165,7 @@ const Index = () => {
                   .map((s) => {
                     return (
                       <option key={s.id} value={s.id}>
-                        {s.name}
+                        {s.name && s.name}
                       </option>
                     );
                   })}
@@ -179,7 +179,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("ShortName") ? error : ""}
+                  {error && error.includes("ShortName") ? error : ""}
                 </p>
               </div>
             )}

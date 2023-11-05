@@ -1,10 +1,4 @@
-/* #login_form{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 100%;
-} */
+
 #login_form h2{
     margin-top: 1em;
     font-size: 34px;
@@ -13,7 +7,7 @@
     font-weight: 400;
     margin-bottom: 20px;
 }
-#login_form input{
+/* #login_form input{
     border: 2px solid #ddd !important;
     outline: none;
     padding: 0 12px !important;
@@ -22,7 +16,7 @@
     font-size: 15px !important;
     height: 40px !important;
     box-sizing: border-box !important;
-}
+} */
 #login_form button{
     font-size: 15px;
     background: #f7ca18!important;
@@ -39,6 +33,40 @@
 }
 #login_form label{
     text-align: left !important;
+}
+
+.password_div{
+    position: relative;
+    width: 340px;
+    margin: auto;
+    border-radius: 5px;
+    display: flex;
+    background-color: white;
+    border: 1px solid var(--bs-border-color);
+    padding: 7px;
+}
+.username_login input{
+    background-color: white;
+    border: 1px solid var(--bs-border-color);
+    width: 340px;
+    margin: auto;
+    border-radius: 5px;
+    padding: 7px;
+    outline: none;
+}
+.password_div input{
+    border: none !important;
+    outline: none;
+    background-color: transparent !important;
+}
+.password_div input:focus{
+    outline: transparent !important;
+}
+#login_form input:-webkit-autofill { 
+    -webkit-background-clip: text;
+}
+.password_div .login_eye{
+    margin-top: 5px;
 }
 
 @media screen and (max-width:576px) {

@@ -186,7 +186,7 @@ const Index = () => {
                     <th scope="row">{f.id}</th>
                     <td>{f.roomNumber}</td>
                     <td>{f.capacity}</td>
-                    <td>{f.faculty.name}</td>
+                    <td>{f.faculty && f.faculty.name}</td>
                     <td>{f.isDeleted === false ? <span style={{color:"green"}}>Active</span> : 
                     <span style={{color:"red"}}>DeActive</span>}</td>
                     <td className="facultyList_superadmin_action d-flex gap-3">

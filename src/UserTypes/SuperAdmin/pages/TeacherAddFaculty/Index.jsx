@@ -33,17 +33,16 @@ const Index = () => {
 
     if (name === "facultyIds") {
       const selectedFacultys = Array.from(options)
-        .filter((option) => option.selected && option.value !== "")
+        .filter((option) => option.selected && option.value !== " ")
         .map((option) => Number(option.value));
-
-      setSelectFaculty(selectedFacultys);
+        setSelectFaculty(selectedFacultys.length > 0 ? selectedFacultys : " ");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formdata = new FormData();
-    formdata.append("userName", selectTeacher);
+    formdata.append("userName", selectTeacher || "");
     console.log(selectTeacher);
 
     selectFaculty.forEach((faculyIds) => {
@@ -65,6 +64,7 @@ const Index = () => {
         navigate("/superadmin/teacher");
       });
   };
+
 
   return (
     <section className="faculty_create py-4">
@@ -91,7 +91,7 @@ const Index = () => {
               <option value="" selected disabled>
                 Select Teacher
               </option>
-              {teacher
+              {teacher && teacher
                 .filter((f) => f.isDeleted === false)
                 .map((e) => {
                   return (

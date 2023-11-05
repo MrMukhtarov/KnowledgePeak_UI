@@ -14,12 +14,14 @@ const Index = () => {
   const [error, setError] = useState("");
   const [selectLessons, setSelectLessons] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'))
+  const [selectFaculty,setSelectFaculty]= useState("")
   
 useEffect(() => {
   axios.get(`https://localhost:7153/api/Specialities/GetById/${id}`)
   .then(res => {
     setSpeciality(res.data)
     setInputs(res.data)
+    setSelectFaculty(res.data.facultyId && res.data.facultyId)
     setSelectLessons(res.data.lessonSpecialities && res.data.lessonSpecialities.map(l => l.lesson.id))
   })
   .catch(e => console.log(e))
@@ -51,10 +53,7 @@ const handleInputChange = (e) => {
   }));
 
   if (name === "facultyId") {
-    setInputs((prevState) => ({
-      ...prevState,
-      facultyId: parseInt(value, 10),
-    }));
+   setSelectFaculty(value)
   }
   if (name === "lessonIds") {
     const selectedLessonIds = Array.from(e.target.selectedOptions).map(
@@ -69,7 +68,7 @@ const handleSubmit = (e) => {
   var formData = new FormData();
   formData.append("name",inpust.name)
   formData.append("shortName",inpust.shortName)
-  formData.append("facultyId",inpust.facultyId)
+  formData.append("facultyId",selectFaculty)
   
     selectLessons.forEach((lessonId) => {
       formData.append("lessonIds", lessonId);
@@ -151,11 +150,11 @@ const handleSubmit = (e) => {
             className="form-control"
             id="facllty"
             name="facultyId"
-            value={speciality.facultyId}
+            value={selectFaculty}
             onChange={handleInputChange}
           >
-            <option value="" disabled selected>Select Faculty</option>
-            {faculty.filter(f => f.isDeleted === false).map(f => {
+            <option value=" " selected>Select Faculty</option>
+            {faculty.filter(s => s.isDeleted === false).map(f => {
               return(
                 <option key={f.id} value={f.id}>{f.id} - {f.name}</option>
               )
