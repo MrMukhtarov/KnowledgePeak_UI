@@ -242,10 +242,10 @@ const Index = () => {
                     </td>
                     <td>
                       <span>
-                        {f.isDeleted === false ? "Active" : "DeActive"}
+                        {f.isDeleted === false ? <span style={{color:"green", fontSize:"12px"}}>Work</span> : <span style={{color:"red",fontSize:"12px"}}>Out Of Work</span>}
                       </span>
                     </td>
-                    <td className="facultyList_superadmin_action d-flex gap-3">
+                    <td  className="facultyList_superadmin_action d-flex gap-3">
                       <button
                         title="update"
                         onClick={() =>

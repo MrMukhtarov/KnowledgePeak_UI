@@ -10,6 +10,9 @@ const Index = () => {
   const [selectGroup, setSelectGroup] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const [error, setError] = useState("");
+  const [disabled,setDisabled] = useState(false)
+  const [specialityId, setSpecialityId] = useState(0);
+  const [current,setCurrent] = useState([])
 
   useEffect(() => {
     axios
@@ -20,20 +23,44 @@ const Index = () => {
         },
       })
       .then((res) => setTutor(res.data));
-  }, []);
+  }, [user.token]);
 
   useEffect(() => {
+    if(disabled){
+      axios.get(`https://localhost:7153/api/TutorAuth/GetSingle?userName=${selectTutor}`,{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        "Content-Type": "multipart/form-data",
+      }
+      })
+      .then(res => {
+        const data = res.data;
+        setSpecialityId(data.speciality && data.speciality.id)
+        setCurrent(data.groups && data.groups)
+        setSelectGroup(data.groups && data.groups.forEach(f => f.id))
+      })
+    }
+  },[disabled,selectTutor,user.token])
+
+  useEffect(() => {
+  if(selectTutor){
     axios
-      .get("https://localhost:7153/api/Groups")
-      .then((res) => setGroup(res.data))
-      .catch((e) => console.log(e));
-  }, []);
+    .get("https://localhost:7153/api/Groups")
+    .then((res) =>  {
+      const data = res.data
+      const filter = data.filter(g => g.speciality.id === specialityId)
+      setGroup(filter)
+    })
+    .catch((e) => console.log(e));
+  }
+  }, [selectTutor,specialityId]);
 
   const handleInputChange = (e) => {
     const { name, value, options } = e.target;
 
     if (name === "userName") {
       setSelectTutor(value);
+      setDisabled(true);
     }
 
     if (name === "groupIds") {
@@ -110,8 +137,13 @@ const Index = () => {
           </div>
           {/* ------ */}
           <div className="form-group mt-3">
+          {current ? <span>{current.map(c => {
+            return(
+             <span style={{color:"green"}} key={c.id}>Current Groups : {c.name} <br /></span>
+            )
+          })}</span> : "No Current Group"}
             <label className="mb-1" htmlFor="short">
-              Speciality
+              Group
             </label>
             <select
               type="text"

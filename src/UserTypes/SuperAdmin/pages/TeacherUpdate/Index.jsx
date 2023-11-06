@@ -6,78 +6,82 @@ const Index = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [lesson, setLesson] = useState([]);
-  const [selectFaculty,setSelectFaculty] = useState([])
+  const [selectFaculty, setSelectFaculty] = useState([]);
   const [speciality, setSpeciality] = useState([]);
   const [faculty, setFaculty] = useState([]);
-  const [selectLesson,setSelectLesson] = useState([])
+  const [selectLesson, setSelectLesson] = useState([]);
   const [teacher, setTeacher] = useState({});
-  const [selectSepciality,setSelectSpeciality] = useState([])
+  const [selectSepciality, setSelectSpeciality] = useState([]);
   const [inputs, setInputs] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectGender, setSelectGender] = useState("");
   const [selectStatus, setSelectStatus] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-  const [disabelSpeciality,setDisableSpeciality] = useState(false);
-  const [disableLesson,setDisableLesson] = useState(false);
-  
-  useEffect(() => {
-    axios.get("https://localhost:7153/api/Lessons").then((res) => {
-      setLesson(res.data);
-    });
-  }, []);
-  
-  useEffect(() => {
-    axios.get("https://localhost:7153/api/Specialities/Get").then((res) => {
-      setSpeciality(res.data);
-    });
-  }, []);
-  
-  useEffect(() => {
-    axios.get("https://localhost:7153/api/Facultys/GetAll").then((res) => {
-      setFaculty(res.data);
-    });
-  }, []);
-  
+  const [disabelSpeciality, setDisableSpeciality] = useState(false);
+  const [disableLesson, setDisableLesson] = useState(false);
+
+  // useEffect(() => {
+  //   axios.get("https://localhost:7153/api/Lessons").then((res) => {
+  //     setLesson(res.data);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   axios.get("https://localhost:7153/api/Specialities/Get").then((res) => {
+  //     setSpeciality(res.data);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   axios.get("https://localhost:7153/api/Facultys/GetAll").then((res) => {
+  //     setFaculty(res.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
     axios
-    .get(`https://localhost:7153/api/TeacherAuth/GetById/${id}`)
-    .then((res) => {
-      setTeacher(res.data);
-      setInputs(res.data);
-      setSelectFaculty(res.data.faculties && res.data.faculties.map(f => f.id))
-      setSelectLesson(res.data.lessons && res.data.lessons.map(l => l.id))
-      setSelectSpeciality(res.data.specialities && res.data.specialities.map(s => s.id))
-    });
+      .get(`https://localhost:7153/api/TeacherAuth/GetById/${id}`)
+      .then((res) => {
+        setTeacher(res.data);
+        setInputs(res.data);
+        // setSelectFaculty(res.data.faculties && res.data.faculties.map((f) => f.id));
+        // res.data.specialities.length > 0 ?
+        // setSelectLesson(res.data.lessons && res.data.lessons.map((l) => l.id)) : setSelectLesson("")
+        // res.data.faculties &&
+        // setSelectSpeciality(
+        //   res.data.specialities && res.data.specialities.map((s) => s.id)
+        // );
+      });
   }, []);
-  
+
   console.log(inputs);
   const handleInputChange = (e) => {
     const { name, value, files, type, options } = e.target;
-    
-    if (name === "lessonIds") {
-      const selectedlesson = Array.from(options)
-        .filter((option) => option.selected && option.value !== "")
-        .map((option) => Number(option.value));
-  
-      setSelectLesson(selectedlesson);
-    }
 
-    if (name === "specialityIds") {
-      const selectedSpeciality = Array.from(options)
-        .filter((option) => option.selected && option.value !== "")
-        .map((option) => Number(option.value));
-  
-      setSelectSpeciality(selectedSpeciality);
-    }
+    // if (name === "lessonIds") {
+    //   const selectedlesson = Array.from(options)
+    //     .filter((option) => option.selected && option.value !== "")
+    //     .map((option) => Number(option.value));
 
-    if (name === "facultyIds") {
-      const selectedFacultys = Array.from(options)
-        .filter((option) => option.selected && option.value !== "")
-        .map((option) => Number(option.value));
-  
-      setSelectFaculty(selectedFacultys);
-    }
+    //   setSelectLesson(selectedlesson);
+    // }
+
+    // if (name === "specialityIds") {
+    //   const selectedSpeciality = Array.from(options)
+    //     .filter((option) => option.selected && option.value !== "")
+    //     .map((option) => Number(option.value));
+
+    //   setSelectSpeciality(selectedSpeciality);
+    // }
+
+    // if (name === "facultyIds") {
+    //   const selectedFacultys = Array.from(options)
+    //     .filter((option) => option.selected && option.value !== "")
+    //     .map((option) => Number(option.value));
+
+    //   setSelectFaculty(selectedFacultys);
+    // }
 
     setInputs((prev) => ({
       ...prev,
@@ -114,27 +118,31 @@ const Index = () => {
     formdata.append("email", inputs.email);
     formdata.append("status", inputs.status);
 
-    selectFaculty.forEach((faculyIds) => {
-      formdata.append("facultyIds", faculyIds);
-    });
+    // selectFaculty.forEach((faculyIds) => {
+    //   formdata.append("facultyIds", faculyIds);
+    // });
 
-    selectLesson.forEach((lessonIds) => {
-      formdata.append("lessonIds", lessonIds);
-    });
+    // selectLesson.forEach((lessonIds) => {
+    //   formdata.append("lessonIds", lessonIds);
+    // });
 
-    selectSepciality.forEach((specialityIds) => {
-      formdata.append("specialityIds", specialityIds);
-    });
+    // selectSepciality.forEach((specialityIds) => {
+    //   formdata.append("specialityIds", specialityIds);
+    // });
     axios
-      .put(`https://localhost:7153/api/TeacherAuth/UpdateProfileAdmin?id=${id}`, formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      .put(
+        `https://localhost:7153/api/TeacherAuth/UpdateProfileAdmin?id=${id}`,
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
       .then((res) => {
-        if(res.status === 200){
-          navigate("/superadmin/teacher")
+        if (res.status === 200) {
+          navigate("/superadmin/teacher");
         }
       })
       .catch((e) => {
@@ -290,7 +298,7 @@ const Index = () => {
             )}
           </div>
           {/* ---- */}
-            <img width={40} src={teacher.imageUrl} alt="" />
+          <img width={40} src={teacher.imageUrl} alt="" />
           <div className="form-group">
             <label htmlFor="img">Image</label>
             <input
@@ -317,7 +325,13 @@ const Index = () => {
           </div>
           {/* ---- */}
           <div className="form-group">
-           Current Gender : {teacher.gender === 1 ? <span style={{color:"green"}}>Male</span> : <span style={{color:"green"}}>Female</span>}<br/>
+            Current Gender :{" "}
+            {teacher.gender === 1 ? (
+              <span style={{ color: "green" }}>Male</span>
+            ) : (
+              <span style={{ color: "green" }}>Female</span>
+            )}
+            <br />
             <label htmlFor="gender">Gender</label>
             <select
               type="text"
@@ -399,7 +413,12 @@ const Index = () => {
           </div>
           {/* ---- */}
           <div className="form-group">
-            Current Status : {teacher.status === 2 ? <span style={{color:"green"}}>Work</span> :  <span style={{color:"green"}}>Out ofWork</span>}
+            Current Status :{" "}
+            {teacher.status === 2 ? (
+              <span style={{ color: "green" }}>Work</span>
+            ) : (
+              <span style={{ color: "green" }}>Out ofWork</span>
+            )}
             <select
               type="text"
               className="form-control"
@@ -417,7 +436,95 @@ const Index = () => {
             </select>
           </div>
           {/* ---- */}
-          <div className="form-group">
+          {/* <div className="form-group">
+            {teacher.faculties && teacher.faculties.length > 0
+              ? teacher.faculties.map((ls) => {
+                  return (
+                    <span style={{ color: "green" }}>
+                      Current Faculty :{" "}
+                      {ls.name ? ls.name : "No Current Faculty"} <br />
+                    </span>
+                  );
+                })
+              : ""}
+            <label htmlFor="faculties">Faculty</label>
+            <select
+              className="form-control"
+              id="faculties"
+              placeholder="Select Faculty"
+              onChange={handleInputChange}
+              name="facultyIds"
+              multiple
+              value={selectFaculty}
+            >
+              <option value="" selected disabled>
+                Select Faculty
+              </option>
+              {faculty
+                .filter((e) => e.isDeleted === false)
+                .map((l) => {
+                  return (
+                    <option key={l.id} value={l.id}>
+                      {l.id} - {l.name}
+                    </option>
+                  );
+                })}
+            </select>
+            {errorMessages.Password && (
+              <div className="error-messages">
+                <p style={{ color: "red" }} className="error-message">
+                  {errorMessages.Password}
+                </p>
+              </div>
+            )}
+          </div> */}
+
+          {/* ---- */}
+          {/* <div className="form-group">
+            {teacher.specialities && teacher.specialities.length > 0
+              ? teacher.specialities.map((ls) => {
+                  return (
+                    <span style={{ color: "green" }}>
+                      Current Speciality :{" "}
+                      {ls.name ? ls.name : "No Current Speciality"} <br />
+                    </span>
+                  );
+                })
+              : ""}
+            <label htmlFor="specialities">Speciality</label>
+            <select
+              className="form-control"
+              id="specialities"
+              placeholder="Select Lesson"
+              onChange={handleInputChange}
+              name="specialityIds"
+              multiple
+              value={selectSepciality}
+            >
+              <option value="" selected disabled>
+                Select Speciality
+              </option>
+              {speciality
+                .filter((e) => e.isDeleted === false)
+                .map((l) => {
+                  return (
+                    <option key={l.id} value={l.id}>
+                      {l.id} - {l.name}
+                    </option>
+                  );
+                })}
+            </select>
+            {errorMessages.Password && (
+              <div className="error-messages">
+                <p style={{ color: "red" }} className="error-message">
+                  {errorMessages.Password}
+                </p>
+              </div>
+            )}
+          </div> */}
+
+          {/* ---- */}
+          {/* <div className="form-group">
             {teacher.lessons && teacher.lessons.length > 0
               ? teacher.lessons.map((ls) => {
                   return (
@@ -451,100 +558,14 @@ const Index = () => {
                   );
                 })}
             </select>
-            {errorMessages.Password &&
+            {errorMessages.Password && (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
                   {errorMessages.Password}
                 </p>
               </div>
-          }
-          </div>
-          {/* ---- */}
-          <div className="form-group">
-            {teacher.specialities && teacher.specialities.length > 0
-              ? teacher.specialities.map((ls) => {
-                  return (
-                    <span style={{ color: "green" }}>
-                      Current Speciality : {ls.name ? ls.name : "No Current Speciality"}{" "}
-                      <br />
-                    </span>
-                  );
-                })
-              : ""}
-            <label htmlFor="specialities">Speciality</label>
-            <select
-              className="form-control"
-              id="specialities"
-              placeholder="Select Lesson"
-              onChange={handleInputChange}
-              name="specialityIds"
-              multiple
-              value={selectSepciality}  
-            >
-              <option value="" selected disabled>
-                Select Speciality
-              </option>
-              {speciality
-                .filter((e) => e.isDeleted === false)
-                .map((l) => {
-                  return (
-                    <option key={l.id} value={l.id}>
-                      {l.id} - {l.name}
-                    </option>
-                  );
-                })}
-            </select>
-            {errorMessages.Password &&
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Password}
-                </p>
-              </div>
-            }
-          </div>
-          {/* ---- */}
-          <div className="form-group">
-            {teacher.faculties && teacher.faculties.length > 0
-              ? teacher.faculties.map((ls) => {
-                  return (
-                    <span style={{ color: "green" }}>
-                      Current Faculty : {ls.name ? ls.name : "No Current Faculty"}{" "}
-                      <br />
-                    </span>
-                  );
-                })
-              : ""}
-            <label htmlFor="faculties">Faculty</label>
-            <select
-              className="form-control"
-              id="faculties"
-              placeholder="Select Faculty"
-              onChange={handleInputChange}
-              name="facultyIds"
-              multiple
-              value={selectFaculty}
-            >
-              <option value="" selected disabled>
-                Select Faculty
-              </option>
-              {faculty
-                .filter((e) => e.isDeleted === false)
-                .map((l) => {
-                  return (
-                    <option key={l.id} value={l.id}>
-                      {l.id} - {l.name}
-                    </option>
-                  );
-                })}
-            </select>
-            {errorMessages.Password &&
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Password}
-                </p>
-              </div>
-             }
-          </div>
+            )}
+          </div> */}
           {/* ---- */}
           <button
             style={{ backgroundColor: "#002140" }}

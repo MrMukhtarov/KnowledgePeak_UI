@@ -18,10 +18,17 @@ const Index = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    axios.get("https://localhost:7153/api/Groups").then((res) => {
-      setGroup(res.data);
-    });
-  }, []);
+    if(selectSepciality){
+      axios.get("https://localhost:7153/api/Groups")
+      .then((res) => {
+        console.log("ADsdasd " + selectSepciality);
+        const data = res.data
+        setGroup(data && data.filter(f => f.speciality && f.speciality.id == selectSepciality));
+      });
+     }
+  }, [selectSepciality]);
+
+  console.log(group);
 
   useEffect(() => {
     axios.get("https://localhost:7153/api/Specialities/Get").then((res) => {
@@ -47,9 +54,8 @@ const Index = () => {
         setSelectGroup(res.data.groups && res.data.groups.map(g => g.id))
         setSelectSpeciality(res.data.speciality && res.data.speciality.id ? res.data.speciality.id : " ");
       });
-  }, []);
+  }, [user.token,username]);
 
-  console.log(inputs);
   const handleInputChange = (e) => {
     const { name, value, files, type, options } = e.target;
 
