@@ -22,6 +22,10 @@ const Index = () => {
   const [schedule, setSchedule] = useState({});
   const [group,setGroup] = useState([]);
   const [selectGroup, setSelectGroup] = useState('');
+  const [speciality, setSpeciality] = useState({});
+  const [groups, setGroups] = useState({});
+  const [start,setStart] = useState(false)
+  
 
   useEffect(() => {
     axios.get("https://localhost:7153/api/TeacherAuth/GetAll").then((res) => {
@@ -38,7 +42,24 @@ const Index = () => {
     .then(res => {
         setGroup(res.data.groups)
     })
-  },[])
+  },[user.token,user.username])
+
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7153/api/Groups/Get/${schedule.group.id}`)
+      .then((res) => {
+        setGroups(res.data.speciality && res.data.speciality.id)
+        setStart(true)
+      });
+  }, []);
+
+  useEffect(() => {
+    if (start) {
+      axios
+        .get(`https://localhost:7153/api/Specialities/GetById/${groups}`)
+        .then((res) => setSpeciality(res.data.facultyId && res.data.facultyId));
+    }
+  }, [start,groups]);
 
   useEffect(() => {
     axios
@@ -57,7 +78,7 @@ const Index = () => {
         setSelectRoom(res.data.room && res.data.room.id)
         setSelectGroup(res.data.group && res.data.group.id)
       });
-  }, []);
+  }, [id,user.token]);
 
   console.log(schedule);
 
@@ -82,9 +103,11 @@ const Index = () => {
         },
       })
       .then((res) => {
-        setRoom(res.data);
+        setRoom(
+          res.data.filter((r) => r.faculty && r.faculty.id === speciality)
+        );
       });
-  }, []);
+  }, [speciality,user.token]);
 
   useEffect(() => {
     axios
@@ -270,7 +293,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error && error.includes("LessonId") ? error : ""}
+                  {error && (error.includes("LessonId") || error.includes("Teach")) ? error : ""}
                 </p>
               </div>
             )}

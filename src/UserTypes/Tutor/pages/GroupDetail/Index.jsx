@@ -37,12 +37,22 @@ const Index = () => {
           </div>
           <div className="teacher_grades_list_top d-flex align-items-center">
             <div className="search_div text-end">
+              {group.students && group.students.length > 0 ?
               <NavLink
                 to={`/tutor/group/createSchedules/${group.id}`}
                 className="btn btn-primary me-2"
               >
                 Create Class Schedule
               </NavLink>
+               : 
+               <button
+               disabled
+                to={`/tutor/group/createSchedules/${group.id}`}
+                className="btn btn-primary me-2"
+              >
+                Create Class Schedule
+              </button>
+               }
               <NavLink
                 title="Add Students"
                 className="btn btn-primary me-4"

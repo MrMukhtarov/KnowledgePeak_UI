@@ -19,7 +19,14 @@ const Index = () => {
           })
           .then((res) => setStudent(res.data))
           .catch((e) => console.log(e));
-      }, []);
+      }, [user.token]);
+
+      useEffect(() => {
+        axios.get(`https://localhost:7153/api/Groups/Get/${id}`)
+        .then(res => {
+          setSelectStudent(res.data.students && res.data.students.map(s => s.userName))
+        })
+      },[])
 
     
     const handleInputChange = (e) => {
@@ -74,6 +81,7 @@ const Index = () => {
         <h5>Add Student In Group</h5>
       </div>
       <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
+        {selectStudent ? <span style={{color:"green", fontWeight:"bold"}}>Current Students : {selectStudent}</span> : "No Students"}
         {/* ------ */}
         <div className="form-group mt-3">
           <label className="mb-1" htmlFor="short">
@@ -86,6 +94,7 @@ const Index = () => {
             onChange={handleInputChange}
             name="userName"
             multiple={true}
+            value={selectStudent}
           >
             <option value="" selected disabled>Select Students</option>
             {student.map(e => {
