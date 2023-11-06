@@ -68,7 +68,7 @@ const handleSubmit = (e) => {
   var formData = new FormData();
   formData.append("name",inpust.name)
   formData.append("shortName",inpust.shortName)
-  formData.append("facultyId",selectFaculty)
+  formData.append("facultyId",selectFaculty ? selectFaculty : "")
   
     selectLessons.forEach((lessonId) => {
       formData.append("lessonIds", lessonId);
@@ -153,7 +153,7 @@ const handleSubmit = (e) => {
             value={selectFaculty}
             onChange={handleInputChange}
           >
-            <option value=" " selected>Select Faculty</option>
+            <option value="" selected>Select Faculty</option>
             {faculty.filter(s => s.isDeleted === false).map(f => {
               return(
                 <option key={f.id} value={f.id}>{f.id} - {f.name}</option>

@@ -9,6 +9,8 @@ const Index = () => {
   const [selectTeacher, setSelectTeacher] = useState("");
   const [selectSepciality, setSelectSpeciality] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [disable, setDisable] = useState(false);
+  const [speTeacher,setSpeTeacher] = useState({})
 
   useEffect(() => {
     axios
@@ -18,11 +20,37 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    if (selectTeacher) {
+      axios
+        .get(`https://localhost:7153/api/TeacherAuth/GetByUserName?Usermame=${selectTeacher}`, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          setSpeTeacher(res.data);
+          setDisable(true);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [selectTeacher]);
+
+useEffect(() => {
+  if (disable && speTeacher.faculties) {
+    const facultyIds = speTeacher.faculties.map((faculty) => faculty.id);
     axios
       .get("https://localhost:7153/api/Specialities/Get")
-      .then((res) => setSpeciality(res.data))
+      .then((res) => {
+        const data = res.data;
+        const filteredSpecialities = data.filter((speciality) =>
+          facultyIds.includes(speciality.facultyId)
+        );
+        setSpeciality(filteredSpecialities);
+      })
       .catch((e) => console.log(e));
-  }, []);
+  }
+}, [disable, speTeacher])
 
   const handleInputChange = (e) => {
     const { name, value, options } = e.target;

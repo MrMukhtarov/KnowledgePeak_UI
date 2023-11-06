@@ -18,7 +18,7 @@ const Index = () => {
 
   const filteredFaculty =
     student.studentHistory &&
-    student.studentHistory.filter((f) => f.grade.lesson.name && f.grade.lesson.name.includes(search));
+    student.studentHistory.filter((f) => f.grade.lesson && f.grade.lesson.name.includes(search));
 
     const sorted = filteredFaculty && filteredFaculty.sort((a,b) => b.id - a.id)
 

@@ -84,6 +84,11 @@ const Index = () => {
           <h5>Teacher Register</h5>
         </div>
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
+        <div className="error-messages">
+                <p style={{ color: "red" }} className="error-message">
+                  {error.includes("some") ? error : ""}
+                </p>
+              </div>
           {/* ---- */}
           <div className="form-group">
             <label htmlFor="name">Name</label>

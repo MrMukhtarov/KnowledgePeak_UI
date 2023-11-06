@@ -12,13 +12,14 @@ const Index = () => {
   const [selectLesson,setSelectLesson] = useState([])
   const [teacher, setTeacher] = useState({});
   const [selectSepciality,setSelectSpeciality] = useState([])
-  const [inputs, setInputs] = useState({
-  });
+  const [inputs, setInputs] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectGender, setSelectGender] = useState("");
   const [selectStatus, setSelectStatus] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
+  const [disabelSpeciality,setDisableSpeciality] = useState(false);
+  const [disableLesson,setDisableLesson] = useState(false);
   
   useEffect(() => {
     axios.get("https://localhost:7153/api/Lessons").then((res) => {

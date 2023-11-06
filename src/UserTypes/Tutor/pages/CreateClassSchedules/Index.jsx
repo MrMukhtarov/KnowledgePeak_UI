@@ -6,7 +6,6 @@ import { DatePicker } from 'antd';
 const Index = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'))
-  console.log(user);
   const { id } = useParams();
   const [lesson, setLesson] = useState([]);
   const [classTime, setClassTime] = useState([]);

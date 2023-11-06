@@ -11,26 +11,47 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState("");
   const [error, setError] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     axios
       .get("https://localhost:7153/api/TeacherAuth/GetAll")
-      .then((res) => setTeacher(res.data))
+      .then((res) => {
+        const data = res.data;
+        setTeacher(data);
+      })
       .catch((e) => console.log(e));
   }, []);
 
   useEffect(() => {
-    axios
-      .get("https://localhost:7153/api/Lessons")
-      .then((res) => setLesson(res.data))
-      .catch((e) => console.log(e));
-  }, []);
+    if (disable) {
+      axios
+        .get(
+          `https://localhost:7153/api/TeacherAuth/GetByUserName?Usermame=${selectTeacher}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          const data = res.data;
+          setLesson(
+            data.specialities &&
+              data.specialities.map((s) => s.lessonSpecialities)
+          );
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [disable, selectTeacher, user.token]);
+
 
   const handleInputChange = (e) => {
     const { name, value, options } = e.target;
 
     if (name === "userName") {
       setSelectTeacher(value);
+      setDisable(true);
     }
 
     if (name === "lessonIds") {
@@ -127,14 +148,13 @@ const Index = () => {
               <option selected disabled>
                 Select Lesson
               </option>
-              {lesson
-                .filter((f) => f.isDeleted === false)
-                .map((e) => {
-                  return (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
+              {lesson &&
+                lesson.map((e) => {
+                  return e && e.map((l) => (
+                    <option key={l.lesson.id} value={l.lesson.id}>
+                      {l.lesson.name}
                     </option>
-                  );
+                  ));
                 })}
             </select>
           </div>
