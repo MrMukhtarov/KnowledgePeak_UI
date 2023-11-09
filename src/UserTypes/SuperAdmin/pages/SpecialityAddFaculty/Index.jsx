@@ -10,6 +10,7 @@ const Index = () => {
   const [selectSepciality, setSelectSpeciality] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
   const [error, setError] = useState("");
+  const [disable,setDisable] = useState(false);
 
   useEffect(() => {
     axios
@@ -21,6 +22,15 @@ const Index = () => {
       })
       .then((res) => setFaculty(res.data));
   }, []);
+
+  useEffect(() => {
+    if(disable){
+    axios.get(`https://localhost:7153/api/Specialities/GetById/${selectSepciality}`)
+    .then(res => {
+      setSelectFaculty(res.data.facultyId && res.data.facultyId);
+    })
+    }
+  },[disable,selectSepciality])
 
   useEffect(() => {
     axios
@@ -43,6 +53,7 @@ const Index = () => {
 
     if (name === "id") {
       setSelectSpeciality(value);
+      setDisable(true);
     }
   };
 
@@ -120,7 +131,7 @@ const Index = () => {
               name="facultyId"
               value={selectFaculty}
             >
-              <option value="" selected disabled>
+              <option value="" selected>
                 Select Faculty
               </option>
               {faculty

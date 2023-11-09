@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
+import './Index.css'
 
 const Index = () => {
   const navigate = useNavigate();
@@ -219,7 +220,7 @@ const Index = () => {
                     </td>
                     <td>
                       <span>
-                        {f.isDeleted === false ? "Active" : "DeActive"}
+                        {f.isDeleted === false ? <span style={{color:"green"}}>Work</span> : <span style={{color:"red"}}>Out</span>}
                       </span>
                     </td>
                     <td className="facultyList_superadmin_action d-flex gap-3">

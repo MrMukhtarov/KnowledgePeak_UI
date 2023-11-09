@@ -10,6 +10,7 @@ const Index = () => {
   const [selectSepciality, setSelectSpeciality] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
   const [error, setError] = useState("");
+  const [disable,setDisable] = useState(false);
 
   useEffect(() => {
     axios
@@ -23,6 +24,21 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    if(disable){
+      axios.get(`https://localhost:7153/api/TutorAuth/GetSingle?userName=${selectTutor}`,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then(res => {
+        setSelectSpeciality(res.data.speciality && res.data.speciality.id)
+      })
+    }
+  },[disable,selectTutor,user.token])
+  
+
+  useEffect(() => {
     axios
       .get("https://localhost:7153/api/Specialities/Get")
       .then((res) => setSpeciality(res.data))
@@ -34,6 +50,7 @@ const Index = () => {
 
     if (name === "userName") {
       setSelectTutor(value);
+      setDisable(true)
     }
 
     if (name === "specialityId") {
@@ -115,7 +132,7 @@ const Index = () => {
               name="specialityId"
               value={selectSepciality}
             >
-              <option value="" selected disabled>
+              <option value="" selected>
                 Select Speciality
               </option>
               {sepciality

@@ -172,11 +172,11 @@ const Index = () => {
                       }}
                       scope="row"
                     >
-                      <span title={f.id}>{f.id}</span>
+                      <span title={f.id}>{f.id.substring(0,8)}</span>
                     </th>
                     <th scope="row">
                       <img
-                        className="img-fluid"
+                        className="img-fluid teacher_img"
                         style={{ width: "70px" }}
                         src={f.imageUrl}
                         alt=""
@@ -242,7 +242,7 @@ const Index = () => {
                     </td>
                     <td>
                       <span>
-                        {f.isDeleted === false ? <span style={{color:"green", fontSize:"12px"}}>Work</span> : <span style={{color:"red",fontSize:"12px"}}>Out Of Work</span>}
+                        {f.isDeleted === false ? <span style={{color:"green"}}>Work</span> : <span style={{color:"red"}}>Out</span>}
                       </span>
                     </td>
                     <td  className="facultyList_superadmin_action d-flex gap-3">

@@ -39,7 +39,8 @@ const Index = () => {
           setLesson(
             data.specialities &&
               data.specialities.map((s) => s.lessonSpecialities)
-          );
+          )
+          setSelectLesson(data.lessons && data.lessons.map(l => l.id))
         })
         .catch((e) => console.log(e));
     }

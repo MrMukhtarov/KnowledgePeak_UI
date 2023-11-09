@@ -25,8 +25,8 @@ const Index = () => {
   const [speciality, setSpeciality] = useState({});
   const [groups, setGroups] = useState({});
   const [start,setStart] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   
-
   useEffect(() => {
     axios.get("https://localhost:7153/api/TeacherAuth/GetAll").then((res) => {
       setTeacher(res.data);
@@ -44,14 +44,17 @@ const Index = () => {
     })
   },[user.token,user.username])
 
+  
   useEffect(() => {
-    axios
+    if(disabled){
+      axios
       .get(`https://localhost:7153/api/Groups/Get/${schedule.group.id}`)
       .then((res) => {
         setGroups(res.data.speciality && res.data.speciality.id)
         setStart(true)
       });
-  }, []);
+    }
+  }, [schedule,disabled]);
 
   useEffect(() => {
     if (start) {
@@ -65,12 +68,12 @@ const Index = () => {
     axios
       .get(`https://localhost:7153/api/ClassSchedules/GetById/${id}`, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       })
       .then((res) => {
         setSchedule(res.data);
+        setDisabled(true)
         setSelectClassTime(res.data.classTime && res.data.classTime.id)
         setSelectLesson(res.data.lesson && res.data.lesson.id)
         setInputs(res.data)
@@ -80,7 +83,7 @@ const Index = () => {
       });
   }, [id,user.token]);
 
-  console.log(schedule);
+
 
   useEffect(() => {
     if (selectTeacher) {
@@ -92,7 +95,6 @@ const Index = () => {
     }
   }, [isLessonSelectDisabled, selectTeacher]);
 
-  console.log(lesson);
 
   useEffect(() => {
     axios

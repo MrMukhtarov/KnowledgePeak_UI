@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { PiStudentBold } from 'react-icons/pi';
 import { FaPeopleGroup } from 'react-icons/fa6';
 import { MdMeetingRoom } from 'react-icons/md';
+import './Index.css'
 
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -87,14 +88,16 @@ const Index = () => {
         onCollapse={(value) => setCollapsed(value)}
         style={{height:"100vh"}}
         className="superadmin-sidebar"
-      >
+        >
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
+          itemSelectedBg = 'red'
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
           onClick={(e) => OpenPage(e.key)}
+          className="ant-menu-item.active"
         />
       </Sider>
  </Layout>

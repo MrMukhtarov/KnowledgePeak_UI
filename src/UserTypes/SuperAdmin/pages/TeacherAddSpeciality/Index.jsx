@@ -30,6 +30,7 @@ const Index = () => {
         })
         .then((res) => {
           setSpeTeacher(res.data);
+          setSelectSpeciality(res.data.specialities && res.data.specialities.map(s => s.id))
           setDisable(true);
         })
         .catch((e) => console.log(e));

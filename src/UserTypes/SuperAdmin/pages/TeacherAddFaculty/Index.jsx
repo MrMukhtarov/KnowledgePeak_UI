@@ -9,13 +9,30 @@ const Index = () => {
   const [selectTeacher, setSelectTeacher] = useState("");
   const [selectFaculty, setSelectFaculty] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [disabled, setDisables] = useState(false)
 
   useEffect(() => {
     axios
       .get("https://localhost:7153/api/TeacherAuth/GetAll")
-      .then((res) => setTeacher(res.data))
+      .then((res) => {
+        setTeacher(res.data)
+      })
       .catch((e) => console.log(e));
   }, []);
+
+  useEffect(() => {
+    if(disabled){
+      axios.get(`https://localhost:7153/api/TeacherAuth/GetByUserName?Usermame=${selectTeacher}`,{
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then(res => {
+        setSelectFaculty(res.data && res.data.faculties && res.data.faculties.map(f => f.id))
+      })
+    }
+  },[selectTeacher,user.token,disabled])
+
 
   useEffect(() => {
     axios
@@ -29,13 +46,14 @@ const Index = () => {
 
     if (name === "userName") {
       setSelectTeacher(value);
+      setDisables(true)
     }
 
     if (name === "facultyIds") {
       const selectedFacultys = Array.from(options)
         .filter((option) => option.selected && option.value !== " ")
         .map((option) => Number(option.value));
-        setSelectFaculty(selectedFacultys.length > 0 ? selectedFacultys : " ");
+        setSelectFaculty(selectedFacultys.length > 0 ? selectedFacultys : "");
     }
   };
 
@@ -43,10 +61,9 @@ const Index = () => {
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("userName", selectTeacher || "");
-    console.log(selectTeacher);
 
-    selectFaculty.forEach((faculyIds) => {
-      formdata.append("facultyIds", faculyIds);
+    selectFaculty && selectFaculty.forEach((facultyIds) => {
+      formdata.append("facultyIds", facultyIds);
     });
 
     axios

@@ -27,11 +27,12 @@ const Index = () => {
     }
     
     if (name === "userName") {
-        const selectedStudent = Array.from(options)
-          .filter((option) => option.selected && option.value !== "")
+      const selectedStudent = Array.from(options)
+        .filter((option) => option.selected && option.value !== "")
+        .map((option) => option.value);
   
-        setSelectStudent(selectedStudent);
-      }
+      setSelectStudent(selectedStudent);
+    }
   };
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const Index = () => {
         setSelectSpeciality(res.data.speciality && res.data.speciality.id)
         setSelectStudent(res.data.students && res.data.students.map(s => s.userName))
     })
-  },[])
+  },[id,user.token])
 
   console.log(selectStudent);
 
@@ -219,7 +220,7 @@ const Index = () => {
               value={selectStudent}
               multiple
             >
-              <option value="" selected disabled>
+              <option value="" selected>
                 Select Student
               </option>
               {student &&

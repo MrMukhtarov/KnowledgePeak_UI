@@ -37,7 +37,7 @@ const Index = () => {
         const data = res.data;
         setSpecialityId(data.speciality && data.speciality.id)
         setCurrent(data.groups && data.groups)
-        setSelectGroup(data.groups && data.groups.forEach(f => f.id))
+        setSelectGroup(data.groups && data.groups.map(f => f.id))
       })
     }
   },[disabled,selectTutor,user.token])
@@ -65,7 +65,7 @@ const Index = () => {
 
     if (name === "groupIds") {
         const selectedGroups = Array.from(options)
-          .filter((option) => option.selected && option.value !== "")
+          .filter((option) => option.selected && option.value !== " ")
           .map((option) => Number(option.value));
     
         setSelectGroup(selectedGroups);
@@ -76,7 +76,8 @@ const Index = () => {
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("userName", selectTutor);
-    selectGroup.forEach((groupIds) => {
+
+    selectGroup && selectGroup.forEach((groupIds) => {
         formdata.append("groupIds", groupIds);
       });
 

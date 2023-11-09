@@ -10,6 +10,7 @@ const Index = () => {
   const [selectLesson, setSelectLesson] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const [error, setError] = useState("");
+  const [dsaible,setDisable] = useState(false);
 
   useEffect(() => {
     axios
@@ -19,8 +20,11 @@ const Index = () => {
           Authorization: `Bearer ${user.token}`,
         },
       })
-      .then((res) => setSpeciality(res.data));
-  }, []);
+      .then((res) => {
+        setSpeciality(res.data)
+      });
+  }, [user.token]);
+
 
   useEffect(() => {
     axios
@@ -29,11 +33,21 @@ const Index = () => {
       .catch((e) => console.log(e));
   }, []);
 
+  useEffect(() => {
+    if(dsaible){
+    axios.get(`https://localhost:7153/api/Specialities/GetById/${selectSpeciality}`)
+    .then(res => {
+      setSelectLesson(res.data.lessonSpecialities && res.data.lessonSpecialities.map(l => l.lesson.id))
+    })
+    }
+  },[dsaible,selectSpeciality])
+
   const handleInputChange = (e) => {
     const { name, value, options } = e.target;
 
     if (name === "id") {
         setSelectSpeciality(value);
+        setDisable(true)
     }
 
     if (name === "lessonIds") {
@@ -122,7 +136,7 @@ const Index = () => {
               value={selectLesson}
               multiple
             >
-              <option value="" selected disabled>
+              <option value="" selected>
                 Select Lesson
               </option>
               {lesson

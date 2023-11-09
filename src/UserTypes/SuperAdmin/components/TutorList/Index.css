@@ -1,0 +1,9 @@
+.tutor_img_admin{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.ant-tabs-ink-bar {
+    background-color: transparent !important;
+  }
