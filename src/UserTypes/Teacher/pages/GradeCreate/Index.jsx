@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import './Index.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { format } from 'date-fns';
 
 const Index = () => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -14,10 +12,6 @@ const Index = () => {
     const [errorMessages, setErrorMessages] = useState({});
     const [error, setError] = useState("");
     const [inputs, setInputs] = useState({});
-
-    const currentDate = new Date();
-    const dates = format(currentDate, "yyyy-MM-dd");
-    const dateNow = `${dates}`;
 
     useEffect(() => {
         axios

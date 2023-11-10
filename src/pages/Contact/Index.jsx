@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "./Index.css";
 import Map from "../../components/ContactComponents/Map/Index";
 import Information from '../../components/ContactComponents/Information/Index'
 import Form from '../../components/ContactComponents/Form/Index'

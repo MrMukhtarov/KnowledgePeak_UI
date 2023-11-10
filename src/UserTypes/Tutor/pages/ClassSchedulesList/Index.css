@@ -2,3 +2,33 @@
     color: blue;
     transition: .3s all;
 }
+.teacher_grades_list .cancel{
+    background-color: red;
+    border-radius: 5px;
+    padding: 5px 5px;
+    color: white;
+    width: 100% !important;
+    text-align: center;
+    font-size: 13px;
+}
+.teacher_grades_list .finished{
+    background-color: green;
+    border-radius: 5px;
+    padding: 5px 5px;
+    width: 10px;
+    color: white;
+    width: 100% !important;
+    text-align: center;
+    font-size: 13px;
+
+}
+.teacher_grades_list .pending{
+    background-color: chocolate;
+    border-radius: 5px;
+    padding: 5px 5px;
+    color: white;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+
+}

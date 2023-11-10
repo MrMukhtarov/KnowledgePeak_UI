@@ -226,11 +226,19 @@ const Index = () => {
                           {s.classTime.startTime} : {s.classTime.endTime}
                         </td>
                         <td>
-                          {s.isDeleted === false ? (
-                            <span style={{ color: "green" }}>Active</span>
-                          ) : (
-                            <span style={{ color: "red" }}>DeActive</span>
-                          )}
+                          {s.status === 11 ? (
+                            <div className="cancel">
+                              <span>Canceled</span>
+                            </div>
+                          ) : s.status === 10 ? (
+                            <div className="finished">
+                              <span>Finished</span>
+                            </div>
+                          ) : s.status === 8 ? (
+                            <div className="pending">
+                              <span>Pending</span>
+                            </div>
+                          ) : ""}
                         </td>
                         <td>
                           <NavLink

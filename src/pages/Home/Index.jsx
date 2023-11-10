@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "./Index.css";
 import HomeHero from "../../components/HomeComponents/HomeHero/Index";
 import Information from "../../components/HomeComponents/Information/Index";
 import Instagram from "../../components/HomeComponents/Instagram/Index";

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./Index.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";

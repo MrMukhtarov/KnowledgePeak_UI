@@ -1,5 +1,4 @@
 import React from 'react'
-import './Index.css'
 import MobileMenu from '../../components/SuperAdminMobileMenu/Index'
 import SideBar from '../../components/Sidebar/Index'
 import Lesson from '../../components/LessonList/Index'

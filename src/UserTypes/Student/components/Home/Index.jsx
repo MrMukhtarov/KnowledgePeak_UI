@@ -35,7 +35,7 @@ function Index() {
         }
       )
       .then((res) => {
-        setStudent(res.data.classSchedules);
+        setStudent(res.data.classSchedules && res.data.classSchedules.filter(s => s.status !== 11));
         setGrade(res.data.studentHistory && res.data.studentHistory);
       });
   }, []);

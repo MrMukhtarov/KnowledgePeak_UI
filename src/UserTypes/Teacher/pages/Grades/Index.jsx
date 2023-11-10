@@ -1,5 +1,4 @@
 import React from 'react'
-import './Index.css'
 import SideBar from '../../components/SideBar/Index'
 import Grades from '../../components/Grades/Index'
 

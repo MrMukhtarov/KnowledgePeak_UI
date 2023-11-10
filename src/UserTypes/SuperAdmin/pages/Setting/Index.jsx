@@ -1,5 +1,4 @@
 import React from 'react'
-import './Index.css'
 import SideBar from "../../components/Sidebar/Index";
 import MobileMenu from '../../components/SuperAdminMobileMenu/Index'
 import Setting from '../../components/Setting/Index'
