@@ -142,7 +142,6 @@ const Index = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
                   <th scope="col">Image</th>
                   <th scope="col">Name</th>
                   <th scope="col">Surname</th>
@@ -163,17 +162,6 @@ const Index = () => {
               <tbody>
                 {currentItems.map((f) => (
                   <tr key={f.id}>
-                    <th
-                      style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        fontSize: "12px",
-                      }}
-                      scope="row"
-                    >
-                      <span title={f.id}>{f.id.substring(0,8)}</span>
-                    </th>
                     <th scope="row">
                       <img
                         className="img-fluid teacher_img"
