@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const { Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -16,45 +17,47 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Dashboard", "1",<HomeOutlined />),
-  getItem("Profile", "2",<CgProfile />),
+  getItem("Dashboard","/tutor",<HomeOutlined />),
+  getItem("Profile","/tutor/profile",<CgProfile />),
 ];
 
 const Index = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
-  const OpenPage = (item) => {
-    if(item === "1"){
-     navigate("/tutor");
-    }
-    if(item === "2"){
-      navigate("/tutor/profile");
-     }
-  }
+  const handleMenuClick = (key) => {
+    navigate(key);
+    setCollapsed(true);
+  };
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
- 
- <Layout style={{width:"0"}}>
-       <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        style={{height:"100vh"}}
-        className="superadmin-sidebar"
+    <Layout style={{ width: "0" }}>
+    <Sider
+      style={{ height: "100vh" }}
+      className="superadmin-sidebar"
+    >
+      <div className="demo-logo-vertical" />
+      <Menu
+        theme="dark"
+        selectedKeys={[window.location.pathname]}
+        mode="inline"
+        className="ant-menu-item.active"
       >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-          onClick={(e) => OpenPage(e.key)}
-        />
-      </Sider>
- </Layout>
+        {items.map((item) => (
+          <Menu.Item
+            key={item.key}
+            icon={item.icon}
+            onClick={() => handleMenuClick(item.key)}
+          >
+            <NavLink to={item.key}>{item.label}</NavLink>
+          </Menu.Item>
+        ))}
+      </Menu>
+    </Sider>
+  </Layout>
   );
 };
 
