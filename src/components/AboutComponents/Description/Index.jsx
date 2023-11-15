@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Index.css";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Index = () => {
+  useEffect(() => {
+    AOS.init();
+  }, [])
   return (
     <section id="AboutDesc" className="py-5">
       <div className="container">
-        <p className="mb-5">
+        <p style={{overflow:"hidden"}} className="mb-5" data-aos="fade-left">
           Duihs autem vel eum iriure dolor in hendrerit in vulputate velit esse
           molestie consequat, vel illum dolore eu feugiat nulla facilisis at
           vero eros et accumsan et iusto odio dignissim qui blandit praesent
@@ -16,7 +21,7 @@ const Index = () => {
           claritatem. Investigationes demonstraverunt lectores legere me lius
           quod ii legunt saepius.
         </p>
-        <p>
+        <p style={{overflow:"hidden"}} data-aos="fade-right">
           Investigationes demonstraverunt lectores. Duis autem vel eum iriure
           dolor in hendrerit in vulputate velit esse molestie consequat, vel
           illum dolore eu feugiat nulla facilisis at vero eros et accumsan et

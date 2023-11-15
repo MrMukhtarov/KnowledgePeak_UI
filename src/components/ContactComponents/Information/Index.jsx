@@ -3,6 +3,8 @@ import "./Index.css";
 import { HashLink } from "react-router-hash-link";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Index = () => {
   const [setting, setSetting] = useState([]);
@@ -13,6 +15,10 @@ const Index = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    AOS.init();
+  }, [])
+
   return (
     <section id="Contact_Info" className="mt-5 py-3">
       <div className="container-contact">
@@ -22,7 +28,7 @@ const Index = () => {
               key={set.id}
               className="contact_info_all d-flex justify-content-center text-center"
             >
-              <div className="contact_info_box d-flex flex-column gap-4 col-lg-5 justify-content-end text-start">
+              <div data-aos="fade-left" className="contact_info_box d-flex flex-column gap-4 col-lg-5 justify-content-end text-start">
                 <h3>Visit Us</h3>
                 <p>{set.location}</p>
                 <div>
@@ -30,7 +36,7 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="contact_info_box d-flex flex-column gap-4 col-lg-5 text-start">
+              <div data-aos="fade-right" className="contact_info_box d-flex flex-column gap-4 col-lg-5 text-start">
                 <h3>Get In Touch</h3>
                 <div>
                   <p>TEL {set.phone}</p>
