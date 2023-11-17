@@ -1,0 +1,22 @@
+.feedback_modal {
+    background-color: #002140;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    width: 500px;
+    max-height: 70vh;
+    overflow-x: auto;
+    border-radius: 5px;
+}
+
+.feedback_modal span {
+    cursor: pointer;
+}
+
+.feedback_modal span:hover {
+    color: red !important;
+    transition: 0.3s all !important;
+}

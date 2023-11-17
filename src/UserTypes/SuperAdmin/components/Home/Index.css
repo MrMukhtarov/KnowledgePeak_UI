@@ -26,6 +26,14 @@
     margin-bottom: 30px;
 }
 
+.admin_feedback_notification{
+    background-color: #002140;
+    color: #fff;
+    margin-left: 43px;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
 @media screen and (max-width:992px){
     .super_admin_home_box{
         width: 40%;

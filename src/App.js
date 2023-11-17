@@ -72,6 +72,7 @@ import RoomUpdate from "./UserTypes/SuperAdmin/pages/RoomUpdate/Index.jsx";
 import OurTeacher from "./pages/OurTeacher/Index.jsx";
 import TeacherDetail from "./pages/TeacherDeatil/Index.jsx";
 import ScrollTop from "./components/ScrollTop/Index.js";
+import FeedBack from './UserTypes/SuperAdmin/pages/FeedBack/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -251,6 +252,10 @@ function App() {
               <Route
                 path="/superadmin/room/update/:id"
                 element={<RoomUpdate />}
+              />
+               <Route
+                path="/superadmin/feedback"
+                element={<FeedBack />}
               />
             </Route>
             <Route

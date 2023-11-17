@@ -10,6 +10,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { MdMeetingRoom } from "react-icons/md";
 import "./Index.css";
 import { NavLink } from "react-router-dom";
+import { MdFeedback } from "react-icons/md";
 
 const { Sider } = Layout;
 
@@ -33,6 +34,7 @@ const items = [
   getItem("Student", "/superadmin/student", <PiStudentBold />),
   getItem("Group", "/superadmin/group", <FaPeopleGroup />),
   getItem("Room", "/superadmin/room", <MdMeetingRoom />),
+  getItem("FeedBack", "/superadmin/feedback", <MdFeedback />),
 ];
 
 const Index = () => {
