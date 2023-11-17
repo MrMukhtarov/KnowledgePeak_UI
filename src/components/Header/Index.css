@@ -82,6 +82,20 @@ header a:hover{
 .mobile-menu{
     display: none;
 }
+.header .header_link{
+    color: #1a265c;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    text-transform: uppercase;
+    max-width: 200px;
+    transition: .3s all;
+}
+.header_active{
+    border-bottom: 1px solid #fcb900;
+    color: #fcb900;
+}
 
 @media screen and (max-width:992px){
     .header-center img{

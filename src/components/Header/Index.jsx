@@ -12,7 +12,7 @@ const Index = () => {
     axios
       .get("https://localhost:7153/api/Settings")
       .then((res) => setSetting(res.data))
-      .catch((err) => console.log(err));  
+      .catch((err) => console.log(err));
   }, []);
 
   const Burger = () => {
@@ -28,13 +28,29 @@ const Index = () => {
     mobileMenu.fadeOut("slow");
   };
 
+  const Active = () => {};
+
   return (
     <header className="p-3">
       <div className="container">
         <div className="header-all d-flex align-items-center justify-content-between">
           <div className="header-left col-lg-2">
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive ? "header_active" : "header_link"
+              }
+            >
+              About
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "header_active" : "header_link"
+              }
+              to="/contact"
+            >
+              Contact
+            </NavLink>
           </div>
           <div className="header-center col-lg-4">
             {setting.map((set) => {
@@ -50,8 +66,20 @@ const Index = () => {
             })}
           </div>
           <div className="header-right col-lg-3">
-            <NavLink to="/ourteacher">Teacher</NavLink>
-            <NavLink className="header-login" to="/login">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "header_active" : "header_link"
+              }
+              to="/ourteacher"
+            >
+              Teacher
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "header_active" : "header_link"
+              }
+              to="/login"
+            >
               Login
             </NavLink>
           </div>
