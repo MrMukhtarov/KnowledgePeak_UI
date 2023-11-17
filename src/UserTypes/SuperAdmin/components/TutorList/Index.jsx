@@ -25,7 +25,7 @@ const Index = () => {
       })
       .then((res) => setTutor(res.data))
       .catch((e) => console.log(e));
-  }, []);
+  }, [user.token]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -175,12 +175,13 @@ const Index = () => {
                     <th scope="row">
                       <img
                         className="img-fluid tutor_img_admin"
-                        style={{ width: "70px" }}
+                        style={{ width: "70px" , cursor:"pointer"}}
                         src={f.imageUrl}
                         alt=""
+                        onClick={() => navigate(`/superadmin/tutor/${f.userName}`)}
                       />
                     </th>
-                    <td>{f.name}</td>
+                    <td className="superadmin_tutor_name" style={{cursor:"pointer"}} onClick={() => navigate(`/superadmin/tutor/${f.userName}`)}>{f.name}</td>
                     <td>{f.surname}</td>
                     <td>{f.userName}</td>
                     <td>{f.email}</td>

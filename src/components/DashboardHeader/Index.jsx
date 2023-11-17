@@ -44,7 +44,7 @@ const Index = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, [type,start,user && user.token]);
+  }, [type,start,user && user.token,]);
 
   const startCount = () => {
     setStart(true)

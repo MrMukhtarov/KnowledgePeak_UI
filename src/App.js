@@ -73,6 +73,9 @@ import OurTeacher from "./pages/OurTeacher/Index.jsx";
 import TeacherDetail from "./pages/TeacherDeatil/Index.jsx";
 import ScrollTop from "./components/ScrollTop/Index.js";
 import FeedBack from './UserTypes/SuperAdmin/pages/FeedBack/Index.jsx'
+import TeacherProfileAdmin from './UserTypes/SuperAdmin/pages/TeacherProfile/Index.jsx'
+import TutorProfileAdmin from './UserTypes/SuperAdmin/pages/TutorProfile/Index.jsx'
+import StudentProfileAdmin  from './UserTypes/SuperAdmin/pages/StudentProfile/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -256,6 +259,18 @@ function App() {
                <Route
                 path="/superadmin/feedback"
                 element={<FeedBack />}
+              />
+               <Route
+                path="/superadmin/teacher/:username"
+                element={<TeacherProfileAdmin />}
+              />
+                <Route
+                path="/superadmin/tutor/:username"
+                element={<TutorProfileAdmin />}
+              />
+                 <Route
+                path="/superadmin/student/:username"
+                element={<StudentProfileAdmin />}
               />
             </Route>
             <Route

@@ -165,12 +165,12 @@ const Index = () => {
                     <th scope="row">
                       <img
                         className="img-fluid teacher_img"
-                        style={{ width: "70px" }}
                         src={f.imageUrl}
                         alt=""
+                        style={{cursor:"pointer",width: "70px"}} onClick={() => navigate(`/superadmin/teacher/${f.userName}`)}
                       />
                     </th>
-                    <td>{f.name}</td>
+                    <td className="superadmin_teacher_name" style={{cursor:"pointer"}} onClick={() => navigate(`/superadmin/teacher/${f.userName}`)}>{f.name}</td>
                     <td>{f.surname}</td>
                     <td>{f.userName}</td>
                     <td>{f.email}</td>

@@ -7,3 +7,7 @@
 .ant-tabs-ink-bar {
     background-color: transparent !important;
   }
+.superadmin_tutor_name:hover{
+    color: blue;
+    transition: .3s all;
+}

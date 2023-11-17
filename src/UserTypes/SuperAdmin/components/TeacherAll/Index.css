@@ -3,3 +3,7 @@
     width: 40px !important;
     height: 40px;
 }
+.superadmin_teacher_name:hover{
+    color: blue;
+    transition: .3s all;
+}

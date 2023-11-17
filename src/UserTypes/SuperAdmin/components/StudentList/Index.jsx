@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
+import './Index.css'
 
 const Index = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Index = () => {
       })
       .then((res) => setStudent(res.data))
       .catch((e) => console.log(e));
-  }, []);
+  }, [user.token]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -151,12 +152,13 @@ const Index = () => {
                     <th scope="row">
                       <img
                         className="img-fluid tutor_img_admin"
-                        style={{ width: "70px" }}
+                        style={{ width: "70px" , cursor:"pointer"}}
                         src={f.imageUrl}
                         alt=""
+                        onClick={() => navigate(`/superadmin/student/${f.userName}`)}
                       />
                     </th>
-                    <td>{f.name}</td>
+                    <td className="superadmin_student_name" style={{cursor:"pointer"}} onClick={() => navigate(`/superadmin/student/${f.userName}`)}>{f.name}</td>
                     <td>{f.surName}</td>
                     <td>{f.userName}</td>
                     <td>{f.course}</td>
