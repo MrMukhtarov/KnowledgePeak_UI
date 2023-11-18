@@ -31,9 +31,7 @@ const Index = () => {
         setTutor(res.data);
         setSchedules(res.data.classSchedules);
       });
-  }, []);
-  const newSchedules = schedules.sort((a, b) => b.id - a.id);
-
+  }, [user.token,user.username]);
   const handleClose = () => setShow(false);
 
   const handleShow = (eventInfo) => {
@@ -70,38 +68,6 @@ const Index = () => {
             </div>
           </div>
           <div className="tutor_home_bottom mt-5 d-flex justify-content-center flex-column">
-            {/* <h1
-              className="tutor_home_groups_box_title_head text-center"
-              style={{ color: "blue" }}
-            >
-              Class Schedules
-            </h1>
-            <div className="d-flex  flex-wrap gap-3 justify-content-center">
-              {newSchedules.slice(0, 6).map((c) => {
-                return (
-                  <div
-                    key={c.id}
-                    className="teacher_dashboard_bottom_box col-lg-3 d-flex flex-column justify-content-center align-items-center gap-2"
-                  >
-                    <div className="teacher_dashboard_bottom_box_top text-center">
-                      <span className="text-center" style={{color:"blue"}}>Group Name : {c.group.name}</span><br />
-                      <span className="text-center" style={{color:"blue"}}>Room : {c.room.roomNumber}</span>
-                    </div>
-                    <div className="teacher_dashboard_bottom_box_bottom d-flex gap-3 justify-centent-center">
-                      <span>
-                        <i className="fa-solid fa-calendar-days me-1"></i>
-                        {c.scheduleDate.substring(0, 10)}
-                      </span>
-                      |
-                      <span>
-                        <i class="fa-solid fa-clock me-1"></i>
-                        {c.classTime.startTime} : {c.classTime.endTime}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div> */}
             <FullCalendar
               plugins={[dayGridPlugin, interactionPlugin]}
               initialView="dayGridMonth"

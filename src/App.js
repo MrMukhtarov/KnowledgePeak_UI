@@ -76,6 +76,9 @@ import FeedBack from './UserTypes/SuperAdmin/pages/FeedBack/Index.jsx'
 import TeacherProfileAdmin from './UserTypes/SuperAdmin/pages/TeacherProfile/Index.jsx'
 import TutorProfileAdmin from './UserTypes/SuperAdmin/pages/TutorProfile/Index.jsx'
 import StudentProfileAdmin  from './UserTypes/SuperAdmin/pages/StudentProfile/Index.jsx'
+import StudentProfileForTeacher from './UserTypes/Teacher/pages/StudentProfile/Index.jsx'
+import StudentProfileForTutor from './UserTypes/Tutor/pages/StudentProfile/Index.jsx'
+import ScheduleListAdmin from './UserTypes/SuperAdmin/pages/ClassScheduleList/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -127,6 +130,10 @@ function App() {
               <Route
                 path="/superadmin/faculty/create"
                 element={<FacultyCreate />}
+              />
+                   <Route
+                path="/superadmin/schedule"
+                element={<ScheduleListAdmin />}
               />
               <Route
                 path="/superadmin/faculty/update/:id"
@@ -290,6 +297,10 @@ function App() {
                 path="/teacher/grade/update/:id"
                 element={<GradeUpdate />}
               />
+                <Route
+                path="/teacher/grade/:username"
+                element={<StudentProfileForTeacher />}
+              />
               <Route path="/teacher/profile" element={<TeacherProfile />} />
               <Route
                 path="/teacher/update"
@@ -312,6 +323,10 @@ function App() {
               <Route
                 path="/tutor/classschedules/:username"
                 element={<TutorClassScheduleList />}
+              />
+              <Route
+                path="/tutor/group/student/:username"
+                element={<StudentProfileForTutor />}
               />
               <Route
                 path="/tutor/group/createSchedules/:id"

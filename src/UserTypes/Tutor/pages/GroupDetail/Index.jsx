@@ -13,7 +13,7 @@ const Index = () => {
     axios.get(`https://localhost:7153/api/Groups/Get/${id}`).then((res) => {
       setGroup(res.data);
     });
-  }, []);
+  }, [id]);
 
   const filteredFaculty =
     group.students &&
@@ -94,10 +94,10 @@ const Index = () => {
                   filteredFaculty.map((s) => {
                     return (
                       <tr>
-                        <th scope="row">
+                        <th style={{cursor:"pointer"}} onClick={() => nav(`/tutor/group/student/${s.userName}`)} scope="row">
                           <img src={s.imageUrl} alt="" />
                         </th>
-                        <td>{s.name}</td>
+                        <td className="tutor_stu_name" onClick={() => nav(`/tutor/group/student/${s.userName}`)}>{s.name}</td>
                         <td>{s.surName}</td>
                         <td>{s.age}</td>
                         <td>{s.avarage}</td>

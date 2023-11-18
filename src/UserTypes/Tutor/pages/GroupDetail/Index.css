@@ -30,3 +30,12 @@
     height: 40px;
     object-fit: cover;
 }
+.tutor_stu_name{
+    cursor: pointer;
+    color: #2C323F;
+    font-weight: bolder;
+}
+.tutor_stu_name:hover{
+    color: #0d6efd;
+    transition: .3s all;
+}

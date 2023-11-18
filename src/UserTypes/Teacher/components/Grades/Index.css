@@ -24,3 +24,12 @@
     color: #2C323F;
     margin-bottom: 40px;
 }
+.teacher_stu_name{
+    color: #2C323F !important;
+    font-weight: bolder;
+}
+.teacher_stu_name:hover{
+    cursor: pointer;
+    color: #0d6efd !important;
+    transition: .3s all;
+}

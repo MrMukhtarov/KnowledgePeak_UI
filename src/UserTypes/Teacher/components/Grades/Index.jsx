@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import "./Index.css";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
@@ -11,6 +11,7 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const nav = useNavigate();
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -37,7 +38,7 @@ const Index = () => {
       .then((res) => {
         setTeacher(res.data);
       });
-  }, []);
+  }, [user.username]);
 
 
   return (
@@ -82,7 +83,7 @@ const Index = () => {
                       <tr>
                         <th scope="row">{g.id}</th>
                         <td>{g.point}</td>
-                        <td>{g.student.name}</td>
+                        <td className="teacher_stu_name" onClick={() => nav(`/teacher/grade/${g.student.userName}`)}>{g.student.name}</td>
                         <td>{g.student.surName}</td>
                         <td>
                           {g.gradeDate.substring(0, 10)} -{" "}

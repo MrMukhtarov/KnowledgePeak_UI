@@ -4,12 +4,19 @@ import img1 from "../../../../assets/teacher-icon-01.svg";
 import img2 from "../../../../assets/stu.svg";
 import img3 from "../../../../assets/lesson.svg";
 import axios from "axios";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/daygrid";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const Index = () => {
   var user = JSON.parse(localStorage.getItem("user"));
   const [teacher, setTeacher] = useState({});
   const [groups, setGroups] = useState([]);
   const [getGroups, setGetGrops] = useState([]);
+  const [show, setShow] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   var count = [];
   var stuCount = 0;
 
@@ -26,7 +33,7 @@ const Index = () => {
         );
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [user.username]);
 
   useEffect(() => {
     axios.get("https://localhost:7153/api/Groups").then((res) => {
@@ -56,18 +63,24 @@ const Index = () => {
         stuCount += s.students.length;
       });
   }
-Student(count);
+  Student(count);
 
-  const date = new Date();
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
-  let currentDate = `${year}-${month}-${day}`;
+  const handleClose = () => setShow(false);
+
+  const handleShow = (eventInfo) => {
+    setSelectedEvent(eventInfo.event);
+    setShow(true);
+  };
 
   return (
     <section className="teacher_dashboard py-3 h-100">
       <div className="container">
-        <h1 className="teacher_dashboard_title">Welcome <span style={{fontWeight:"bolder", color:"blue"}}>{teacher.userName}</span></h1>
+        <h1 className="teacher_dashboard_title">
+          Welcome{" "}
+          <span style={{ fontWeight: "bolder", color: "blue" }}>
+            {teacher.userName}
+          </span>
+        </h1>
         <div className="teacher_dashboard_top d-flex justify-content-center gap-5 mt-5">
           <div className="teacher_dashboard_top_box col-lg-3 d-flex justify-content-between align-items-center">
             <div className="teacher_dashboard_top_box_left">
@@ -101,34 +114,56 @@ Student(count);
         </div>
         <div className="teacher_dashboard_bottom mt-5">
           <h5 className="teacher_dashboard_bottom_title text-center mb-4">
-            Upcoming Lesson
+            All Lesson
           </h5>
-          <div className="teacher_dashboard_bottom_all d-flex justify-content-center flex-wrap gap-3">
-            {teacher.classSchedules &&
-              teacher.classSchedules
-                .filter((g) => g.scheduleDate > currentDate)
-                .map((c) => {
-                  return (
-                    <div
-                      key={c.id}
-                      className="teacher_dashboard_bottom_box col-lg-3 d-flex flex-column justify-content-center align-items-center gap-2"
-                    >
-                      <div className="teacher_dashboard_bottom_box_top text-center">
-                        <span className="text-center">{c.group.name}</span>
-                      </div>
-                      <div className="teacher_dashboard_bottom_box_bottom d-flex gap-3 justify-centent-center">
-                        <span>
-                          <i className="fa-solid fa-calendar-days me-1"></i>
-                          {c.scheduleDate.substring(0,10)}
-                        </span>
-                        |
-                        <span>
-                          <i class="fa-solid fa-clock me-1"></i>{c.classTime.startTime}-{c.classTime.endTime}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+          <div className="tutor_home_bottom mt-5 d-flex justify-content-center flex-column">
+            <FullCalendar
+              plugins={[dayGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              selectOverlap={true}
+              events={
+                teacher.classSchedules &&
+                teacher.classSchedules.map((s) => ({
+                  date: s.scheduleDate.substring(0, 10),
+                  title:
+                    s.group &&
+                    s.group.name +
+                      " " +
+                      s.room.roomNumber +
+                      " " +
+                      s.classTime.startTime +
+                      " " +
+                      s.classTime.endTime +
+                      " " +
+                      s.lesson.name,
+                }))
+              }
+              eventClick={(e) => handleShow(e)}
+            />
+
+            <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Lesson Details</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {selectedEvent && (
+                  <div>
+                    <p>Date: {selectedEvent.startStr}</p>
+                    <p>Description: {selectedEvent.title}</p>
+                  </div>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>

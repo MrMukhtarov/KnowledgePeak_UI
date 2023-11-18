@@ -11,6 +11,7 @@ import { MdMeetingRoom } from "react-icons/md";
 import "./Index.css";
 import { NavLink } from "react-router-dom";
 import { MdFeedback } from "react-icons/md";
+import { GrSchedule } from "react-icons/gr";
 
 const { Sider } = Layout;
 
@@ -35,6 +36,7 @@ const items = [
   getItem("Group", "/superadmin/group", <FaPeopleGroup />),
   getItem("Room", "/superadmin/room", <MdMeetingRoom />),
   getItem("FeedBack", "/superadmin/feedback", <MdFeedback />),
+  getItem("Schedule", "/superadmin/schedule", <GrSchedule style={{backgroundColor:"white"}}/>),
 ];
 
 const Index = () => {
