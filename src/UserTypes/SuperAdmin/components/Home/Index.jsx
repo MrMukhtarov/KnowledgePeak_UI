@@ -9,6 +9,7 @@ import { FaChalkboardTeacher } from 'react-icons/fa';
 import { CiTimer } from 'react-icons/ci';
 import { MdFeedback } from "react-icons/md";
 import { format } from "date-fns";
+import { GrSchedules } from "react-icons/gr";
 
 const Index = () => {
   const [stuCount, setStuCount] = useState();
@@ -23,6 +24,7 @@ const Index = () => {
   const [feedBack, setFeedBack] = useState();
   const nav = useNavigate();
   const [feedbackList, setFeedBackList] = useState([])
+  const [schedule, setSchedule] = useState([])
   const user = JSON.parse(localStorage.getItem("user"));
   const colors = ["#002140","green"];
   const [value, setvalue] = useState(0);
@@ -48,6 +50,13 @@ const Index = () => {
     axios
       .get("https://localhost:7153/api/StudentAuth/Count")
       .then((res) => setStuCount(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://localhost:7153/api/ClassSchedules/Count")
+      .then((res) => setSchedule(res.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -277,6 +286,20 @@ const Index = () => {
               </div>
               <div className="super_admin_home_box_bottom_right">
                 <i><MdFeedback/></i>
+              </div>
+            </div>
+          </div>
+
+              <div onClick={() => nav('/superadmin/schedule')} style={{cursor:"pointer"}} className="super_admin_home_box col-lg-3">
+            <div className="super_admin_home_box_top">
+              <h5>Schedule</h5>
+            </div>
+            <div className="super_admin_home_box_bottom d-flex justify-content-between align-items-center">
+              <div className="super_admin_home_box_bottom_left">
+                <h3>{schedule}</h3>
+              </div>
+              <div className="super_admin_home_box_bottom_right">
+              <i class="fa-solid fa-calendar-days"></i>
               </div>
             </div>
           </div>
