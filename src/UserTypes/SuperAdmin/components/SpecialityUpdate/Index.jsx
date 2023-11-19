@@ -51,6 +51,13 @@ const handleInputChange = (e) => {
     [name]: value,
   }));
 
+  setErrorMessages((prev) => ({
+    ...prev,
+    [name]: null,
+  }));
+
+  setError("");
+
   if (name === "facultyId") {
    setSelectFaculty(value)
   }
@@ -61,7 +68,9 @@ const handleInputChange = (e) => {
     setSelectLessons(selectedLessonIds);
   }
 };
-console.log(inpust);
+useEffect(() => {
+  setErrorMessages({});
+}, [inpust]);
 const handleSubmit = (e) => {
   e.preventDefault()
   var formData = new FormData();
@@ -116,7 +125,7 @@ const handleSubmit = (e) => {
                 <p style={{color:"red"}} className="error-message">{errorMessages.Name}</p>
               </div>
             ) : <div className="error-messages">
-            <p style={{color:"red"}} className="error-message">{error.includes("name")  ? error : "" }</p>
+            <p style={{color:"red"}} className="error-message">{error.includes("naem")  ? error : "" }</p>
           </div>}
         </div>
         {/* {}======= */}

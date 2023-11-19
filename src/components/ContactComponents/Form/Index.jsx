@@ -20,6 +20,8 @@ const Index = () => {
       ...prev,
       [name]: null,
     }));
+
+    setError("");
   };
 
   useEffect(() => {

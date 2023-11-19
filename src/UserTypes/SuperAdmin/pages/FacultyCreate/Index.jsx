@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Index.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,11 +16,22 @@ const Index = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+
+    setError("");
+
     setInputs((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

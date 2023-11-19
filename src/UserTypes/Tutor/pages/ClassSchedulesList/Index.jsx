@@ -11,7 +11,6 @@ const Index = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const nav = useNavigate();
-  const [tutor, setTutor] = useState({});
   const [schedules, setSchedules] = useState([]);
   const [error, setError] = useState("");
 
@@ -42,10 +41,9 @@ const Index = () => {
         }
       )
       .then((res) => {
-        setTutor(res.data);
         setSchedules(res.data.classSchedules);
       });
-  }, []);
+  }, [user.token,user.username]);
 
   const Remove = (id) => {
     Swal.fire({
@@ -189,7 +187,7 @@ const Index = () => {
             </p>
           </div>
           <div className="teacher_grades_list_center">
-            <table class="table">
+            <table className="table">
               <thead>
                 <tr>
                   <th scope="col">Id</th>

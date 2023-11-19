@@ -5,39 +5,13 @@ import axios from "axios";
 const Index = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [lesson, setLesson] = useState([]);
-  const [selectFaculty, setSelectFaculty] = useState([]);
-  const [speciality, setSpeciality] = useState([]);
-  const [faculty, setFaculty] = useState([]);
-  const [selectLesson, setSelectLesson] = useState([]);
   const [teacher, setTeacher] = useState({});
-  const [selectSepciality, setSelectSpeciality] = useState([]);
   const [inputs, setInputs] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const [selectGender, setSelectGender] = useState("");
   const [selectStatus, setSelectStatus] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-  const [disabelSpeciality, setDisableSpeciality] = useState(false);
-  const [disableLesson, setDisableLesson] = useState(false);
-
-  // useEffect(() => {
-  //   axios.get("https://localhost:7153/api/Lessons").then((res) => {
-  //     setLesson(res.data);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   axios.get("https://localhost:7153/api/Specialities/Get").then((res) => {
-  //     setSpeciality(res.data);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   axios.get("https://localhost:7153/api/Facultys/GetAll").then((res) => {
-  //     setFaculty(res.data);
-  //   });
-  // }, []);
 
   useEffect(() => {
     axios
@@ -45,43 +19,12 @@ const Index = () => {
       .then((res) => {
         setTeacher(res.data);
         setInputs(res.data);
-        // setSelectFaculty(res.data.faculties && res.data.faculties.map((f) => f.id));
-        // res.data.specialities.length > 0 ?
-        // setSelectLesson(res.data.lessons && res.data.lessons.map((l) => l.id)) : setSelectLesson("")
-        // res.data.faculties &&
-        // setSelectSpeciality(
-        //   res.data.specialities && res.data.specialities.map((s) => s.id)
-        // );
       });
-  }, []);
+  }, [id]);
 
   console.log(inputs);
   const handleInputChange = (e) => {
-    const { name, value, files, type, options } = e.target;
-
-    // if (name === "lessonIds") {
-    //   const selectedlesson = Array.from(options)
-    //     .filter((option) => option.selected && option.value !== "")
-    //     .map((option) => Number(option.value));
-
-    //   setSelectLesson(selectedlesson);
-    // }
-
-    // if (name === "specialityIds") {
-    //   const selectedSpeciality = Array.from(options)
-    //     .filter((option) => option.selected && option.value !== "")
-    //     .map((option) => Number(option.value));
-
-    //   setSelectSpeciality(selectedSpeciality);
-    // }
-
-    // if (name === "facultyIds") {
-    //   const selectedFacultys = Array.from(options)
-    //     .filter((option) => option.selected && option.value !== "")
-    //     .map((option) => Number(option.value));
-
-    //   setSelectFaculty(selectedFacultys);
-    // }
+    const { name, value, files, type } = e.target;
 
     setInputs((prev) => ({
       ...prev,
@@ -102,7 +45,19 @@ const Index = () => {
         [name]: selectedFile,
       }));
     }
+
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+
+    setError("");
+
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -118,17 +73,6 @@ const Index = () => {
     formdata.append("email", inputs.email);
     formdata.append("status", inputs.status);
 
-    // selectFaculty.forEach((faculyIds) => {
-    //   formdata.append("facultyIds", faculyIds);
-    // });
-
-    // selectLesson.forEach((lessonIds) => {
-    //   formdata.append("lessonIds", lessonIds);
-    // });
-
-    // selectSepciality.forEach((specialityIds) => {
-    //   formdata.append("specialityIds", specialityIds);
-    // });
     axios
       .put(
         `https://localhost:7153/api/TeacherAuth/UpdateProfileAdmin?id=${id}`,
@@ -436,137 +380,11 @@ const Index = () => {
             </select>
           </div>
           {/* ---- */}
-          {/* <div className="form-group">
-            {teacher.faculties && teacher.faculties.length > 0
-              ? teacher.faculties.map((ls) => {
-                  return (
-                    <span style={{ color: "green" }}>
-                      Current Faculty :{" "}
-                      {ls.name ? ls.name : "No Current Faculty"} <br />
-                    </span>
-                  );
-                })
-              : ""}
-            <label htmlFor="faculties">Faculty</label>
-            <select
-              className="form-control"
-              id="faculties"
-              placeholder="Select Faculty"
-              onChange={handleInputChange}
-              name="facultyIds"
-              multiple
-              value={selectFaculty}
-            >
-              <option value="" selected disabled>
-                Select Faculty
-              </option>
-              {faculty
-                .filter((e) => e.isDeleted === false)
-                .map((l) => {
-                  return (
-                    <option key={l.id} value={l.id}>
-                      {l.id} - {l.name}
-                    </option>
-                  );
-                })}
-            </select>
-            {errorMessages.Password && (
-              <div className="error-messages">
+          <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Password}
+                  {error && error.includes("User") ? error : ""}
                 </p>
               </div>
-            )}
-          </div> */}
-
-          {/* ---- */}
-          {/* <div className="form-group">
-            {teacher.specialities && teacher.specialities.length > 0
-              ? teacher.specialities.map((ls) => {
-                  return (
-                    <span style={{ color: "green" }}>
-                      Current Speciality :{" "}
-                      {ls.name ? ls.name : "No Current Speciality"} <br />
-                    </span>
-                  );
-                })
-              : ""}
-            <label htmlFor="specialities">Speciality</label>
-            <select
-              className="form-control"
-              id="specialities"
-              placeholder="Select Lesson"
-              onChange={handleInputChange}
-              name="specialityIds"
-              multiple
-              value={selectSepciality}
-            >
-              <option value="" selected disabled>
-                Select Speciality
-              </option>
-              {speciality
-                .filter((e) => e.isDeleted === false)
-                .map((l) => {
-                  return (
-                    <option key={l.id} value={l.id}>
-                      {l.id} - {l.name}
-                    </option>
-                  );
-                })}
-            </select>
-            {errorMessages.Password && (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Password}
-                </p>
-              </div>
-            )}
-          </div> */}
-
-          {/* ---- */}
-          {/* <div className="form-group">
-            {teacher.lessons && teacher.lessons.length > 0
-              ? teacher.lessons.map((ls) => {
-                  return (
-                    <span style={{ color: "green" }}>
-                      Current Lesson : {ls.name ? ls.name : "No Current Lesson"}{" "}
-                      <br />
-                    </span>
-                  );
-                })
-              : ""}
-            <label htmlFor="lesson">Lesson</label>
-            <select
-              className="form-control"
-              id="lesson"
-              placeholder="Select Lesson"
-              onChange={handleInputChange}
-              name="lessonIds"
-              multiple
-              value={selectLesson}
-            >
-              <option value="" selected disabled>
-                Select Lesson
-              </option>
-              {lesson
-                .filter((e) => e.isDeleted === false)
-                .map((l) => {
-                  return (
-                    <option key={l.id} value={l.id}>
-                      {l.id} - {l.name}
-                    </option>
-                  );
-                })}
-            </select>
-            {errorMessages.Password && (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.Password}
-                </p>
-              </div>
-            )}
-          </div> */}
-          {/* ---- */}
           <button
             style={{ backgroundColor: "#002140" }}
             type="submit"

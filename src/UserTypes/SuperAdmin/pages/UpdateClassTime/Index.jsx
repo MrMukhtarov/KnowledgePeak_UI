@@ -11,21 +11,20 @@ const Index = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-  const [classTime, setClassTime] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`https://localhost:7153/api/ClassTime/Get/${id}`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then(res => {
-        setClassTime(res.data)
-        setInputs(res.data)
-    })
-  }, []);
+    axios
+      .get(`https://localhost:7153/api/ClassTime/Get/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setInputs(res.data);
+      });
+  }, [id, user.token]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +33,16 @@ const Index = () => {
       ...prev,
       [name]: value,
     }));
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,7 +82,7 @@ const Index = () => {
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
           <div className="error-messages">
             <p style={{ color: "red" }} className="error-message">
-              {error.includes("used") ? error : ""}
+              {error.includes("Exist") ? error : ""}
             </p>
           </div>
           <div className="form-group">

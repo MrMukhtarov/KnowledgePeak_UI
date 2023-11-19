@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Index.css";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
@@ -12,6 +12,8 @@ const Index = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const nav = useNavigate();
+  const [review, setReview] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -40,6 +42,13 @@ const Index = () => {
       });
   }, [user.username]);
 
+  const See = (a) => {
+    setReview(a);
+    setVisible(true);
+  };
+  const Close = () => {
+    setVisible(false);
+  };
 
   return (
     <section className="teacher_grades_list py-3">
@@ -48,13 +57,13 @@ const Index = () => {
         <div className="teacher_grades_list_all">
           <div className="teacher_grades_list_top">
             <div className="search_div text-end">
-                <NavLink
-                  title="Add Grade"
-                  className="btn btn-primary me-4"
-                  to={"/teacher/grade/create"}
-                >
-                  <AiOutlinePlus />
-                </NavLink>
+              <NavLink
+                title="Add Grade"
+                className="btn btn-primary me-4"
+                to={"/teacher/grade/create"}
+              >
+                <AiOutlinePlus />
+              </NavLink>
               <label htmlFor="search">Search</label>
               <input
                 onChange={(e) => setSearch(e.target.value)}
@@ -83,13 +92,22 @@ const Index = () => {
                       <tr>
                         <th scope="row">{g.id}</th>
                         <td>{g.point}</td>
-                        <td className="teacher_stu_name" onClick={() => nav(`/teacher/grade/${g.student.userName}`)}>{g.student.name}</td>
+                        <td
+                          className="teacher_stu_name"
+                          onClick={() =>
+                            nav(`/teacher/grade/${g.student.userName}`)
+                          }
+                        >
+                          {g.student.name}
+                        </td>
                         <td>{g.student.surName}</td>
                         <td>
                           {g.gradeDate.substring(0, 10)} -{" "}
                           {g.gradeDate.substring(11, 19)}
                         </td>
-                        <td title={g.review}>{g.review.substring(0, 10)}...</td>
+                        <td>
+                          {g.review.length > 10 ? <button className="btn btn-sm btn-primary" onClick={() => See(g.review)}>See</button> : g.review}
+                        </td>
                         <td>
                           <NavLink
                             title="Edit"
@@ -127,6 +145,21 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div
+        id="asda"
+        className={`teacher_grades_reviev d-flex ${
+          visible ? "d-block" : "d-none"
+        }`}
+      >
+        <p className="w-100 mb-0">{review}</p>
+        <span
+          onClick={Close}
+          style={{ color: "white" }}
+          className="ms-3 x_Feedback"
+        >
+          X
+        </span>
       </div>
     </section>
   );

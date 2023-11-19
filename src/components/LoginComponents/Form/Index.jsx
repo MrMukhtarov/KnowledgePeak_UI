@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import "./Index.css";
 import axios from "axios";
 
@@ -22,11 +22,22 @@ const Index = () => {
       ...prev,
       [name]: value,
     }));
+    
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
 
     if (name === "type") {
       setSelectType(value);
     }
+
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
   const handleSubmit = (e) => {
     e.preventDefault();
     const formdata = new FormData();
@@ -121,7 +132,7 @@ const Index = () => {
               ) : (
                 <div className="error-messages">
                   <p style={{ color: "red" }} className="error-message">
-                    {error && error.includes("password") ? error : ""}
+                    {error && (error.includes("password") || error.includes("length")) ? error : ""}
                   </p>
                 </div>
               )}
@@ -140,16 +151,16 @@ const Index = () => {
              </div>
               <i onClick={Watch} style={{cursor:"pointer"}} className="fa-solid fa-eye col-lg-2 login_eye"></i>
              </div>
-              {errorMessages.password ? (
+              {errorMessages.Password ? (
                 <div className="error-messages">
                   <p style={{ color: "red" }} className="error-message">
-                    {errorMessages.password}
+                    {errorMessages.Password}
                   </p>
                 </div>
               ) : (
                 <div className="error-messages">
                   <p style={{ color: "red" }} className="error-message">
-                    {error && error.includes("password") ? error : ""}
+                    {error && (error.includes("Password") || error.includes("length")) ? error : ""}
                   </p>
                 </div>
               )}

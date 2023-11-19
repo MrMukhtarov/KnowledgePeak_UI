@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -39,7 +39,16 @@ const Index = () => {
         [name]: selectedFile,
       }));
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -83,7 +92,7 @@ const Index = () => {
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
           <div className="error-messages text-center  ">
             <p style={{ color: "red" }} className="error-message">
-              {error.includes("Exist") ? error : ""}
+              {(error.includes("Exist") || error.includes("null")) ? error : ""}
             </p>
           </div>
           {/* ---- */}

@@ -12,8 +12,7 @@ const Index = () => {
     const [selectLesson,setSelectLesson] = useState([])
     const [errorMessages, setErrorMessages] = useState({});
     const [error, setError] = useState("");
-    const [inputs, setInputs] = useState({
-    });
+    const [inputs, setInputs] = useState({});
     const {id} = useParams();
 
     useEffect(() => {
@@ -25,14 +24,14 @@ const Index = () => {
           })
           .then((res) => setStudent(res.data))
           .catch((e) => console.log(e));
-      }, []);
+      }, [user.token]);
 
       useEffect(() => {
         axios.get(`https://localhost:7153/api/TeacherAuth/GetByUserName?Usermame=${user.username}`)
         .then(res => {
             setTeacher(res.data)
         })
-    },[])
+    },[user.username])
 
 useEffect(() => {
     axios.get(`https://localhost:7153/api/Grades/Get/${id}`,{
@@ -44,10 +43,10 @@ useEffect(() => {
         setGrade(res.data)
         setInputs(res.data)
         setSelectLesson(res.data.lesson.id)
-        setSelectStudent(res.data.student && res.data.student.name)
+        setSelectStudent(res.data.student && res.data.student.id)
        
     })
-},[])
+},[id,user.token])
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -64,8 +63,19 @@ useEffect(() => {
         ...prev,
         [name]: value,
       }));
+
+      setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+
+    setError("");
     };
-  console.log(inputs);
+
+    useEffect(() => {
+      setErrorMessages({});
+    }, [inputs]);
+
     const handleSubmit = (e) => {
       e.preventDefault();
       const formdata = new FormData();
@@ -123,7 +133,7 @@ useEffect(() => {
             value={selectStudent}
           >
             <option value="" selected disabled>Select Student</option>
-            {student.filter(f => f.course < 5).map(e => {
+            {student.filter(f => f.isDeleted === false).map(e => {
                 return(
                     <option key={e.id} value={e.id}>{e.name}  {e.surName}</option>
                 )

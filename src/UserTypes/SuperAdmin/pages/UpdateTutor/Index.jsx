@@ -28,8 +28,6 @@ const Index = () => {
      }
   }, [selectSepciality]);
 
-  console.log(group);
-
   useEffect(() => {
     axios.get("https://localhost:7153/api/Specialities/Get").then((res) => {
       setSpeciality(res.data);
@@ -90,7 +88,17 @@ const Index = () => {
         [name]: selectedFile,
       }));
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

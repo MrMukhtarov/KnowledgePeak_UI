@@ -33,6 +33,11 @@ const Index = () => {
   
       setSelectStudent(selectedStudent);
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
 
   useEffect(() => {
@@ -48,7 +53,6 @@ const Index = () => {
     })
   },[id,user.token])
 
-  console.log(selectStudent);
 
   useEffect(() => {
     axios.get(`https://localhost:7153/api/StudentAuth/Get`,{
@@ -59,13 +63,17 @@ const Index = () => {
     .then(res => {
         setStudent(res.data)
     })
-  },[])
+  },[user.token])
 
   useEffect(() => {
     axios.get(`https://localhost:7153/api/Specialities/Get`).then((res) => {
       setSpeciality(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

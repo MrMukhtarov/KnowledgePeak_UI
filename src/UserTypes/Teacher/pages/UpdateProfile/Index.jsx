@@ -12,7 +12,6 @@ const Index = () => {
     description: " ",
     age: " ",
     salary: " ",
-    userName: " ",
     email: " ",
     gender: teacher.gender,
     imageFile: teacher.imageUrl,
@@ -28,19 +27,18 @@ const Index = () => {
         `https://localhost:7153/api/TeacherAuth/GetByUserName?Usermame=${user.username}`,
         {
           headers: {
-            "Authorization": `Bearer ${user.token}`,
+            Authorization: `Bearer ${user.token}`,
           },
         }
       )
       .then((res) => {
         setTeacher(res.data);
         setInputs(res.data);
-        setSelectGender(res.data.gender)
-        setSelectImage(res.data.imageUrl)
+        setSelectGender(res.data.gender);
+        setSelectImage(res.data.imageUrl);
       });
-  }, []);
+  }, [user.token, user.username]);
 
-  console.log(inputs);
   const handleInputChange = (e) => {
     const { name, value, files, type } = e.target;
 
@@ -59,7 +57,16 @@ const Index = () => {
         [name]: selectedFile,
       }));
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,14 +77,13 @@ const Index = () => {
     formdata.append("imageFile", inputs.imageFile);
     formdata.append("age", inputs.age);
     formdata.append("gender", inputs.gender);
-    formdata.append("userName", inputs.userName);
     formdata.append("email", inputs.email);
 
     axios
       .put(`https://localhost:7153/api/TeacherAuth/UpdateProfile`, formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       })
       .then((res) => {
@@ -257,7 +263,9 @@ const Index = () => {
               name="gender"
               value={selectGender}
             >
-              <option value="" selected disabled>Select Gender</option>
+              <option value="" selected disabled>
+                Select Gender
+              </option>
               <option value="1">Male</option>
               <option value="2">Female</option>
             </select>
@@ -271,32 +279,6 @@ const Index = () => {
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
                   {error && error.includes("gender") ? error : ""}
-                </p>
-              </div>
-            )}
-          </div>
-          {/* ---- */}
-          <div className="form-group">
-            <label htmlFor="usr">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="usr"
-              placeholder="Enter Username"
-              onChange={handleInputChange}
-              name="userName"
-              defaultValue={teacher.userName}
-            />
-            {errorMessages.UserName ? (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.UserName}
-                </p>
-              </div>
-            ) : (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error && error.includes("UserName") ? error : ""}
                 </p>
               </div>
             )}
@@ -329,12 +311,12 @@ const Index = () => {
           </div>
           {/* ---- */}
           {
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error && error.includes("Exist") ? error : ""}
-                </p>
-              </div>
-            }
+            <div className="error-messages">
+              <p style={{ color: "red" }} className="error-message">
+                {error && error.includes("Exist") ? error : ""}
+              </p>
+            </div>
+          }
           <button
             style={{ backgroundColor: "#002140" }}
             type="submit"

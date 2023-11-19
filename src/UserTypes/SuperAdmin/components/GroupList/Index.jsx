@@ -213,7 +213,10 @@ const Index = () => {
                     return (
                       <tr key={g.id}>
                         <th scope="row">{g.id}</th>
-                        <td>{g.name}</td>
+                        <td className="admin_shcedule_link" style={{ fontWeight: "bolder" }}
+                      onClick={() =>
+                        navigate(`/superadmin/schedule/group/${g.id}`)
+                      }>{g.name}</td>
                         <td>{g.limit}</td>
                         <td>{g.speciality && g.speciality.name}</td>
                         <td>

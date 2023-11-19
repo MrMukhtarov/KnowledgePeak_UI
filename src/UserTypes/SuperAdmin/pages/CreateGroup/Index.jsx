@@ -22,6 +22,11 @@ const Index = () => {
     if (name === "specialityId") {
       setSelectSpeciality(value);
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
 
   useEffect(() => {
@@ -29,6 +34,10 @@ const Index = () => {
       setSpeciality(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,11 +74,6 @@ const Index = () => {
           <h5>Create Group</h5>
         </div>
         <form className="w-50 m-auto mt-5" onSubmit={(e) => handleSubmit(e)}>
-          <div className="error-messages">
-            <p style={{ color: "red" }} className="error-message">
-              {error.includes("Exist") ? error : ""}
-            </p>
-          </div>
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
@@ -89,7 +93,7 @@ const Index = () => {
             ) : (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {error.includes("name") ? error : ""}
+                  {error.includes("Name") ? error : ""}
                 </p>
               </div>
             )}
@@ -148,10 +152,10 @@ const Index = () => {
                     );
                   })}
             </select>
-            {errorMessages.ShortName ? (
+            {errorMessages.SpecialityId ? (
               <div className="error-messages">
                 <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.ShortName}
+                  {errorMessages.SpecialityId}
                 </p>
               </div>
             ) : (

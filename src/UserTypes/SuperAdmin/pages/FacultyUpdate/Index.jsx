@@ -24,12 +24,23 @@ useEffect(() => {
 const handleInputChange = (e) => {
   const { name, value } = e.target;
 
+  setErrorMessages((prev) => ({
+    ...prev,
+    [name]: null,
+  }));
+
   setInputs((prev) => ({
     ...prev,
     [name]: value,
   }));
+
+  setError("");
 };
-console.log(inpust);
+
+useEffect(() => {
+  setErrorMessages({});
+}, [inpust]);
+
 const handleSubmit = (e) => {
   e.preventDefault()
   var formData = new FormData();

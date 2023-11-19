@@ -13,6 +13,14 @@
 .stu_molad_all{
     padding: 30px;
 }
+.admin_shcedule_link:hover{
+    color: blue !important;
+    transition: .3s all;
+    cursor: pointer;
+}
+.admin_shcedule_link{
+    color: darkblue !important;
+}
 .stu_modal ul{
     padding: 0;
     display: flex;

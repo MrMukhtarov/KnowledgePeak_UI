@@ -37,7 +37,7 @@ const Index = () => {
         setSelectGender(res.data.gender);
         setSelectImage(res.data.imageUrl);
       });
-  }, []);
+  }, [user.token,user.username]);
 
   console.log(inputs);
   const handleInputChange = (e) => {
@@ -58,7 +58,16 @@ const Index = () => {
         [name]: selectedFile,
       }));
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,7 +77,6 @@ const Index = () => {
     formdata.append("imageFile", inputs.imageFile);
     formdata.append("age", inputs.age);
     formdata.append("gender", inputs.gender);
-    formdata.append("userName", inputs.userName);
     formdata.append("email", inputs.email);
 
     axios
@@ -250,33 +258,7 @@ const Index = () => {
             )}
           </div>
           {/* ---- */}
-          <div className="form-group">
-            <label htmlFor="usr">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="usr"
-              placeholder="Enter Username"
-              onChange={handleInputChange}
-              name="userName"
-              defaultValue={tutor.userName}
-            />
-            {errorMessages.UserName ? (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {errorMessages.UserName}
-                </p>
-              </div>
-            ) : (
-              <div className="error-messages">
-                <p style={{ color: "red" }} className="error-message">
-                  {error && error.includes("UserName") ? error : ""}
-                </p>
-              </div>
-            )}
-          </div>
-          {/* ---- */}
-          <div className="form-group">
+           <div className="form-group">
             <label htmlFor="eml">Email</label>
             <input
               type="text"

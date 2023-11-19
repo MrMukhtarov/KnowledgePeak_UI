@@ -188,7 +188,7 @@ const Index = () => {
                     <td>{f.group && f.group.name}</td>
                     <td>
                       {f.isDeleted === true ? (
-                        <span style={{ color: "red" }}>Kicked Out</span>
+                        <span style={{ color: "red" }}>Out</span>
                       ) : (
                         <span style={{ color: "green" }}>Student</span>
                       )}

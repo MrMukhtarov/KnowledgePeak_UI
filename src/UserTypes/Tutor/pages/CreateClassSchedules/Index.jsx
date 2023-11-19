@@ -82,7 +82,7 @@ const Index = () => {
       .then((res) => {
         setClassTime(res.data);
       });
-  }, []);
+  }, [user.token]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -104,7 +104,16 @@ const Index = () => {
     if (name === "roomId") {
       setSelectRoom(value);
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

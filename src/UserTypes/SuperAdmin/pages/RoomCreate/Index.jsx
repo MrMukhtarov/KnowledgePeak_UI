@@ -22,6 +22,12 @@ const Index = () => {
     if (name === "facultyId") {
       setSelectFaculty(value);
     }
+
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
 
   useEffect(() => {
@@ -29,6 +35,10 @@ const Index = () => {
       setFaculty(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

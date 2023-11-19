@@ -26,7 +26,7 @@ const Index = () => {
         setInputs(res.data);
         setSelectStatus(res.data.status);
       });
-  }, []);
+  }, [user.token,username]);
 
   console.log(inputs);
   const handleInputChange = (e) => {
@@ -50,7 +50,16 @@ const Index = () => {
         [name]: selectedFile,
       }));
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

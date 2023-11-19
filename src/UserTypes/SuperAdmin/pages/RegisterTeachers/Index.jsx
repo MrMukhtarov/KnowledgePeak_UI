@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -39,7 +39,18 @@ const Index = () => {
           [name]: selectedFile,
         }));
       }
+
+      setErrorMessages((prev) => ({
+        ...prev,
+        [name]: null,
+      }));
+
+      setError("");
   };
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -345,6 +356,11 @@ const Index = () => {
             )}
           </div>
           {/* ---- */}
+          <div className="error-messages">
+                <p style={{ color: "red" }} className="error-message">
+                  {error.includes("null") ? error : ""}
+                </p>
+              </div>
           <button
             style={{ backgroundColor: "#002140" }}
             type="submit"

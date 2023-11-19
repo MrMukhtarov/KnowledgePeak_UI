@@ -24,14 +24,16 @@ const Index = () => {
           })
           .then((res) => setStudent(res.data))
           .catch((e) => console.log(e));
-      }, []);
+      }, [user.token]);
 
       useEffect(() => {
         axios.get(`https://localhost:7153/api/TeacherAuth/GetByUserName?Usermame=${user.username}`)
         .then(res => {
             setTeacher(res.data)
         })
-    },[])
+    },[user.username ])
+
+    console.log(student);
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -48,15 +50,24 @@ const Index = () => {
         ...prev,
         [name]: value,
       }));
+      setErrorMessages((prev) => ({
+        ...prev,
+        [name]: null,
+      }));
+      setError("");
     };
-  console.log(inputs);
+
+    useEffect(() => {
+      setErrorMessages({});
+    }, [inputs]);
+
     const handleSubmit = (e) => {
       e.preventDefault();
       const formdata = new FormData();
       formdata.append("studentId", selectStudent);
       formdata.append("lessonId", selectLesson);
       formdata.append("point", inputs.point);
-      formdata.append("review", inputs.review);
+      formdata.append("review", inputs.review === "undefined" ? null : inputs.review);
       
       axios
         .post(`https://localhost:7153/api/Grades/Create`, formdata, {
@@ -100,12 +111,19 @@ const Index = () => {
             value={selectStudent}
           >
             <option value="" selected disabled>Select Student</option>
-            {student.filter(f => f.course < 5).map(e => {
+            {student.filter(f => f.isDeleted === false).map(e => {
                 return(
                     <option key={e.id} value={e.id}>{e.name}  {e.surName}</option>
                 )
             })}
             </select>
+            {errorMessages.StudentId ? (
+              <div className="error-messages">
+                <p style={{color:"red"}} className="error-message">{errorMessages.StudentId}</p>
+              </div>
+            ) : <div className="error-messages">
+            <p style={{color:"red"}} className="error-message">{error && error.includes("StudentId")  ? error : "" }</p>
+          </div>}
         </div>
         {/* ------ */}
         <div className="form-group mt-3">
@@ -127,12 +145,12 @@ const Index = () => {
                 )
             })}
             </select>
-            {errorMessages.StudentId ? (
+            {errorMessages.LessonId ? (
               <div className="error-messages">
-                <p style={{color:"red"}} className="error-message">{errorMessages.StudentId}</p>
+                <p style={{color:"red"}} className="error-message">{errorMessages.LessonId}</p>
               </div>
             ) : <div className="error-messages">
-            <p style={{color:"red"}} className="error-message">{error && error.includes("StudentId")  ? error : "" }</p>
+            <p style={{color:"red"}} className="error-message">{error && error.includes("LessonId")  ? error : "" }</p>
           </div>}
         </div>
         <div className="form-group mt-2">

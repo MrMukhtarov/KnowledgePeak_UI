@@ -23,6 +23,11 @@ const Index = () => {
     if (name === "facultyId") {
       setSelectFaculty(value);
     }
+    setErrorMessages((prev) => ({
+      ...prev,
+      [name]: null,
+    }));
+    setError("");
   };
 
   useEffect(() => {
@@ -37,13 +42,17 @@ const Index = () => {
         setSelectFaculty(res.data.faculty && res.data.faculty.id);
         setInputs(res.data);
       });
-  }, []);
+  }, [id,user.token]);
 
   useEffect(() => {
     axios.get(`https://localhost:7153/api/Facultys/GetAll`).then((res) => {
       setFaculty(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    setErrorMessages({});
+  }, [inputs]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

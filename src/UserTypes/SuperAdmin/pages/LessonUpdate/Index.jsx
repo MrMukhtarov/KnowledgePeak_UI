@@ -27,8 +27,19 @@ const handleInputChange = (e) => {
     ...prev,
     [name]: value,
   }));
+
+  setErrorMessages((prev) => ({
+    ...prev,
+    [name]: null,
+  }));
+
+  setError("");
 };
-console.log(inpust);
+
+useEffect(() => {
+  setErrorMessages({});
+}, [inpust]);
+
 const handleSubmit = (e) => {
   e.preventDefault()
   var formData = new FormData();

@@ -79,6 +79,7 @@ import StudentProfileAdmin  from './UserTypes/SuperAdmin/pages/StudentProfile/In
 import StudentProfileForTeacher from './UserTypes/Teacher/pages/StudentProfile/Index.jsx'
 import StudentProfileForTutor from './UserTypes/Tutor/pages/StudentProfile/Index.jsx'
 import ScheduleListAdmin from './UserTypes/SuperAdmin/pages/ClassScheduleList/Index.jsx'
+import GroupDetailForAdmin from './UserTypes/SuperAdmin/pages/GroupDetailAdmin/Index.jsx'
 
 function App() {
   var user = JSON.parse(localStorage.getItem("user"));
@@ -138,6 +139,10 @@ function App() {
               <Route
                 path="/superadmin/faculty/update/:id"
                 element={<FacultyUpdate />}
+              />
+              <Route
+                path="/superadmin/schedule/group/:id"
+                element={<GroupDetailForAdmin />}
               />
               <Route path="/superadmin/speciality" element={<Speciality />} />
               <Route
