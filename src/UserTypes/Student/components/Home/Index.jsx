@@ -16,6 +16,9 @@ function Index() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [grade, setGrade] = useState([]);
   const nav = useNavigate();
+  const [value, setvalue] = useState(0);
+  const colors = ["#002140","green"];
+
 
   const handleClose = () => setShow(false);
 
@@ -38,7 +41,7 @@ function Index() {
         setStudent(res.data.classSchedules && res.data.classSchedules.filter(s => s.status !== 11));
         setGrade(res.data.studentHistory && res.data.studentHistory);
       });
-  }, []);
+  }, [user.token,user.username]);
 
   const currentDate = new Date();
   const dates = format(currentDate, "yyyy-MM-dd");
@@ -47,12 +50,27 @@ function Index() {
   var notification =
     grade && grade.filter((g) => g.grade.gradeDate.substring(0,10) === dateNow);
 
+    useEffect(() => {
+      if(notification && notification.length > 0){
+        const interval = setInterval(() => {
+          setvalue((v) => {
+            return v === 4 ? 0 : v + 1;
+          });
+        }, 200);
+        return () => clearInterval(interval);
+      }
+    }, [notification]);
+
   return (
     <div className="py-2 student_home" style={{ width: "90%" }}>
       {notification && (
-        <div
-          onClick={() => nav('/student/history')}
-          style={{ cursor: "pointer" }}
+       notification.length > 0 ?  <div
+       onClick={() => nav('/student/history')}
+       style={{ backgroundColor: colors[value],cursor: "pointer" }}
+       className="student_home_grade_not"
+     >
+       You Have {notification.length} New Grade
+     </div> :  <div
           className="student_home_grade_not"
         >
           You Have {notification.length} New Grade

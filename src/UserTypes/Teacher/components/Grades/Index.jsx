@@ -147,19 +147,20 @@ const Index = () => {
         </div>
       </div>
       <div
-        id="asda"
-        className={`teacher_grades_reviev d-flex ${
+        className={`teacher_grades_reviev ${
           visible ? "d-block" : "d-none"
         }`}
       >
-        <p className="w-100 mb-0">{review}</p>
+        <div className="teacher_grades_reviev-all d-flex justify-content-between">
+        <p className="mb-0">{review}</p>
         <span
           onClick={Close}
           style={{ color: "white" }}
           className="ms-3 x_Feedback"
-        >
+          >
           X
         </span>
+          </div>
       </div>
     </section>
   );

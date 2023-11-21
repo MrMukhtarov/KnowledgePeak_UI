@@ -111,7 +111,7 @@ const Index = () => {
             value={selectStudent}
           >
             <option value="" selected disabled>Select Student</option>
-            {student.filter(f => f.isDeleted === false).map(e => {
+            {student.filter(f => f.isDeleted === false && f.group !== null).map(e => {
                 return(
                     <option key={e.id} value={e.id}>{e.name}  {e.surName}</option>
                 )

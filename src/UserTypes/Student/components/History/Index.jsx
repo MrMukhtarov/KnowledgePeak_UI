@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
 
 
 const Index = () => {
@@ -11,6 +10,8 @@ const Index = () => {
   const itemsPerPage = 5;
   const nav = useNavigate();
   const [student, setStudent] = useState({});
+  const [review, setReview] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -41,7 +42,15 @@ const Index = () => {
       .then((res) => {
         setStudent(res.data);
       });
-  }, []);
+  }, [user.token,user.username]);
+
+  const See = (a) => {
+    setReview(a);
+    setVisible(true);
+  };
+  const Close = () => {
+    setVisible(false);
+  };
 
   return (
     <section className="teacher_grades_list py-3">
@@ -84,10 +93,10 @@ const Index = () => {
                     return (
                       <tr>
                         <td>{e.grade && e.grade.gradeDate.substring(0,10)}</td>
-                        <td>{e.grade.lesson.name}</td>
+                        <td>{e.grade.lesson && e.grade.lesson.name}</td>
                         <td>{e.grade.point}</td>
-                        <td>{e.grade.teacher.name}</td>
-                        <td>{e.grade.review}</td>
+                        <td>{e.grade.teacher && e.grade.teacher.name}</td>
+                        <td>{e.grade.review.length > 10 ? <button className="btn btn-sm btn-primary" onClick={() => See(e.grade.review)}>See</button> : e.grade.review}</td>
                       </tr>
                     );
                   })}
@@ -114,6 +123,21 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div
+        id="asda"
+        className={`teacher_grades_reviev d-flex ${
+          visible ? "d-block" : "d-none"
+        }`}
+      >
+        <p className="w-100 mb-0">{review}</p>
+        <span
+          onClick={Close}
+          style={{ color: "white" }}
+          className="ms-3 x_Feedback"
+        >
+          X
+        </span>
       </div>
     </section>
   );

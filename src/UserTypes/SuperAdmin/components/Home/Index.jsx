@@ -9,7 +9,6 @@ import { FaChalkboardTeacher } from 'react-icons/fa';
 import { CiTimer } from 'react-icons/ci';
 import { MdFeedback } from "react-icons/md";
 import { format } from "date-fns";
-import { GrSchedules } from "react-icons/gr";
 
 const Index = () => {
   const [stuCount, setStuCount] = useState();
